@@ -8,7 +8,7 @@ font_awesome: "fas fa-microchip"
 ---
 
 
-# <i class="{{ page.font_awesome }}"></i> How to use this package
+# <i class="{{ page.font_awesome }}"></i> {{ page.title }}
 {: .no_toc }
 
 
