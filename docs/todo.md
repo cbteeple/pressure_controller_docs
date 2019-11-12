@@ -8,8 +8,9 @@ font_awesome: "fas fa-tasks"
 
 # <i class="{{ page.font_awesome }}"></i> {{ page.title }}
 
-Take a look at the current issues with this package, and feel free to request more features!
+Take a look at the current issues with these packages, and feel free to request more features!
 
-[Current Issues](https://github.com/cbteeple/pressure_controller/issues){: .btn}
+[Firmware / Python Issues](https://github.com/cbteeple/pressure_controller/issues){: .btn}
+[ROS Driver Issues](https://github.com/cbteeple/pressure_control_cbt/issues){: .btn}
 
 

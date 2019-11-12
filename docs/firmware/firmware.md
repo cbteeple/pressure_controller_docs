@@ -12,13 +12,32 @@ font_awesome: "fas fa-microchip"
 {: .no_toc }
 
 
-## Settings Locations
+An object-oriented approach to doing pressure control. Hopefully things are modular and can be swapped in an out for different controllers and valve setups.
+
+
+## Dependencies
+
+### Hardware
+- An arduino-compatible microcontroller (confirmed working on Arduino Mega and Teensy 3.5)
+
+### Software
+- Various Arduino Libraries
+    - [EEPROMAnything Library](https://github.com/collin80/EEPROMAnything) by collin80
+    - [Button Library](https://github.com/madleech/Button) by madleech
+    - [LiquidCrystal_I2C](https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library) by fdebrabander
+    - [EasyLCD Library](https://github.com/cbteeple/EasyLCD) by cbteeple (that's me!)
+    
+## Installation
+[Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn}
+
+## Usage
+### Settings Locations
 - Firmware is located in "**_pressure_control_firmware_**"
 - Harware configurations are located in the "**_config_**" folder
 - Sensor configurations are located in the "**_config/sensors_**" folder 
 
 
-## Install the Firmware on an MCU
+### Install the Firmware on an MCU
 1. Open the firmware in the Arduino IDE.
 2. Choose a configuration file (in the "**config**" folder), where you set the # of valves, pins, etc.
 3. Change the number of valves in "**allSettings.h**" in the "**trajectories**" class _(sorry, this is suboptimal and will be fixed eventually)_
