@@ -27,7 +27,7 @@ font_awesome: "fas fa-laptop-code"
     - [yaml](https://pyyaml.org/wiki/PyYAMLDocumentation) (`pip install pyyaml`)
 
 ## Installation
-[Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn}
+[Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn .btn-primary}
 
 ## Usage
 

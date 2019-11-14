@@ -10,7 +10,7 @@ font_awesome: "fas fa-tasks"
 
 Take a look at the current issues with these packages, and feel free to request more features!
 
-[Firmware / Python Issues](https://github.com/cbteeple/pressure_controller/issues){: .btn}
-[ROS Driver Issues](https://github.com/cbteeple/pressure_control_cbt/issues){: .btn}
+[Firmware / Python Issues](https://github.com/cbteeple/pressure_controller/issues){: .btn .btn-primary}
+[ROS Driver Issues](https://github.com/cbteeple/pressure_control_cbt/issues){: .btn .btn-primary}
 
 

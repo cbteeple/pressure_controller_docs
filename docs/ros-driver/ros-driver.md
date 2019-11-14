@@ -33,7 +33,7 @@ font_awesome: "fas fa-robot"
 
 ## Installation
 
-[Download the ROS Driver](https://github.com/cbteeple/pressure_control_cbt){: .btn}
+[Download the ROS Driver](https://github.com/cbteeple/pressure_control_cbt){: .btn .btn-primary}
 
 
 1. Add this package to your `workspace/src` folder.

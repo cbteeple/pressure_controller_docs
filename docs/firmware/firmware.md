@@ -28,7 +28,7 @@ An object-oriented approach to doing pressure control. Hopefully things are modu
     - [EasyLCD Library](https://github.com/cbteeple/EasyLCD) by cbteeple (that's me!)
     
 ## Installation
-[Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn}
+[Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn .btn-primary}
 
 ## Usage
 ### Settings Locations
