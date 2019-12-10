@@ -41,7 +41,10 @@ An object-oriented approach to doing pressure control. Hopefully things are modu
 1. Open the firmware in the Arduino IDE.
 2. Choose a configuration file (in the "**config**" folder), where you set the # of valves, pins, etc.
 3. Change the number of valves in "**allSettings.h**" in the "**trajectories**" class _(sorry, this is suboptimal and will be fixed eventually)_
-4. Flash the firmware to your microcontroller (confirmed working on Arduino Mega and Teensy 3.5)
+4. Choose what type of communication you want to use
+    - Arduino Mega: It's only capable of serial (no need to change any settings)
+    - Teensy 3.x: You can select between serial vs. native USB (HID). Do this in the Arduino IDE's "**Tools**" >> "**USB Type**" menu.
+5. Flash the firmware to your microcontroller (confirmed working on Arduino Mega and Teensy 3.5)
 
 
 
