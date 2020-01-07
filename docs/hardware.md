@@ -7,33 +7,120 @@ font_awesome: "fas fa-tools"
 ---
 
 # <i class="{{ page.font_awesome }}"></i> {{ page.title }}
+{: .no_toc }
 
 
-## Circuit Board (Bill of Materials)
+## Subsystems
+{: .no_toc }
 
-| Motor Drivers | Power Barrel Connector Jack 2.10mm ID (0.083"), 5.50mm OD (0.217") Through Hole, Right Angle                                  | Digikey | CP-059AH-ND      | 1  | $0.89  | $0.89   |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------|---------|------------------|----|--------|---------|
-|               | Slide Switch SPDT Through Hole                                                                                                | Digikey | 679-1877-ND      | 1  | $4.39  | $4.39   |
-|               | N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3                                                                         | Digikey | TN0104N3-G-ND    | 16 | $0.90  | $14.40  |
-|               |                                                                                                                               |         |                  |    |        |         |
-| MCU Power     | Non-Isolated PoL Module DC DC Converter 1 Output 5V 1A 8V - 36V Input                                                         | Digikey | 102-5018-ND      | 1  | $2.96  | $2.96   |
-|               | Green 572nm LED Indication - Discrete 2.1V 1206 (3216 Metric)                                                                 | Digikey | 516-3233-1-ND    | 1  | $0.53  | $0.53   |
-|               | 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805 (2012 Metric) Automotive AEC-Q200, High Voltage Thick Film                       | Digikey | RHM150AHCT-ND    | 1  | $0.17  | $0.17   |
-|               | 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805 (2012 Metric) Moisture Resistant Thick Film                                     | Digikey | 311-4.70KCRCT-ND | 2  | $0.10  | $0.20   |
-|               |                                                                                                                               |         |                  |    |        |         |
-| Sensors       | Pressure Sensor ±30PSI (±206.84kPa) Differential Male - 0.19" (4.8mm) Tube, Dual 0.25 V ~ 4.25 V 4-SIP, Dual Ports, Same Side | Digikey | 480-5507-ND      | 8  | $27.50 | $220.00 |
-|               | Pressure Sensor 150PSI (1034.21kPa) Vented Gauge Male - 0.19" (4.93mm) Tube 0.5 V ~ 4.5 V 8-DIP (0.524", 13.30mm), Top Port   | Digikey | 480-5203-ND	      | 1  | $23.82 | $23.82  |
-|               | 10 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805 (2012 Metric) Automotive AEC-Q200, Pulse Withstanding Thick Film                | Digikey | P20708CT-ND      | 9  | $0.30  | $2.70   |
-|               | 20 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805 (2012 Metric) Automotive AEC-Q200, Pulse Withstanding Thick Film                | Digikey | P20740CT-ND      | 9  | $0.30  | $2.70   |
-|               |                                                                                                                               |         |                  |    |        |         |
-|               |                                                                                                                               |         |                  |    |        |         |
-| Connectors    | Connector Header Through Hole 2 position 0.100" (2.54mm)                                                                      | Digikey | WM4800-ND	        | 2  | $0.84  | $1.68   |
-|               | 2 Position Rectangular Housing Connector Receptacle Black 0.100" (2.54mm)                                                     | Digikey | WM2900-ND        | 2  | $0.27  | $0.54   |
-|               | Connector Header Through Hole 3 position 0.100" (2.54mm)                                                                      | Digikey | WM4801-ND        | 8  | $0.80  | $6.40   |
-|               | 3 Position Rectangular Housing Connector Receptacle Black 0.100" (2.54mm)                                                     | Digikey | WM2901-ND        | 8  | $0.23  | $1.84   |
-|               | Connector Header Through Hole 4 position 0.100" (2.54mm)                                                                      | Digikey | WM4802-ND        | 2  | $0.99  | $1.98   |
-|               | 4 Position Rectangular Housing Connector Receptacle Black 0.100" (2.54mm)                                                     | Digikey | WM2902-ND        | 2  | $0.26  | $0.52   |
+1. TOC
+{:toc}
+
+---
 
 
-## Valves and Tubing
-Comming soon...
+## Valves
+
+For smooth pressure control, I chose the [EFB-1DV-24-L](https://www.clippard.com/part/EFB-1DV-24-L) proportional fill/bleed valve assembly from Clippard Minimatic. Each valve in the pair can handle high flows at reasonable operating pressures (100 liters/min at 50 PSI). They run at 24 V, but can only handle 60 PSI of back-pressure before they crack.
+
+
+For the input shutoff valve, I chose to use the [E215E-2C024](https://www.clippard.com/part/E215E-2C024) 2-way Valve from Clippard. The valve can withstand high back-pressure with reasonable flow rates (150 PSI with 70 L/min). These also run at 24 V.
+
+To drive all the valves, I am using one mosfet per valve as switches. The valves are then modulated in a smooth way using pulse width modulation (PWM).
+
+<div class="img-gallery">
+
+<img alt="I use the EFB-1DV-24-L proportional fill/blead valve pair for smooth pressure control"
+     src="https://www.clippard.com/static/images/cache/c9/c924a28f45d860109d2f34f2be4c404a828404bf-900.jpg" >
+
+<img alt="I use the E215E-2C024 2-way valves for the input shutoff valve"
+     src="https://www.clippard.com/static/images/cache/ec/ec3d6db01f234367b91b9c4bf862776762acf738-900.jpg" >
+
+ </div>
+
+
+## Sensors
+### Main Control Sensors
+The pressure control system features 10 channels, requiring 10 pressure sensors, each of which needs to be capable of measuring pressure up to ~ 35 PSI, and vaccum down to -14.5 PSI (full vacuum).
+
+After a lot of searching I found the [Honeywell SSCSNBN030PDAC5](https://www.digikey.com/products/en?keywords=480-5507-ND) differential pressure sensor. This sensor measures ±30 PSI over a voltage range of 0.25 V ~ 4.25 V, and we can extend the top end of the range slightly since we can measure up to 5 volts (the accuracy just gets worse as we move past the top of the measurement voltage range). The sensor is abundant and inexpensive at the time of writing, but has a **HUGE** footprint on a PCB.
+
+### Input Shutoff Sensor
+An addition to the pressure control system in v3.4 is an input shutoff valve for the high-pressure line. The main control valves can only take ~ 60 PSI of back pressure before they break, so we need to prevent anything higher from being supplied. The input shutoff utilizes a positive-pressure sensor to measure the input pressure and shut off the flow if it gets too high.
+
+For this, I chose the [Honeywell SSCDANN150PGAA5](https://www.digikey.com/products/en?keywords=480-5203-ND) vented gauge pressure sensor. It can measure up to 150 PSI (more than we should ever be supplying), and has the typical 0.5 V - 4.5 V output range.
+
+
+## Microcontroller
+I used the [Teensy 3.5](https://www.pjrc.com/store/teensy35.html) MCU becasue it's 32 bits with a built-in floating point unit for super fast floating point math (good for real-time control). It also has enough pins 
+
+
+## Custom Printed Circuit Board
+I built a custom circuit PCB to breakout signals to my various sensors and solienoid drivers. 
+
+### General Design
+This board is designed to be relatively space-efficient while still being modular. It also has everything set up to break out every signal from the Teensy 3.5 to potentially be used later if nessecary. This results in a relatively large board, but it was farily cheap to get it fabricated by [OSH Park](https://oshpark.com/shared_projects/FJrbEXym).
+
+
+<div class="img-gallery">
+
+<img alt="Top view of the PCB"
+     src="{{ "assets/img/board_rev3-4_top.png" | absolute_url }}" />
+
+<img alt="Bottom view of the PCB"
+     src="{{ "assets/img/board_rev3-4_bot.png" | absolute_url }}" />
+
+</div>
+
+
+### Electrical Components
+
+All of the electronic components used on this board can be found on [Digikey](https://www.digikey.com/). 
+
+[<i class="fas fa-file-excel"></i> Download as Spreadsheet]( {{ "assets/files/Ctrl-P_BOM.xls" | absolute_url }} ){: .btn .btn-green}
+
+
+| Part Description                                           | Digikey P/N       | Qty | Price Each |
+|:-----------------------------------------------------------|:------------------|:---:|-----------:|
+| **Motor Drivers**                                          |                   |     |            |
+| Power Barrel Connector Jack 2.10mm ID, 5.50mm OD           | CP-059AH-ND       | 1   | $0.89      |
+| Slide Switch SPDT Through Hole                             | 679-1877-ND       | 1   | $4.39      |
+| N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3      | TN0104N3-G-ND     | 20  | $0.90      |
+|                                                            |                   |     |            |
+| **MCU Power**                                              |                   |     |            |
+| Teensy 3.5 32-Bit MCU Eval Board                           | 1568-1443-ND      | 1   | $26.25     |
+| DC-to-DC Converter, Input 8V - 36V, Output 5V 1A           | 102-5018-ND       | 1   | $2.96      |
+| Green 572nm LED Indication - Discrete 2.1V 1206            | 516-3233-1-ND     | 1   | $0.53      |
+| 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805               | RHM150AHCT-ND     | 1   | $0.17      |
+| 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805              | 311-4.70KCRCT-ND  | 2   | $0.10      |
+|                                                            |                   |     |            |
+| **Sensors**                                                |                   |     |            |
+| Pressure Sensor ±30PSI Differential, 0.25 V ~ 4.25 V 4-SIP | 480-5507-ND       | 10  | $27.50     |
+| Pressure Sensor 150PSI Vented Gauge, 0.5 V ~ 4.5 V 8-DIP   | 480-5203-ND	     | 1   | $23.82     |
+| 10 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805              | P20708CT-ND       | 9   | $0.30      |
+| 20 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805              | P20740CT-ND       | 9   | $0.30      |
+|                                                            |                   |     |            |
+| **Connectors**                                             |                   |     |            |
+| Through Hole 2 pin 0.100" (2.54mm)                         | WM4800-ND	     | 2   | $0.84      |
+| Receptacle 2 pin 0.100" (2.54mm)                           | WM2900-ND         | 2   | $0.27      |
+| Through Hole 3 pin 0.100" (2.54mm)                         | WM4801-ND         | 10  | $0.80      |
+| Receptacle 3 pin 0.100" (2.54mm)                           | WM2901-ND         | 10  | $0.23      |
+| Through Hole 4 pin 0.100" (2.54mm)                         | WM4802-ND         | 2   | $0.99      |
+| Receptacle 4 pin 0.100" (2.54mm)                           | WM2902-ND         | 2   | $0.26      |
+|                                                            |                   |     |            |
+| **Pin Headers**                                            |                   |     |            |
+| Surface Mount 10 pins 0.100" (2.54mm)                      | 609-5163-1-ND     | 1   | $1.09      |
+| Surface Mount 8 pins 0.100" (2.54mm)                       | A121623-ND        | 1   | $1.21      |
+| Surface Mount 6 pins 0.100" (2.54mm)                       | 609-5602-ND       | 1   | $0.37      |
+| Through Hole 24 pins 0.100" (2.54mm)                       | 900-0022284245-ND | 4   | $1.41      |
+| Through Hole 6 socket 0.100" (2.54mm)                      | S7106-ND          | 1   | $0.62      |
+| Through Hole 8 socket 0.100" (2.54mm)                      | S7107-ND          | 1   | $0.69      |
+| Through Hole 10 socket 0.100" (2.54mm)                     | S7108-ND          | 1   | $0.71      |
+| Through Hole 24 socket 0.100" (2.54mm)                     | S7057-ND          | 2   | $1.00      |
+| 2 Position Jumper, Closed Top 0.100" (2.54mm)              | S9001-ND          | 16  | $0.10      |
+| Crimp Sockets                                              | WM2512-ND‎         | 250 | $0.09      |
+| Crimp Pins                                                 | ‎WM2517CT-ND‎       | 250 | $0.06      |
+
+
+
+
