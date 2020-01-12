@@ -36,8 +36,8 @@ If someone has configured and flashed this firmware to an arduino for you to use
 Upon powering on the system, you should send the following commands to resume from where you left off last time:
 
  1. "**LOAD**". This loads the PID controller settings that were configured for you. (This is automatically executed on startup)
- 2. "**SET;0**". This ensures all channels are set to 0psi before starting.
- 3. "**MODE;1**". This ensures you are in "pressure control" mode
+ 2. "**SET;0;0**". This ensures all channels are set to 0psi immediately before starting.
+ 3. "**MODE;3**". This ensures you are in "pressure control +ramp" mode
 
 ### Decide what you want to see
 Now you can choose whether you want to see the live pressure output or not
@@ -47,8 +47,8 @@ Now you can choose whether you want to see the live pressure output or not
 
 ### Set pressures and go!
 Now you can set pressures and the controller will take you there. It's as simple as that!
- 1. "**SET;#**". This sets the desired pressure for all channels.
- 2. "**SET;#1;#2;...;#N**". This sets the desired pressure separately for each channel (assuming you have N channels).
+ 1. "**SET;#1;#2**". This ramps to the desired pressure (**#2**) for all channels in **#1** seconds.
+ 2. "**SET;#1;#2;#3;...;#N+1**". This sets the desired pressure separately for each channel (assuming you have N channels), and ramps to that pressure over **#1** seconds..
 
 ### Saving incoming data 
 If you want to save the measured pressure, you need to intercept the incoming serial stream. In addition, you need to filter out all of the command echos that happen every time you send a command (like a new setpoint).
