@@ -28,15 +28,14 @@ For the input shutoff valve, I chose to use the [E215E-2C024](https://www.clippa
 
 To drive all the valves, I am using one mosfet per valve as switches. The valves are then modulated in a smooth way using pulse width modulation (PWM).
 
-<div class="img-gallery">
 
 <img alt="I use the EFB-1DV-24-L proportional fill/blead valve pair for smooth pressure control"
-     src="https://www.clippard.com/static/images/cache/c9/c924a28f45d860109d2f34f2be4c404a828404bf-900.jpg" >
-
+     src="https://www.clippard.com/static/images/cache/c9/c924a28f45d860109d2f34f2be4c404a828404bf-900.jpg"
+     class="gallery-80" >
 <img alt="I use the E215E-2C024 2-way valves for the input shutoff valve"
-     src="https://www.clippard.com/static/images/cache/ec/ec3d6db01f234367b91b9c4bf862776762acf738-900.jpg" >
+     src="https://www.clippard.com/static/images/cache/ec/ec3d6db01f234367b91b9c4bf862776762acf738-900.jpg"
+     class="gallery-20" >
 
- </div>
 
 
 ## Sensors
@@ -62,15 +61,12 @@ I built a custom circuit PCB to breakout signals to my various sensors and solie
 This board is designed to be relatively space-efficient while still being modular. It also has everything set up to break out every signal from the Teensy 3.5 to potentially be used later if nessecary. This results in a relatively large board, but it was farily cheap to get it fabricated by [OSH Park](https://oshpark.com/shared_projects/FJrbEXym).
 
 
-<div class="img-gallery">
-
 <img alt="Top view of the PCB"
-     src="{{ "assets/img/board_rev3-4_top.png" | absolute_url }}" />
-
+     src="{{ "assets/img/board_rev3-4_top.png" | absolute_url }}"
+     class="gallery-50" />
 <img alt="Bottom view of the PCB"
-     src="{{ "assets/img/board_rev3-4_bot.png" | absolute_url }}" />
-
-</div>
+     src="{{ "assets/img/board_rev3-4_bot.png" | absolute_url }}"
+     class="gallery-50" />
 
 
 ### Electrical Components
@@ -80,47 +76,48 @@ All of the electronic components used on this board can be found on [Digikey](ht
 [<i class="fas fa-file-excel"></i> Download as Spreadsheet]( {{ "assets/files/Ctrl-P_BOM.xls" | absolute_url }} ){: .btn .btn-green}
 
 
-| Part Description                                           | Digikey P/N       | Qty | Price Each |
-|:-----------------------------------------------------------|:------------------|:---:|-----------:|
-| **Motor Drivers**                                          |                   |     |            |
-| Power Barrel Connector Jack 2.10mm ID, 5.50mm OD           | CP-059AH-ND       | 1   | $0.89      |
-| Slide Switch SPDT Through Hole                             | 679-1877-ND       | 1   | $4.39      |
-| N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3      | TN0104N3-G-ND     | 20  | $0.90      |
-|                                                            |                   |     |            |
-| **MCU Power**                                              |                   |     |            |
-| Teensy 3.5 32-Bit MCU Eval Board                           | 1568-1443-ND      | 1   | $26.25     |
-| DC-to-DC Converter, Input 8V - 36V, Output 5V 1A           | 102-5018-ND       | 1   | $2.96      |
-| Green 572nm LED Indication - Discrete 2.1V 1206            | 516-3233-1-ND     | 1   | $0.53      |
-| 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805               | RHM150AHCT-ND     | 1   | $0.17      |
-| 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805              | 311-4.70KCRCT-ND  | 2   | $0.10      |
-|                                                            |                   |     |            |
-| **Sensors**                                                |                   |     |            |
-| Pressure Sensor ±30PSI Differential, 0.25 V ~ 4.25 V 4-SIP | 480-5507-ND       | 10  | $27.50     |
-| Pressure Sensor 150PSI Vented Gauge, 0.5 V ~ 4.5 V 8-DIP   | 480-5203-ND	     | 1   | $23.82     |
-| 10 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805              | P20708CT-ND       | 9   | $0.30      |
-| 20 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805              | P20740CT-ND       | 9   | $0.30      |
-|                                                            |                   |     |            |
-| **Connectors**                                             |                   |     |            |
-| Through Hole 2 pin 0.100" (2.54mm)                         | WM4800-ND	     | 2   | $0.84      |
-| Receptacle 2 pin 0.100" (2.54mm)                           | WM2900-ND         | 2   | $0.27      |
-| Through Hole 3 pin 0.100" (2.54mm)                         | WM4801-ND         | 10  | $0.80      |
-| Receptacle 3 pin 0.100" (2.54mm)                           | WM2901-ND         | 10  | $0.23      |
-| Through Hole 4 pin 0.100" (2.54mm)                         | WM4802-ND         | 2   | $0.99      |
-| Receptacle 4 pin 0.100" (2.54mm)                           | WM2902-ND         | 2   | $0.26      |
-|                                                            |                   |     |            |
-| **Pin Headers**                                            |                   |     |            |
-| Surface Mount 10 pins 0.100" (2.54mm)                      | 609-5163-1-ND     | 1   | $1.09      |
-| Surface Mount 8 pins 0.100" (2.54mm)                       | A121623-ND        | 1   | $1.21      |
-| Surface Mount 6 pins 0.100" (2.54mm)                       | 609-5602-ND       | 1   | $0.37      |
-| Through Hole 24 pins 0.100" (2.54mm)                       | 900-0022284245-ND | 4   | $1.41      |
-| Through Hole 6 socket 0.100" (2.54mm)                      | S7106-ND          | 1   | $0.62      |
-| Through Hole 8 socket 0.100" (2.54mm)                      | S7107-ND          | 1   | $0.69      |
-| Through Hole 10 socket 0.100" (2.54mm)                     | S7108-ND          | 1   | $0.71      |
-| Through Hole 24 socket 0.100" (2.54mm)                     | S7057-ND          | 2   | $1.00      |
-| 2 Position Jumper, Closed Top 0.100" (2.54mm)              | S9001-ND          | 16  | $0.10      |
-| Crimp Sockets                                              | WM2512-ND‎         | 250 | $0.09      |
-| Crimp Pins                                                 | ‎WM2517CT-ND‎       | 250 | $0.06      |
-
-
-
-
+| Part Description                                           | Digikey P/N         | Qty  | Price Each |
+|:-----------------------------------------------------------|:--------------------|:----:|-----------:|
+| **Motor Drivers**                                          |                     |      |            |
+| Power Barrel Connector Jack 2.10mm ID, 5.50mm OD           | CP-059AH-ND         | 1    | $0.89      |
+| Slide Switch SPDT Through Hole                             | 679-1877-ND         | 1    | $4.39      |
+| N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3      | TN0104N3-G-ND       | 20   | $0.90      |
+|                                                            |                     |      |            |
+| **MCU Power**                                              |                     |      |            |
+| Teensy 3.5 32-Bit MCU Eval Board                           | 1568-1443-ND        | 1    | $26.25     |
+| DC-to-DC Converter, Input 8V - 36V, Output 5V 1A           | 102-5018-ND         | 1    | $2.96      |
+| Green 572nm LED Indication - Discrete 2.1V 1206            | 516-3233-1-ND       | 1    | $0.53      |
+| 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805               | RHM150AHCT-ND       | 1    | $0.17      |
+| 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805              | 311-4.70KCRCT-ND    | 2    | $0.10      |
+|                                                            |                     |      |            |
+| **Sensors**                                                |                     |      |            |
+| Pressure Sensor ±30PSI Differential, 0.25 V ~ 4.25 V 4-SIP | 480-5507-ND         | 10   | $27.50     |
+| Pressure Sensor 150PSI Vented Gauge, 0.5 V ~ 4.5 V 8-DIP   | 480-5203-ND         | 1    | $23.82     |
+| 10 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805              | P20708CT-ND         | 11   | $0.30      |
+| 20 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805              | P20740CT-ND         | 11   | $0.30      |
+|                                                            |                     |      |            |
+| **Connectors**                                             |                     |      |            |
+| Through Hole 2 pin 0.100" (2.54mm)                         | WM4800-ND	           | 2    | $0.84      |
+| Receptacle 2 pin 0.100" (2.54mm)                           | WM2900-ND           | 2    | $0.27      |
+| Through Hole 3 pin 0.100" (2.54mm)                         | WM4801-ND           | 10   | $0.80      |
+| Receptacle 3 pin 0.100" (2.54mm)                           | WM2901-ND           | 10   | $0.23      |
+| Tactile Button                                             | CKN9085CT-ND        | 3    | $0.31      |
+|                                                            |                     |      |            |
+| **Pin Headers (For Teensy)**                               |                     |      |            |
+| Surface Mount 6 pins (2x3) 0.100" (2.54mm)                 | 609-5381-1-ND       | 1    | $0.35      |
+| Surface Mount 8 pins (2x4) 0.100" (2.54mm)                 | A121623-ND          | 1    | $0.46      |
+| Surface Mount 10 pins (2x5) 0.100" (2.54mm)                | 609-5381-1-ND       | 1    | $0.50      |
+| Through Hole 24 pins (1x24) 0.100" (2.54mm)                | S1012E-24-ND        | 4    | $1.28      |
+|                                                            |                     |      |            |
+| **Pin Headers (For Board)**                                |                     |      |            |
+| Through Hole 12 pins (2x6) 0.100" (2.54mm)                 | S2012E-06-ND        | 1    | $0.60      |
+| Through Hole 6 socket (2x3) 0.100" (2.54mm)                | S7106-ND            | 1    | $0.62      |
+| Through Hole 10 socket (2x5) 0.100" (2.54mm)               | S7108-ND            | 1    | $0.71      |
+| Through Hole 2 socket (1x3) 0.100" (2.54mm)                | S7000-ND            | 1    | $0.32      |
+| Through Hole 3 socket (1x3) 0.100" (2.54mm)                | S7036-ND            | 1    | $0.37      |
+| Through Hole 4 socket (1x4) 0.100" (2.54mm)                | S7002-ND            | 1    | $0.45      |
+| Through Hole 5 socket (1x5) 0.100" (2.54mm)                | S6103-ND            | 1    | $0.47      |
+| Through Hole 24 socket (1x24) 0.100" (2.54mm)              | S7057-ND            | 2    | $1.00      |
+| 2-pin Jumper                                               | S9001-ND            | 11   | $0.10      |
+| Crimp pins                                                 | WM2512-ND‎           | Lots | $0.09      |
+| Crip sockets                                               | ‎WM2517CT-ND‎         | Lots | $0.06      |
