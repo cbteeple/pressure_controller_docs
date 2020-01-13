@@ -16,7 +16,9 @@ nav_order: 1
 _Run these commands in a linux terminal. If you are using an IPython console (like in spyder), replace `python` with `run` at the beginning of commands._
 
 ## Common usage example:
-```console 
+
+### Commands in the console
+```bash 
 # Build your trajectory
 python build_traj.py example/setpoint_traj_demo
 
@@ -31,6 +33,41 @@ python send_pre_built.py example/setpoint_traj_demo 1.5
 # Run the trajectory, with wrapping turned on
 python run_pre_built.py 1
 ```
+
+### example/setpoint_traj_demo.yaml:
+
+```yaml
+settings:
+    traj_type: 'interp'  # Types include: 'waveform', 'interp'
+
+
+# Place all of the type-specific settings in here
+config:
+    interp_type: none   # can be: 'linear', 'cubic'
+    setpoints: # Setpoints are only used if you are doing an interpolation
+        # [time (sec), pressure 1,2...N (psi)]
+        main:
+            - [0.0,   10, 12, 14,  16]
+            - [1.0,    20, 0, 0,  0]
+            - [2.0,   0, 20, 0,  0]
+            - [3.0,     0, 0, 20, 0]
+            - [4.0,     0, 0, 0, 20]
+            - [5.0,    10, 12, 14, 16]
+
+        prefix:
+            - [0.000,   0, 0, 0,  0]
+            - [1.0,    10, 12, 14,  16]
+
+        suffix:
+            - [2.000,   10, 12, 14,  16]
+            - [3.0,  0, 0, 0,  0]
+```
+
+### Output
+
+![Plot of the "setpoint_traj_demo" trajectory](/assets/img/setpoint_traj_demo_plot.png)
+
+
 
 
 
