@@ -89,9 +89,17 @@ nav_order: 1
 ||| #1 = Main trajectory length (`int`)
 ||| #2 = Suffix length (`int`)
 ||| #3 = Run the suffix trajectory after stop (`bool`)
-|TRAJWRAP| [#]| Wrap the trajectory (`bool`)
+|TRAJWRAP| [#]| Wrap the trajectory (`bool`) (_Same functionality can be achieved using TRAJLOOP_)
 |||0 = Off - trajectory excecutes once
 |||1 = On - loop over and over until stopped
+|TRAJLOOP| [#]|  Number of times to loop (`int`)
+|||-1 = Loop Forever until the TRAJSTOP command is sent
+|||0 = Skip the main loop
+|||1,2,... = Do the main loop this many times
+|TRAJSPEED| [#]| Stretch the speed of the trajectory (`float`)
+|||1.0 - base speed
+|||>1.0 - Faster than base speed
+|||<1.0 - Slower than base speed (can never be 0; if 0 is sent, no changes are made)
 |TRAJSET| [#0, #1, #2;...;#N+1]| Set the main trajectory line by line
 ||| #0 = index (`int`, can be 0 &rarr; max_length-1)
 ||| #1 = time point (`float`)

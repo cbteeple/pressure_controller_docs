@@ -104,6 +104,11 @@ Build a pressure trajectory from a yaml file
 
 3. The trajectory is built, and a "*.traj*" file is saved in the `traj_built` folder
 
+_**A Note about smoothness:**_
+- In the "main" part of the trajectory, the first and last lines must be the same if you want to make a smooth looping trajectory.
+- The same is true for the last line in the "prefix" and first line of the "main".
+- Transitions to the suffix are handled onboard (time 0.0 of the suffix gets set to the current setpoint state at the time of calling)
+
 
 ### Load the pre-built trajectory onto the controller
 Send a pressure trajectory
