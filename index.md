@@ -19,4 +19,3 @@ By [Clark Teeple](http://www.cbteeple.com)
 {{ site.description }}
 
 This work was done as part of a research project at the [Harvard Microrobotics Lab](https://www.micro.seas.harvard.edu). Our goal was to build a system capable of smooth control of pressure to drive our custom soft robotic hands.
-

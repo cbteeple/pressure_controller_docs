@@ -27,11 +27,11 @@ python build_traj.py example/setpoint_traj_demo
 #    The last profile to be configured is always loaded on startup
 python config.py default
 
-# Load the built trajectory onto the controller, and speed-stretch by 1.5x
-python send_pre_built.py example/setpoint_traj_demo 1.5
+# Load the built trajectory onto the controller
+python send_pre_built.py example/setpoint_traj_demo
 
-# Run the trajectory, with wrapping turned on
-python run_pre_built.py 1
+# Run the trajectory 1 time, and speed-stretch by 2.5x (faster)
+python run_pre_built.py 1 2.5
 ```
 
 ### example/setpoint_traj_demo.yaml:
@@ -113,10 +113,9 @@ _**A Note about smoothness:**_
 ### Load the pre-built trajectory onto the controller
 Send a pressure trajectory
 
-`python send_pre_built.py [traj_profile] [speed_factor]`
+`python send_pre_built.py [traj_profile]`
 
 * **traj_profile** - name of trajectory you just built
-* **speed_factor** - Time-stretch a trajectory (Times are divided by this factor)
 
 You must build trajectories from setup files before you can send them. Do not try to create trajectory files yourself.
 
@@ -125,6 +124,7 @@ You must build trajectories from setup files before you can send them. Do not tr
 ### Run the current trajectory
 Execute the pressure trajectory you just sent
 
-`python run_pre_built.py [wrap]`
+`python run_pre_built.py [num_cycles] [speed_factor]`
 
-* **wrap** - 0 or 1 - Wrap the trajectory (go back to time=0 when finished to create an endless loop)
+* **num_cycles** - Loop the main part of the trajectory this number of times. (_Set to -1 for endless loop_)
+* **speed_factor** - Speed-stretch a trajectory (_larger speed factor runs the trajectory faster_)
