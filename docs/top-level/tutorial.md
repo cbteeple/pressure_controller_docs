@@ -65,8 +65,8 @@ config:
 
 ### Output
 
-![Plot of the "setpoint_traj_demo" trajectory](/assets/img/setpoint_traj_demo_plot.png)
 
+![Plot of the "setpoint_traj_demo" trajectory]({{ "assets/img/setpoint_traj_demo_plot.png" | absolute_url }})
 
 
 
