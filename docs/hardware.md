@@ -131,19 +131,18 @@ All of the mounting components used on this board can be found on [McMaster-Carr
 [<i class="fas fa-file-excel"></i> Download Mounting BOM]( {{ "assets/files/Ctrl-P_Mounting.xls" | absolute_url }} ){: .btn .btn-green}
 
 
-| Part Description                                           | McMaster P/N         | Qty  | Price Each |
-|:-----------------------------------------------------------|:--------------------|:----:|-----------:|
-| **Motor Drivers**                                          |                     |      |            |
-| Power Barrel Connector Jack 2.10mm ID, 5.50mm OD           | CP-059AH-ND         | 1    | $0.89      |
-| Slide Switch SPDT Through Hole                             | 679-1877-ND         | 1    | $4.39      |
-| N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3      | TN0104N3-G-ND       | 20   | $0.90      |
-|                                                            |                     |      |            |
-| **MCU Power**                                              |                     |      |            |
-| Teensy 3.5 32-Bit MCU Eval Board                           | 1568-1443-ND        | 1    | $26.25     |
-| DC-to-DC Converter, Input 8V - 36V, Output 5V 1A           | 102-5018-ND         | 1    | $2.96      |
-| Green 572nm LED Indication - Discrete 2.1V 1206            | 516-3233-1-ND       | 1    | $0.53      |
-| 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805               | RHM150AHCT-ND       | 1    | $0.17      |
-| 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805              | 311-4.70KCRCT-ND    | 2    | $0.10      |
+| Part Description                                           | McMaster P/N         | Qty  | Package | Price Each |
+|:-----------------------------------------------------------|:--------------------|:----:|:----|-----------:|
+| Narrow Head Slotted Screws, Plastic, M3 , 16mm Long               | 96295A711 | 1  | Pack of 100 each | 9.63   |
+| Narrow Head Slotted Screws, Plastic, M3 , 20mm Long               | 96295A712 | 1  | Pack of 100 each | $9.69  |
+| Nylon Unthreaded Spacer 6 mm OD, 2 mm Long, for M3 Screw Size     | 93657A001 | 12 | Each             | $1.07  |
+| Nylon Plastic Washer for M3 Screw Size, 3.2 mm ID, 8 mm OD, Black | 95610A530 | 1  | Pack of 100 each | $3.60  |
+| Nylon Unthreaded Spacer 4.5 mm OD, 1 mm Long                      | 93657A501 | 6  | Each             | $1.46  |
+| Aluminum Female Threaded Hex Standoff 40mm Long, M3               | 95947A500 | 4  | Each             | $1.76  |
+| Aluminum Male-Female Threaded Hex Standoff 40mm Long, M3          | 98952A401 | 4  | Each             | $2.97  |
+| Aluminum Male-Female Threaded Hex Standoff 20mm Long, M3          | 98952A118 | 4  | Each             | $1.90  |
+| Aluminum Female Threaded Hex Standoff 20mm Long, M3               | 95947A016 | 4  | Each             | $0.91  |
+| Nylon Hex Nut M3 x 0.5 mm Thread, Black                           | 93800A400 | 1  | Pack of 100 each | $13.82 |
 
 ### Custom-Made Components
 In addition, I laser-cut a flat frame to place everything together in a neat package. 
