@@ -51,7 +51,7 @@ For this, I chose the [Honeywell SSCDANN150PGAA5](https://www.digikey.com/produc
 
 
 ## Microcontroller
-I used the [Teensy 3.5](https://www.pjrc.com/store/teensy35.html) MCU becasue it's 32 bits with a built-in floating point unit for super fast floating point math (good for real-time control). It also has enough pins 
+I used the [Teensy 3.5](https://www.pjrc.com/store/teensy35.html) MCU because it's 32 bits with a built-in floating point unit for super fast floating point math (good for real-time control). It also has enough pins 
 
 
 ## Custom Printed Circuit Board
