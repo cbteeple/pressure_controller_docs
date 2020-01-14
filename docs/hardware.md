@@ -31,10 +31,10 @@ To drive all the valves, I am using one mosfet per valve as switches. The valves
 
 <img alt="I use the EFB-1DV-24-L proportional fill/blead valve pair for smooth pressure control"
      src="https://www.clippard.com/static/images/cache/c9/c924a28f45d860109d2f34f2be4c404a828404bf-900.jpg"
-     class="gallery-80" >
+     class="gallery gallery-80" >
 <img alt="I use the E215E-2C024 2-way valves for the input shutoff valve"
      src="https://www.clippard.com/static/images/cache/ec/ec3d6db01f234367b91b9c4bf862776762acf738-900.jpg"
-     class="gallery-20" >
+     class="gallery gallery-20" >
 
 
 
@@ -63,17 +63,17 @@ This board is designed to be relatively space-efficient while still being modula
 
 <img alt="Top view of the PCB"
      src="{{ "assets/img/board_rev3-4_top.png" | absolute_url }}"
-     class="gallery-50" />
+     class="gallery gallery-50" />
 <img alt="Bottom view of the PCB"
      src="{{ "assets/img/board_rev3-4_bot.png" | absolute_url }}"
-     class="gallery-50" />
+     class="gallery gallery-50" />
 
 
 ### Electrical Components
 
 All of the electronic components used on this board can be found on [Digikey](https://www.digikey.com/). 
 
-[<i class="fas fa-file-excel"></i> Download as Spreadsheet]( {{ "assets/files/Ctrl-P_BOM.xls" | absolute_url }} ){: .btn .btn-green}
+[<i class="fas fa-file-excel"></i> Download Electronics BOM]( {{ "assets/files/Ctrl-P_Electronics.xls" | absolute_url }} ){: .btn .btn-green}
 
 
 | Part Description                                           | Digikey P/N         | Qty  | Price Each |
@@ -121,3 +121,31 @@ All of the electronic components used on this board can be found on [Digikey](ht
 | 2-pin Jumper                                               | S9001-ND            | 11   | $0.10      |
 | Crimp pins                                                 | WM2512-ND‎           | Lots | $0.09      |
 | Crip sockets                                               | ‎WM2517CT-ND‎         | Lots | $0.06      |
+
+
+## Mounting Components
+
+### Store-Bought Components
+All of the mounting components used on this board can be found on [McMaster-Carr](https://www.mcmaster.com/). 
+
+[<i class="fas fa-file-excel"></i> Download Mounting BOM]( {{ "assets/files/Ctrl-P_Mounting.xls" | absolute_url }} ){: .btn .btn-green}
+
+
+| Part Description                                           | McMaster P/N         | Qty  | Price Each |
+|:-----------------------------------------------------------|:--------------------|:----:|-----------:|
+| **Motor Drivers**                                          |                     |      |            |
+| Power Barrel Connector Jack 2.10mm ID, 5.50mm OD           | CP-059AH-ND         | 1    | $0.89      |
+| Slide Switch SPDT Through Hole                             | 679-1877-ND         | 1    | $4.39      |
+| N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3      | TN0104N3-G-ND       | 20   | $0.90      |
+|                                                            |                     |      |            |
+| **MCU Power**                                              |                     |      |            |
+| Teensy 3.5 32-Bit MCU Eval Board                           | 1568-1443-ND        | 1    | $26.25     |
+| DC-to-DC Converter, Input 8V - 36V, Output 5V 1A           | 102-5018-ND         | 1    | $2.96      |
+| Green 572nm LED Indication - Discrete 2.1V 1206            | 516-3233-1-ND       | 1    | $0.53      |
+| 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805               | RHM150AHCT-ND       | 1    | $0.17      |
+| 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805              | 311-4.70KCRCT-ND    | 2    | $0.10      |
+
+### Custom-Made Components
+In addition, I laser-cut a flat frame to place everything together in a neat package. 
+
+[<i class="fas fa-file-alt"></i> Download the DXF - Coming Soon]( {{ "assets/files/Ctrl-P_Mounting.xls" | absolute_url }} ){: .btn .btn-purple}
