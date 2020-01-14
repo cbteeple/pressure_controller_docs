@@ -98,7 +98,7 @@ Once running, use keyboard keys to move the pressure up and down.
 Build a pressure trajectory from a yaml file
 
 1. Create a trajectory setup file in the `traj_setup` folder.
-    * Trajectory setup files are "*.yaml*" files with a few specific fields (see examples in the `traj_setup` folder)
+    * Trajectory setup files are "*.yaml*" files with a few specific fields (see examples in the `traj_setup/example` folder)
     * Trajectory setup files must be stored in the `traj_setup` folder.
 2. `python build_traj.py [traj_profile]`
     * **traj_profile** - name of trajectory you want to build. It can include folders too.
