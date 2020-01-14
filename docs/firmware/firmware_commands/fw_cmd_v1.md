@@ -9,6 +9,9 @@ nav_order: 2
 
 # {{ page.title }}
 
+Stable
+{: .label .label-green .fs-5}
+
 
 1. TOC
 {:toc}

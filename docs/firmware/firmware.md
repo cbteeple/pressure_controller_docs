@@ -33,14 +33,23 @@ An object-oriented approach to doing pressure control. Hopefully things are modu
 ## Usage
 ### Settings Locations
 - Firmware is located in "**_pressure_control_firmware_**"
-- Harware configurations are located in the "**_config_**" folder
-- Sensor configurations are located in the "**_config/sensors_**" folder 
+- Harware configurations are located in the "**_config_**"" folder
+- Sensor configurations are located in the "**_config/sensors_lib.h_**"" file
 
+
+### Initialize the Onboard Memory (EEPROM)
+New!
+{: .label .label-purple }
+
+For each new MCU board, you need to initiatlize the onboard memory before installing the firmware.
+1. Navigate to "**_utilities/initialize_onboard_memory_**"
+2. Open "initialize_onboard_memory.ino" in the Arduino IDE
+3. Upload the program to the new MCU.
+4. You're done! You never need to do this again for that MCU.
 
 ### Install the Firmware on an MCU
 1. Open the firmware in the Arduino IDE.
 2. Choose a configuration file (in the "**config**" folder), where you set the # of valves, pins, etc.
-3. Change the number of valves in "**allSettings.h**" in the "**trajectories**" class _(sorry, this is suboptimal and will be fixed eventually)_
 4. Choose what type of communication you want to use
     - Arduino Mega: It's only capable of serial (no need to change any settings)
     - Teensy 3.x: You can select between serial vs. native USB (HID). Do this in the Arduino IDE's "**Tools**" >> "**USB Type**" menu.

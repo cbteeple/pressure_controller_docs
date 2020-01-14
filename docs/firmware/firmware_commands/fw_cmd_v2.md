@@ -9,6 +9,8 @@ nav_order: 1
 
 # {{ page.title }}
 
+New!
+{: .label .label-purple .fs-5 }
 
 1. TOC
 {:toc}
