@@ -54,7 +54,8 @@ config:
             - [4.0,     0, 0, 0, 20]
             - [5.0,    10, 12, 14, 16]
 
-        # The prefix and suffix are optional. If you don't want them, simply exclude them and the program will know what to do.
+        # The prefix and suffix are optional. 
+        # If you don't want them, simply exclude them and the program will know what to do.
         prefix:
             - [0.000,   0, 0, 0,  0]
             - [1.0,    10, 12, 14,  16]
