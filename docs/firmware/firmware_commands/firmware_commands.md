@@ -38,7 +38,7 @@ etc.
 ## Command Spec
 
 
-[v 2.0]({{"/firmware/firmware_commands/fw_cmd_v2" | absolute_url}}){: .btn .btn-primary}
-[v 1.0]({{"/firmware/firmware_commands/fw_cmd_v1" | absolute_url}}){: .btn}
+[v 2.0]({{ site.baseurl }}{% link docs/firmware/firmware_commands/fw_cmd_v2.md %}){: .btn .btn-primary}
+[v 1.0]({{ site.baseurl }}{% link docs/firmware/firmware_commands/fw_cmd_v1.md %}){: .btn}
 
 
