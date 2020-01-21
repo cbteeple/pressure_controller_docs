@@ -30,14 +30,14 @@ python plot_video_data.py planned_23_00/2020_01_20 diam23_angles0_30_base80_tip9
 
 Inputs:
 
-    - **data_folder** - the folder where your data is stored
-    - **filename** - the name of the tracked file family (_do not include the `_A.dat` part_) 
-    - _pickle_ (optional) - pickle the data once calculated (varients: -p, -s, pickle, save)
+- **data_folder** - the folder where your data is stored
+- **filename** - the name of the tracked file family (_do not include the `_A.dat` part_) 
+- _pickle_ (optional) - pickle the data once calculated (varients: -p, -s, pickle, save)
 
 Outputs:
 
-    - **Plot of the angle vs. time**
-    - **pickled data** if you told it to save that
+- **Plot of the angle vs. time**
+- **pickled data** if you told it to save that
 
 _Note: all output files are saved in the same folder as the data files._
 
