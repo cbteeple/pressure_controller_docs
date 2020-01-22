@@ -13,6 +13,10 @@ nav_order: 2
 
 ---
 
+## Use the plotting functions
+[Download the plotting package](https://github.com/cbteeple/soft-finger-characterization){: .btn .btn-primary}
+
+
 ## Get the object angle from video
 
 ### Track a video using Tracker
