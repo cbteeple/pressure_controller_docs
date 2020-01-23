@@ -41,6 +41,15 @@ New!
 |--|--|--
 |MAXP| [#]| Set the maximum pressure allowed. Pressures are clipped if outside this range when using the "SET" command, but not when loaded as part of a trajectory. (_used for the pressure watchdog_)
 |MINP| [#]| Set the minimum pressure allowed. Pressures are clipped if outside this range when using the "SET" command, but not when loaded as part of a trajectory.
+|MASTERP| [#]| If a master pressure sensor exists, use it as a watchdog (`bool`)
+||| 0 = inactive
+||| 1 = active
+|| [#0;#1] | 
+||| #0 = on/off (`bool`)
+||| #1 = pressure sensor data output on/off (`bool`)
+|MASTERMAXP| [#0;#1]| Set the maximum pressure before the master watchdog triggers, as well as the 
+||| #0 = maximum pressure threshold (`float`)
+||| #1 = minimum time above the threshold before watchdog triggers (`int`)
 
 
 ## Control Channels
