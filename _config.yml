@@ -66,7 +66,12 @@ aux_links:
     'ROS Driver <i style="font-size:2.0em;" class="fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_control_cbt"
 # Color scheme currently only supports "dark" or nil (default)
-# color_scheme: "dark"
+color_scheme: "nil"
+
+# code color scheme (default, monokai)
+code_color_scheme:
+  scheme: monokai
+  override_site_theme: false
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
