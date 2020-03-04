@@ -34,6 +34,14 @@ New!
 |||2 = pressure trajectory following
 |||3 = pressure control with ramp from current setpoint to new one
 |TIME| [#] | Set the desired loop time for measurement outputs (in ms) (`int`)
+|UNITS| [#]| Set the pressure units you want to use (`int`)
+||| 0 = psi
+||| 1 = kPa
+||| 2 = bar
+||| 3 = atm
+|| [#0;#1] | Set the input and output units separately
+||| #0 = input units: used for setting setpoints and loading trajectories (`int`)
+||| #1 = output units: used for displaying data (`bool`)
 
 ## Safety Settings
 
