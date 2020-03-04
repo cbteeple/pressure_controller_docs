@@ -43,6 +43,8 @@ New!
 ||| #0 = input units: used for setting setpoints and loading trajectories (`int`)
 ||| #1 = output units: used for displaying data (`bool`)
 
+_NOTE: Units are converted at the command/output level. Pressures are always internally represented in psi regaurdless of what the units are set to._
+
 ## Safety Settings
 
 |Command|Arguments|Description
