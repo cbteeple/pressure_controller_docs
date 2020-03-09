@@ -39,7 +39,7 @@ font_awesome: "fas fa-laptop-code"
 
 
 ### Run Python Scripts
-Run python scripts in a terminal (linux/mac) or [through an IDE](python-tips) (windows)
+Run python scripts in a terminal (linux/mac) or [through an IDE]({{ site.baseurl }}{% link docs/top-level/python-tips.md %}) (windows)
 
 
 
