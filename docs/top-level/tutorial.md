@@ -167,5 +167,5 @@ Comming Soon!
 
 We have witten a python script to parse this data and pickle it. We're working on cleaning it up, and we'll add a link to it once we've pushed it to GitHub.
 
-The [ROS driver]({{ site.baseurl }}{% link docs/ros-driver.md %}) for this pressure control system already handles incomming data, so if you're already using ROS, you can try that. 
+The [ROS driver]({{ site.baseurl }}{% link docs/ros-driver/ros-driver.md %}) for this pressure control system already handles incomming data, so if you're already using ROS, you can try that. 
 
