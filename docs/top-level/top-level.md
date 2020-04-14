@@ -25,6 +25,7 @@ font_awesome: "fas fa-laptop-code"
     - [matplotlib](https://matplotlib.org/) (`pip install matplotlib`)
     - [pynput](https://pypi.org/project/pynput/) (`pip install pynput`)
     - [yaml](https://pyyaml.org/wiki/PyYAMLDocumentation) (`pip install pyyaml`)
+    - [sorotraj](https://pypi.org/project/sorotraj/) (`pip install sorotraj`)
 
 ## Installation
 [Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn .btn-primary}
