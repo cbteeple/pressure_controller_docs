@@ -68,6 +68,8 @@ This board is designed to be relatively space-efficient while still being modula
      src="{{ "assets/img/board_rev3-4_bot.png" | absolute_url }}"
      class="gallery gallery-50" />
 
+![The populated PCB]({{ "assets/img/board_rev3-4_populated.jpg" | absolute_url }})
+
 
 ### Electrical Components
 

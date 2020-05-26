@@ -14,7 +14,7 @@ font_awesome: "fas fa-home"
 
 By [Clark Teeple](http://www.cbteeple.com)
 
-![The world is just within reach!]({{ "assets/img/pressure_controller.jpg" | absolute_url }})
+![The world is just within reach!]({{ "assets/img/pressure_controller_v3-0.jpg" | absolute_url }})
 
 {{ site.description }}
 
