@@ -150,3 +150,32 @@ All of the mounting components used on this board can be found on [McMaster-Carr
 In addition, I laser-cut a flat frame to place everything together in a neat package. 
 
 [<i class="fas fa-file-alt"></i> Download the DXF - Coming Soon]( {{ "assets/files/Ctrl-P_Mounting.xls" | absolute_url }} ){: .btn .btn-purple}
+
+
+## Issues
+There are many issues (both anticipated and unanticipated) with the current PCB Design (v3.4).
+
+Major
+{: .label .label-red}
+
+- Pressure sensors coming off both sides cause mounting and soldering issues.
+	- makes the board hard to solder (end up soldering underneath other sensors)
+	- makes the board hard to mount (needs 40mm standoffs)
+- Onboard 5V regulator can't handle spikes in current
+	- If you turn on the 24V input switch, turn it off, and turn it on again, the 5V regulator will burn itself up.
+	- I just had to removed it, so the Teensy is can ONLY be powered through the USB port.
+- Mounting holes are crowded and not shielded
+	- I placed components too close to the mounting holes
+	- It's hard to get bolts thought the holes without shorting components, so I ended up using plastic screws (bad solution)
+
+Minor
+{: .label .label-yellow}
+
+- Extra headers for overriding onboard pressure sensors don't fit
+	- headers are poorly placed - interfere with sensor seating and mounting
+	- Headers are hacky
+- "Robot" and "Ext" headers don't fit the Molex connectors they were designed for.
+	- I just mis-calculated the width of these connectors
+- USB port for teensy isn't supported and has poor placement
+	- the USB cord just hangs off the teensy board in the middle of the main board
+	- usb coard also covers the power switch.
