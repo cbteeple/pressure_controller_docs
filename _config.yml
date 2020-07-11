@@ -61,7 +61,7 @@ search_enabled: true
 
 # Aux links for the upper right navigation
 aux_links:
-    'Firmware/Python <i style="font-size:2.0em;" class="fab fa-github"></i>':
+    'Firmware <i style="font-size:2.0em;" class="fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_controller"
     'Python Interface <i style="font-size:2.0em;" class="fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_control_interface"
