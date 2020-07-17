@@ -13,6 +13,7 @@ nav_order: 2
 
 ---
 
+## Check out the example
 The data from the pressure control system is saved in a nonstandard format and needs to be parsed before you can use it. As part of the python interface, there are some utillities designed for parsing data and saving the parsed data.
 
 Take a look at the "_plot_data.py_" example in the Python Interface for more details (copied here for ease).
@@ -43,3 +44,12 @@ for _, filename_rel, full_filename in filenames:
                 time_from_zero = True)
     parser.save_data(filename_rel.replace('.txt','.pkl'))
 ```
+
+## Results of plotting script with real data
+
+<img alt="We can graph setpoints and measured pressures"
+     src="{{ "assets/img/pressure_graph0.png" | absolute_url }}"
+     class="gallery gallery-50" />
+<img alt="We can graph setpoints and measured pressures"
+     src="{{ "assets/img/pressure_graph1.png" | absolute_url }}"
+     class="gallery gallery-50" />
