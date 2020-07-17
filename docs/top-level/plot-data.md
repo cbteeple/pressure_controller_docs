@@ -13,44 +13,33 @@ nav_order: 2
 
 ---
 
-## Use the plotting functions
-[Download the plotting package](https://github.com/cbteeple/soft-finger-characterization){: .btn .btn-primary}
+The data form the pressure control system is saved in a nonstandard format and needs to be parsed before you can use it. As part of the python interface, there are some utillities designed for parsing data and saving the parsed data.
 
-
-## Get the object angle from video
-
-### Track a video using Tracker
-I use [Tracker](https://physlets.org/tracker/), an open source video tracking software. It's pretty bad, but it gets the job done for free!
-
-Makes sure to save the raw data from two tracking points, using  `_A.dat` and `_B.dat` at the end of the files.
-
-### Plot the object angle from the raw image tracking data
-
-Use "**plot_video_data.py**"
+Take a look at the "_plot_data.py_" example in the Python Interface for more details (copied here for ease).
 
 ```python
-python plot_video_data.py planned_23_00/2020_01_20 diam23_angles0_30_base80_tip92_0006
-```
+import os
+from utils.parse_data import DataParser
+from utils.get_files import get_files_recursively
+from utils.get_files import get_save_path
 
-Inputs:
 
-- **data_folder** - the folder where your data is stored
-- **filename** - the name of the tracked file family (_do not include the `_A.dat` part_) 
-- _pickle_ (optional) - pickle the data once calculated (varients: -p, -s, pickle, save)
+# Get the desired save path from save_paths.yaml
+base_path = get_save_path(which='default')
 
-Outputs:
+# Set the folder to use within the base data folder
+folder = 'example'
 
-- **Plot of the angle vs. time**
-- **pickled data** if you told it to save that
+# Parse and graph the data, then save it
+data_path=os.path.join(base_path, folder)
+filenames = get_files_recursively(data_path, filter_extension='.txt')
 
-_Note: all output files are saved in the same folder as the data files._
-
-### Usage Examples:
-
-- folder: *planned_23_00* >> *2020_01_20*
-- file: *diam23_angles0_30_base80_tip92_0006*
-- pickle: yes
-
-```python
-python plot_video_data.py planned_23_00/2020_01_20 diam23_angles0_30_base80_tip92_0006 -p
+parser = DataParser(data_path = data_path)
+for _, filename_rel, full_filename in filenames:
+    print(filename_rel)
+    parser.parse_data(filename_rel)
+    parser.plot(filename = filename_rel.replace('.txt','.png'),
+                ylabel="Pressure (psi)",
+                time_from_zero = True)
+    parser.save_data(filename_rel.replace('.txt','.pkl'))
 ```
