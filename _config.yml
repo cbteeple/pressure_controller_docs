@@ -103,6 +103,7 @@ color_scheme: "light-orange"
 # code color scheme (default, monokai)
 code_color_scheme: "monokai-light"
 
+# Nice visual tweaks
 use_font_awesome: True
 image_lightbox: True
 
