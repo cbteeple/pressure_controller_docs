@@ -86,6 +86,7 @@ search:
   button: false
 
 nav_sort: default # Capital letters sorted before lowercase
+nav_bullets: children # all, children
 
 # Aux links for the upper right navigation
 aux_links:
