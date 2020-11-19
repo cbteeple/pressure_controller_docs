@@ -104,6 +104,7 @@ color_scheme: "light-orange"
 code_color_scheme: "monokai-light"
 
 use_font_awesome: True
+image_lightbox: True
 
 back_to_top: false
 gh_edit_link: false # show or hide edit this page link
