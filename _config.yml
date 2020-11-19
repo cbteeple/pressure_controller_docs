@@ -54,7 +54,7 @@ kramdown:
 use_font_awesome: true
 
 # Open external links in a new tab (options are "new-tab" or default )
-external_links: new-tab
+external_links_new_tab: true
 
 # Enable or disable the site search
 search_enabled: true
@@ -68,12 +68,14 @@ aux_links:
     'ROS Driver <i style="font-size:2.0em;" class="fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_control_cbt"
 # Color scheme currently only supports "dark" or nil (default)
-color_scheme: "nil"
+color_scheme: "light"
 
 # code color scheme (default, monokai)
-code_color_scheme:
-  scheme: monokai
-  override_site_theme: false
+code_color_scheme: "monokai-light"
+
+
+back_to_top: false
+gh_edit_link: false # show or hide edit this page link
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
