@@ -90,11 +90,11 @@ nav_bullets: children # all, children
 
 # Aux links for the upper right navigation
 aux_links:
-    'Firmware <i style="font-size:2.0em;" class="fab fa-github"></i>':
+    'Firmware <i class="aux-icon fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_controller"
-    'Python Interface <i style="font-size:2.0em;" class="fab fa-github"></i>':
+    'Python Interface <i class="aux-icon fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_control_interface"
-    'ROS Driver <i style="font-size:2.0em;" class="fab fa-github"></i>':
+    'ROS Driver <i class="aux-icon fab fa-github"></i>':
       - "//github.com/cbteeple/pressure_control_cbt"
 
 # Color scheme currently only supports "dark" or nil (default)
