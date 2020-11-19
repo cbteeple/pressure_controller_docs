@@ -85,6 +85,7 @@ search:
   # Supports true or false (default)
   button: false
 
+# Nav bar tweaks
 nav_sort: default # Capital letters sorted before lowercase
 nav_bullets: children # all, children
 
