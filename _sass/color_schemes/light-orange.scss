@@ -22,26 +22,9 @@ $content-line-height: 1.25;
 $body-heading-line-height: 1.15;
 
 
-
-
-$body-background-color: $grey-dk-300;
-$sidebar-color: $grey-dk-300;
-$sidebar-hover-color: lighten($sidebar-color,3%);
-$border-color: $grey-dk-200;
-
-$body-text-color: $grey-lt-300;
-$body-heading-color: $grey-lt-000;
-$nav-child-link-color: $grey-dk-000;
-$search-result-preview-color: $grey-dk-000;
-
-$link-color: $base-color;
-$btn-primary-color: $base-color;
-$base-button-color: $grey-dk-250;
-
-$code-background-color: $grey-dk-250;
-$search-background-color: $grey-dk-250;
-$table-background-color: $grey-dk-250;
-$feedback-color: darken($sidebar-color, 3%);
+// nav bar hovering
+$sidebar-color: $grey-lt-000;
+$sidebar-hover-color: darken($sidebar-color,3%);
 
 
 
