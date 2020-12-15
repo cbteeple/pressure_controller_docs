@@ -8,3 +8,5 @@ vendor/**
 *.gem
 Gemfile.lock
 node_modules
+
+.vscode
