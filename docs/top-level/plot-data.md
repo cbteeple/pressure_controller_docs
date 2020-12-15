@@ -3,10 +3,12 @@ layout: default
 title: Plotting Data
 parent: Python Interface
 permalink: /top-level/plotting-data
-nav_order: 2
+nav_order: 3
+font_awesome: "fas fa-chart-bar"
 ---
 
-# {{ page.title }}
+
+# <i class="{{ page.font_awesome }}"></i> {{ page.title }}
 
 1. TOC
 {:toc}

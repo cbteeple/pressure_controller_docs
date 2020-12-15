@@ -4,6 +4,7 @@ title: Python Tips
 parent: Python Interface
 permalink: /top-level/python-tips
 nav_order: 99
+font_awesome: "fab fa-python"
 ---
 
 # <i class="{{ page.font_awesome }}"></i> {{ page.title }}

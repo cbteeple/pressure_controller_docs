@@ -3,10 +3,11 @@ layout: default
 title: Tutorial
 parent: Python Interface
 permalink: /top-level/tutorial
-nav_order: 1
+nav_order: 2
+font_awesome: "fas fa-hands-helping"
 ---
 
-# {{ page.title }}
+# <i class="{{ page.font_awesome }}"></i> {{ page.title }}
 
 1. TOC
 {:toc}
