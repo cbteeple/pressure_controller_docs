@@ -21,6 +21,12 @@ By [Clark Teeple](http://www.cbteeple.com)
 This work was done as part of a research project at the [Harvard Microrobotics Lab](https://www.micro.seas.harvard.edu). Our goal was to build a system capable of smooth control of pressure to drive our custom soft robotic hands.
 
 ### Publications using this system:
-- "[A Dexterous Soft Robotic Hand for Delicate In-Hand Manipulation](https://ieeexplore.ieee.org/document/9134855)," S. Abondance, C.B. Teeple, and R.J. Wood, IEEE Robotics and Automation Letters, 2020
-- "[Multi-Segment Soft Robotic Fingers Enable Robust Precision Grasping](https://journals.sagepub.com/doi/10.1177/0278364920910465)," C.B. Teeple, T.N. Koutros, M.A. Graule, and R.J. Wood, International Journal of Robotics Research, 2020
-- "[Ultragentle Manipulation of Delicate Structures using a Soft Robotic Gripper](https://robotics.sciencemag.org/content/4/33/eaax5425)," N.R. Sinatra, C.B. Teeple, D.M. Vogt, K.K. Parker, D.F. Gruber, and R.J. Wood, Science Robotics, 2019 (_uses a version modified for use with water pressure_)
+- "**A Dexterous Soft Robotic Hand for Delicate In-Hand Manipulation**," S. Abondance, C.B. Teeple, and R.J. Wood, IEEE Robotics and Automation Letters, 2020
+
+    [<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9134855){: .btn .btn-outline} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/abondance2020_dexterous.pdf){: .btn .btn-outline}
+- "**Multi-Segment Soft Robotic Fingers Enable Robust Precision Grasping**," C.B. Teeple, T.N. Koutros, M.A. Graule, and R.J. Wood, International Journal of Robotics Research, 2020
+
+    [<i class="fas fa-link"></i> Link ](https://journals.sagepub.com/doi/10.1177/0278364920910465){: .btn .btn-outline} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/teeple2020_two_seg_fingers.pdf){: .btn .btn-outline}
+- "**Ultragentle Manipulation of Delicate Structures using a Soft Robotic Gripper**," N.R. Sinatra, C.B. Teeple, D.M. Vogt, K.K. Parker, D.F. Gruber, and R.J. Wood, Science Robotics, 2019 (_uses a version modified for use with water pressure_)
+
+    [<i class="fas fa-link"></i> Link ](https://robotics.sciencemag.org/content/4/33/eaax5425){: .btn .btn-outline} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/sinatra2019_ultragentle_soft_gripper.pdf){: .btn .btn-outline}
