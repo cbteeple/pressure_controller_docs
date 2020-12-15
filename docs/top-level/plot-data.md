@@ -10,10 +10,21 @@ font_awesome: "fas fa-chart-bar"
 
 # <i class="{{ page.font_awesome }}"></i> {{ page.title }}
 
+Obselete
+{: .label .label-red .fs-5}
+
+The newest version of this interface parses data directly, producing a nicely formatted CSV.
+{: .fs-5}
+
+---
+
 1. TOC
 {:toc}
 
 ---
+
+
+
 
 ## Check out the example
 The data from the pressure control system is saved in a nonstandard format and needs to be parsed before you can use it. As part of the python interface, there are some utillities designed for parsing data and saving the parsed data.
