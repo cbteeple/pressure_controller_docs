@@ -9,10 +9,19 @@ font_awesome: "fas fa-hands-helping"
 
 # <i class="{{ page.font_awesome }}"></i> {{ page.title }}
 
+NEW!
+{: .label .label-purple .fs-5}
+
+Works with multi-device setup!
+{: .fs-6}
+
+---
+
 1. TOC
 {:toc}
 
 ---
+
 
 _Run these commands in a linux terminal. If you are using an IPython console (like in spyder), replace `python` with `run` at the beginning of commands._
 
@@ -72,6 +81,11 @@ config:
 ![Plot of the "setpoint_traj_demo" trajectory]({{ "assets/img/setpoint_traj_demo_plot.png" | absolute_url }})
 
 
+
+## Set up your hardware
+Follow the instructions in [Hardware Setup]({{ site.baseurl }}{% link docs/top-level/setup.md %}).
+
+Once configured, you can pretend you have only one pressure controller with **_n_** channels. If you have multiple devices configured together, then you treat them as one controller with the total number of channels of all devices combined. This python interface does the hard work of splitting up commands to all the controllers, so for all intents and purposes, you just pretend you have one controller with a bunch of channels.
 
 
 ## Configure the pressure controller.
@@ -144,29 +158,17 @@ Execute the pressure trajectory you just sent
 * **num_cycles** - Loop the main part of the trajectory this number of times. (_Set to -1 for endless loop_)
 * **speed_factor** - Speed-stretch a trajectory (_larger speed factor runs the trajectory faster_)
 
-This command also saves the incomming data from the pressure controller in a tab-separated list:
+This command also saves the incomming data from the pressure controller in a csv:
 ```
-_TIME: 20
-
-[time in ms] [line data type] [p1] [p2] ... [pn]
-10293848    0   0.00    0.00    0.00    0.00
-10293848    1   0.24    0.15    -0.05   0.19
-10293868    0   0.00    0.00    0.00    0.00
-10293868    1   0.21    0.17    -0.12   0.05
+[time in ms] [setpoints  p1 ...... pn]  [measured  p1 ....... pn]  [input pressure] [command echos]
+3848,         0.00, 0.00, 0.00, 0.00,    0.10, 0.05, 0.03, -0.07,   30.00,           , ,
+3858,         0.50, 0.50, 0.50, 0.50,    0.45, 0.51, 0.46, 0.39,    29.50,           , ,
+3868,         , , , ,                    , , , ,                    ,                time, 10
 ```
+_Spaces are shown in this example for clarity, but in real csv's there are no spaces._
 
-- Command echos always have an underscore before them, so you can filter this out when you parse the data
-- **line data type** - 0 for setpoints, 1 for actual measurements.
-    - We have to send the data in separate messages to keep messages from getting too long.
-    - The "**time in ms**" will always match exactly for each point in time.
-- For pressures **p1,...pn**, data will always be returned from all channels, even if they are turned off.
+- For pressures, data will always be returned from all channels, even if they are turned off in the configuration.
+- If multiple controllers are configured together, one file per hardware device is created, with the suffix **"_00X"** appended to the output filename for each device.
+- Data for all devices is automatically synced.
 
-
-### Parse raw data
-New!
-{: .label .label-green .fs-4 }
-
-Checkout the "[Plotting Data]({{ site.baseurl }}{% link docs/top-level/plot-data.md %} )" page for details
-
-The [ROS driver]({{ site.baseurl }}{% link docs/ros-driver/ros-driver.md %}) for this pressure control system already handles incomming data, so if you're already using ROS, you can try that. 
 
