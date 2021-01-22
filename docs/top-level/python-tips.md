@@ -19,7 +19,7 @@ This is the standard way to run this control interface.
 	- On Windows: Use [Anaconda](https://www.anaconda.com/)
 2. Make a new python virtual environment (call it "ctrl_p")
 	- On Ubuntu: use [venv](https://docs.python.org/3/library/venv.html) `sudo apt-get install python3-venv`
-	- On Windows: do this inside Anaconda
+	- On Windows: do this inside Anaconda ([instructions](https://docs.anaconda.com/anaconda/navigator/tutorials/manage-environments/))
 
 3. Clone the [python interface](https://github.com/cbteeple/pressure_control_interface) code (you can put it anywhere you want)
 4. Install [VSCode](https://code.visualstudio.com/)

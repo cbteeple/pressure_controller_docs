@@ -18,6 +18,7 @@ font_awesome: "fas fa-laptop-code"
 - An arduino-compatible microcontroller (confirmed working on Arduino Mega and Teensy 3.5)
 
 ### Software
+- Python 3 (use python 3.6 or newer)
 - Various python libraries:
     - [scipy](https://www.scipy.org/) (`pip install scipy`)
     - [numpy](https://www.numpy.org/) (`pip install numpy`)
