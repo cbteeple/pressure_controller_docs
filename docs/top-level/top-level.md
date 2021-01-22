@@ -28,7 +28,7 @@ font_awesome: "fas fa-laptop-code"
     - [sorotraj](https://pypi.org/project/sorotraj/) (`pip install sorotraj`)
 
 ## Installation
-[Download the Firmware / Python Interface](https://github.com/cbteeple/pressure_controller){: .btn .btn-primary}
+[Download the Python Interface](https://github.com/cbteeple/pressure_control_interface){: .btn .btn-primary}
 
 ## Usage
 
