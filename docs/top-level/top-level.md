@@ -28,6 +28,14 @@ font_awesome: "fas fa-laptop-code"
     - [sorotraj](https://pypi.org/project/sorotraj/) (`pip install sorotraj`)
 
 ## Installation
+
+### Set up a python IDE
+Follow the instructions in the [Python Tips]({{ site.baseurl }}{% link docs/top-level/python-tips.md %}) page.
+
+
+### Clone the code
+Already have an IDE you like (like [VSCode](https://code.visualstudio.com/) or [PyCharm](https://www.jetbrains.com/pycharm/))?
+
 [Download the Python Interface](https://github.com/cbteeple/pressure_control_interface){: .btn .btn-primary}
 
 ## Usage
@@ -40,8 +48,7 @@ font_awesome: "fas fa-laptop-code"
 
 
 ### Run Python Scripts
-Run python scripts in a terminal (linux/mac) or [through an IDE]({{ site.baseurl }}{% link docs/top-level/python-tips.md %}) (windows)
-
+Run python scripts through the terminal: `python file_name.py [arg1] [arg2]`
 
 
 
