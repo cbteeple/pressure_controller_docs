@@ -19,14 +19,7 @@ font_awesome: "fas fa-laptop-code"
 
 ### Software
 - Python 3 (use python 3.6 or newer)
-- Various python libraries:
-    - [scipy](https://www.scipy.org/) (`pip install scipy`)
-    - [numpy](https://www.numpy.org/) (`pip install numpy`)
-    - [numbers](https://docs.python.org/2/library/numbers.html) (`pip install numbers`)
-    - [matplotlib](https://matplotlib.org/) (`pip install matplotlib`)
-    - [pynput](https://pypi.org/project/pynput/) (`pip install pynput`)
-    - [yaml](https://pyyaml.org/wiki/PyYAMLDocumentation) (`pip install pyyaml`)
-    - [sorotraj](https://pypi.org/project/sorotraj/) (`pip install sorotraj`)
+- Various python libraries, specified in `requirements.txt`: `pip install -r requirements.txt`
 
 ## Installation
 
