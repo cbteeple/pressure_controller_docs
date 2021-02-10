@@ -19,7 +19,7 @@ font_awesome: "fas fa-laptop-code"
 
 ### Software
 - Python 3 (use python 3.6 or newer)
-- Various python libraries, specified in `requirements.txt`: `pip install -r requirements.txt`
+- Various python libraries, specified in _**requirements.txt**_: `pip install -r requirements.txt`
 
 ## Installation
 
