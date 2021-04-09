@@ -34,9 +34,9 @@ jobs:
       with:
         personal_token: ${{ secrets.PERSONAL_TOKEN }}
         src_branch: ${{ steps.extract_branch.outputs.branch }}
-        src_path: ""
+        src_path: "/"
         dst_branch: gh-pages
-        dst_path: ""
+        dst_path: "/"
         dst_owner: cbteeple
         dst_repo_name: pressure_controller_docs_${{ steps.extract_branch.outputs.branch }}
 
