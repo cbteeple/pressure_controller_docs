@@ -1,0 +1,26 @@
+name: Deploy Site
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+    - '.github/**' # Ignore changes towards the .github directory
+    branches-ignore:
+    - master # Only trigger on other branches besides master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - name: Perform Checkout
+      uses: actions/checkout@v2
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./versions/${{ steps.extract_branch.outputs.branch }}
+        publish_branch: master
