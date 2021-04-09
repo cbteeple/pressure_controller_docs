@@ -1,5 +1,4 @@
-name: Deploy Site
-
+name: Copy To Repo
 on:
   workflow_dispatch:
   push:
