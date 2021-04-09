@@ -18,9 +18,20 @@ jobs:
       id: extract_branch
     - name: Perform Checkout
       uses: actions/checkout@v2
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Copy files to gh_pages
+      uses: andstor/copycat-action@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./versions/${{ steps.extract_branch.outputs.branch }}
-        publish_branch: gh-pages
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
+        src_branch: ${{ steps.extract_branch.outputs.branch }}
+        src_path: /docs/
+        dst_branch: gh-pages
+        dst_path: /versions/
+        dst_owner: cbteeple
+        dst_repo_name: pressure_controller_docs
+
+    #- name: Deploy
+    #  uses: peaceiris/actions-gh-pages@v3
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
+    #    publish_dir: ./versions/${{ steps.extract_branch.outputs.branch }}
+    #    publish_branch: gh-pages
