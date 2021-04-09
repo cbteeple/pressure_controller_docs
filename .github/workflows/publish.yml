@@ -25,7 +25,7 @@ jobs:
         src_branch: ${{ steps.extract_branch.outputs.branch }}
         src_path: /docs/
         dst_branch: gh-pages
-        dst_path: /versions/
+        dst_path: /versions/${{ steps.extract_branch.outputs.branch }}/
         dst_owner: cbteeple
         dst_repo_name: pressure_controller_docs
 
