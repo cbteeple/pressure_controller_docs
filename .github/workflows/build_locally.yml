@@ -21,7 +21,7 @@ jobs:
       uses: helaili/jekyll-action@master
       with:
         target_branch: gh-pages
-        target_path: /latest
+        #target_path: /
         keep_history: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
