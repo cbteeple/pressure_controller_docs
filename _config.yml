@@ -21,6 +21,10 @@ description: >- # this means to ignore newlines until "baseurl:"
   A custom pneumatic control system featuring smooth control of pressure at a high bandwidth.
 baseurl: "/v2.0" # the subpath of your site, e.g. /blog
 url: "" #"https://cbteeple.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+versions:
+  available: ["latest","v2.1", "v2.0", "v1.0" ]
+
 twitter_username: cbteeple
 github_username:  cbteeple
 
