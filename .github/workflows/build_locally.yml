@@ -8,28 +8,8 @@ on:
     branches-ignore:
     # Only trigger on other branches besides gh-pages
     - gh-pages
-    - master
 
 jobs:
-  publish-this-version:
-    runs-on: ubuntu-latest
-    steps:
-    # Get the name of the current branch
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ steps.extract_branch.outputs.branch }}
-    - name: Run with dest path
-      uses: helaili/jekyll-action@v2
-      with:
-        target_branch: gh-pages
-        target_path: /versions/${{ steps.extract_branch.outputs.branch }}
-        keep_history: true
-        token: ${{ secrets.GITHUB_TOKEN }}
-
   publish-latest-version:
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +18,7 @@ jobs:
       with:
         ref: master
     - name: Run with dest path
-      uses: helaili/jekyll-action@v2
+      uses: helaili/jekyll-action@master
       with:
         target_branch: gh-pages
         target_path: /
