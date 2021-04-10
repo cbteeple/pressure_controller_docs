@@ -23,7 +23,6 @@ baseurl: "/latest" # the subpath of your site, e.g. /blog
 url: "" #"https://cbteeple.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 versions:
   available: ["latest","v2.1", "v2.0", "v1.0" ]
-  current: "latest"
 
 twitter_username: cbteeple
 github_username:  cbteeple
