@@ -30,21 +30,6 @@ jobs:
         keep_history: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
-  publish-latest-version:
-    runs-on: ubuntu-latest
-    steps:
-    # Get the name of the current branch
-    - uses: actions/checkout@v2
-      with:
-        ref: master
-    - name: Run with dest path
-      uses: helaili/jekyll-action@v2
-      with:
-        target_branch: gh-pages
-        target_path: /
-        keep_history: true
-        token: ${{ secrets.GITHUB_TOKEN }}
-
 
   # build:
   #   runs-on: ubuntu-latest
