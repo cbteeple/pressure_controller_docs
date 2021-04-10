@@ -8,6 +8,7 @@ on:
     branches-ignore:
     # Only trigger on other branches besides gh-pages
     - gh-pages
+    - master
 
 jobs:
   publish-this-version:
@@ -27,7 +28,7 @@ jobs:
         target_branch: gh-pages
         target_path: /versions/${{ steps.extract_branch.outputs.branch }}
         keep_history: true
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-latest-version:
     runs-on: ubuntu-latest
@@ -42,7 +43,7 @@ jobs:
         target_branch: gh-pages
         target_path: /
         keep_history: true
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
 
   # build:
