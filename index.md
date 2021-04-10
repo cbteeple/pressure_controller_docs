@@ -10,7 +10,7 @@ font_awesome: "fas fa-home"
 ---
 
 <!-- # {{ site.title }} -->
-# Ctrl-P: Control Pressure
+# Ctrl-P: Control Pressure ({{ site.baseurl }})
 
 By [Clark Teeple](http://www.cbteeple.com)
 
