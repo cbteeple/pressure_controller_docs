@@ -22,7 +22,7 @@ jobs:
       with:
         ref: ${{ steps.extract_branch.outputs.branch }}
     - name: Run with dest path
-      uses: helaili/jekyll-build@v2
+      uses: helaili/jekyll-action@v2
       with:
         target_branch: gh-pages
         target_path: /versions/${{ steps.extract_branch.outputs.branch }}
@@ -37,7 +37,7 @@ jobs:
       with:
         ref: master
     - name: Run with dest path
-      uses: helaili/jekyll-build@v2
+      uses: helaili/jekyll-action@v2
       with:
         target_branch: gh-pages
         target_path: /
