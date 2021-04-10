@@ -1,0 +1,94 @@
+name: Deploy Versions
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+    - '.github/**' # Ignore changes towards the .github directory
+    branches-ignore:
+    # Only trigger on other branches besides gh-pages
+    - gh-pages
+
+jobs:
+  publish-this-version:
+    runs-on: ubuntu-latest
+    steps:
+    # Get the name of the current branch
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ steps.extract_branch.outputs.branch }}
+    - name: Run with dest path
+      uses: helaili/jekyll-build@v2
+      with:
+        target_branch: gh-pages
+        target_path: /versions/${{ steps.extract_branch.outputs.branch }}
+        keep_history: true
+        token: ${{ secrets.PERSONAL_TOKEN }}
+
+  publish-latest-version:
+    runs-on: ubuntu-latest
+    steps:
+    # Get the name of the current branch
+    - uses: actions/checkout@v2
+      with:
+        ref: master
+    - name: Run with dest path
+      uses: helaili/jekyll-build@v2
+      with:
+        target_branch: gh-pages
+        target_path: /
+        keep_history: true
+        token: ${{ secrets.PERSONAL_TOKEN }}
+
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   # Get the name of the current branch
+  #   - name: Extract branch name
+  #     shell: bash
+  #     run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+  #     id: extract_branch
+  #   # Copy files from the current branch to the build branch
+  #   - name: Copy files to build branch
+  #     uses: andstor/copycat-action@v3
+  #     with:
+  #       personal_token: ${{ secrets.PERSONAL_TOKEN }}
+  #       src_branch: ${{ steps.extract_branch.outputs.branch }}
+  #       src_path: /
+  #       dst_branch: ${{ steps.extract_branch.outputs.branch }}-build
+  #       dst_path: /
+  #       dst_owner: cbteeple
+  #       dst_repo_name: pressure_controller_docs
+  #       commit_message: Copied new files from ${{ steps.extract_branch.outputs.branch }} to build
+
+  #   # Check out the build branch for this version
+  #   - name: "Checkout the build branch"
+  #     uses: actions/checkout@v2
+  #       with:
+  #         ref: ${{ steps.extract_branch.outputs.branch }}-build
+  #         clean: false
+  #   # Build the site with Jekyll
+  #   uses: helaili/jekyll-action@v2
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         target_branch: gh-pages
+  #         target_path: /versions/${{ steps.extract_branch.outputs.branch }}/
+
+  #   # Copy the _site folder to the gh-pages branch    
+  #   - name: Copy files to gh_pages
+  #     uses: andstor/copycat-action@v3
+  #     with:
+  #       personal_token: ${{ secrets.PERSONAL_TOKEN }}
+  #       src_branch: ${{ steps.extract_branch.outputs.branch }}-build
+  #       src_path: /
+  #       dst_branch: gh-pages
+  #       dst_path: /versions/${{ steps.extract_branch.outputs.branch }}/
+  #       dst_owner: cbteeple
+  #       dst_repo_name: pressure_controller_docs
+  #       commit_message: Copying new build from ${{ steps.extract_branch.outputs.branch }}
+
