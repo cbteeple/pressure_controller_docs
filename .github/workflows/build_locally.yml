@@ -23,12 +23,9 @@ jobs:
       with:
         ref: ${{ steps.extract_branch.outputs.branch }}
     #Copy the _config.yml file from master   
-    #- name: Copy Master Config File
-    #  shell: bash
-    #  run: git checkout master -- _config.yml
-    - uses: Bhacaz/checkout-files@v1
-      with:
-        files: _config.yml
+    - name: Copy Master Config File
+      shell: bash
+      run: git checkout origin/master -- _config.yml
     # Run a shell command to fix the config file
     - name: Fix Config File with current branch name
       shell: bash
