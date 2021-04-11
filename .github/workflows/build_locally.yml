@@ -30,7 +30,7 @@ jobs:
         src_branch: master
         src_path: /_config.yml
         dst_branch: ${{ steps.extract_branch.outputs.branch }}
-        dst_path: /_config.yml
+        dst_path: /
         dst_owner: cbteeple
         dst_repo_name: pressure_controller_docs
         commit_message: Copying master config
