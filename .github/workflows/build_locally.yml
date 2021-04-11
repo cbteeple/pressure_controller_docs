@@ -26,8 +26,7 @@ jobs:
     #Copy the _config.yml file from master   
     - name: Copy Master Config File
       shell: bash
-      run: git branch
-           git checkout origin/master -- _config.yml
+      run: git checkout origin/master -- _config.yml
     # Run a shell command to fix the config file
     - name: Fix Config File with current branch name
       shell: bash
