@@ -24,16 +24,8 @@ jobs:
         ref: ${{ steps.extract_branch.outputs.branch }}
     #Copy the _config.yml file from master   
     - name: Copy Master Config File
-      uses: andstor/copycat-action@v3
-      with:
-        personal_token: ${{ secrets.PERSONAL_TOKEN }}
-        src_branch: master
-        src_path: /_config.yml
-        dst_branch: ${{ steps.extract_branch.outputs.branch }}
-        dst_path: /
-        dst_owner: cbteeple
-        dst_repo_name: pressure_controller_docs
-        commit_message: Copying master config
+      uses: shell
+      run: git restore --source master -- _config.yml
     # Run a shell command to fix the config file
     - name: Fix Config File with current branch name
       shell: bash
