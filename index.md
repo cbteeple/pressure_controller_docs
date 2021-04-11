@@ -9,7 +9,6 @@ permalink: '/'
 font_awesome: "fas fa-home"
 ---
 
-<!-- # {{ site.title }} -->
 {% assign curr_version = site.baseurl | remove: "/" %}
 # Ctrl-P: Control Pressure ({{ curr_version }})
 
