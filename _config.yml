@@ -13,13 +13,17 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+
+
+# NOTE: THIS WILL GET OVERWRITTEN BY THE CONFIG IN MASTER BRANCH...
+
 title: Ctrl-P
 owner: Clark Teeple
 email: cbteeple@g.harvard.edu
 
 description: >- # this means to ignore newlines until "baseurl:"
   A custom pneumatic control system featuring smooth control of pressure at a high bandwidth.
-baseurl: "/v2.0" # the subpath of your site, e.g. /blog
+baseurl: "/v2.1" # the subpath of your site, e.g. /blog
 url: "" #"https://cbteeple.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 versions:
