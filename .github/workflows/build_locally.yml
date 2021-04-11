@@ -37,7 +37,7 @@ jobs:
       with:
         target_branch: gh-pages
         target_path: /${{ steps.extract_branch.outputs.branch }}
-        keep_history: False
+        keep_history: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
 
