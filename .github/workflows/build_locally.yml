@@ -26,7 +26,7 @@ jobs:
     #- name: Copy Master Config File
     #  shell: bash
     #  run: git checkout master -- _config.yml
-    - use: Bhacaz/checkout-files
+    - uses: Bhacaz/checkout-files
       with:
         files: _config.yml
     # Run a shell command to fix the config file
