@@ -287,240 +287,276 @@
     "url": "/latest/top-level/python-tips",
     "relUrl": "/top-level/python-tips"
   },"48": {
+    "doc": "ROS Basics",
+    "title": "ROS Basics",
+    "content": ". | Install ROS | Make a Catkin Workspace | Installing ROS packages | ROS programming paradigms | Running Programs | . ",
+    "url": "/latest/ros-driver/ros-basics",
+    "relUrl": "/ros-driver/ros-basics"
+  },"49": {
+    "doc": "ROS Basics",
+    "title": "Install ROS",
+    "content": "Follow the instructions for installing ROS. You should match the version of ROS to the version of Ubuntu you are using. | Ubuntu 20.04 – ROS Noetic | Ubuntu 18.04 – ROS Melodic | Ubuntu 16.04 – ROS Kinetic | . For this package, you should use the “desktop-full” installation option. Setting up the terminal to play nicely with ROS . Add your ROS installation to your .bashrc file so it gets loaded when every time you open a new terminal: . echo \"source /opt/ros/noetic/setup.bash\" &gt;&gt; ~/.bashrc source ~/.bashrc . ",
+    "url": "/latest/ros-driver/ros-basics#install-ros",
+    "relUrl": "/ros-driver/ros-basics#install-ros"
+  },"50": {
+    "doc": "ROS Basics",
+    "title": "Make a Catkin Workspace",
+    "content": "Follow the tutorial for making a new workspace. I usually create my worskapces in the “Documents” folder rather than the home folder, so step 1 of the tuorial becomes: . mkdir -p ~/Documents/[WORKSPACE NAME]/src cd ~/Documents/[WORKSPACE NAME] catkin_make . Setting up the terminal to play nicely with your new workspace . Add your new catkin workspace to your .bashrc file so it gets loaded when every time you open a new terminal: . echo \"source /home/[USERNAME]/Documents/[WORKSPACE NAME]/devel/setup.bash\" &gt;&gt; ~/.bashrc source ~/.bashrc . where [USERNAME] is your computer’s username, and [WORKSPACE NAME] is the name of your workspace folder. ",
+    "url": "/latest/ros-driver/ros-basics#make-a-catkin-workspace",
+    "relUrl": "/ros-driver/ros-basics#make-a-catkin-workspace"
+  },"51": {
+    "doc": "ROS Basics",
+    "title": "Installing ROS packages",
+    "content": "ROS packages can be installed either using apt-get install if they have official packages (like MoveIt! or Gazebo), or built from source. The pressure controller package must be built from source: . | Clone the repo into the src directory in your catkin workspace. | To build packages, run catkin_make from your workspace folder. (Note: you must run this from the workspace folder, not any subfolders or anywhere else) | . ",
+    "url": "/latest/ros-driver/ros-basics#installing-ros-packages",
+    "relUrl": "/ros-driver/ros-basics#installing-ros-packages"
+  },"52": {
+    "doc": "ROS Basics",
+    "title": "ROS programming paradigms",
+    "content": "ROS has three main programming paradigms it uses to send/recieve messages and do things with them: . | Publishers/Subscribers: Send/Recieve messages to and from topics. | Publishers send data to topics. | Subscribers poll for new messages on particular topics, and perform something when a new message comes in. | . | Services: Event-based programs. These are blocking, so a service MUST finish before the program that called it can move forward. | These should only ever be used for executing tiny calculations or triggering short actions. | . | Action Servers: Event-based programs. A goal is sent to an action server by another node, and the prgram does something in response. This is non-blocking. | Most modern drivers for running real hardware use this type of node (including this package). | . | . Stitching ROS constructs together . Usually, you will have a few ROS objects in the same node, especialy if you are building a “controller” node. For example, maybe you want to send some control signals in response to the pose of an object to do visual servoing. To do this, you would: . | Use an existing driver for doing pose detection (maybe AprilTags with a camera) that publishes the pose of objects in one topic. | Use this pressure_controller_ros driver to control pneumatic pressure as your “control inputs”. This package uses an action server to send commands to the controller. | Build your own control node that: . | Subscribes to the “object pose” topic with a callback function. | Performs one step of your controller in response to each new pose estimate to obtain pressure setpoints from the pose error | Sends new pressure setpoints to the pressure controller by sending a new goal to the “command server” | . | . ",
+    "url": "/latest/ros-driver/ros-basics#ros-programming-paradigms",
+    "relUrl": "/ros-driver/ros-basics#ros-programming-paradigms"
+  },"53": {
+    "doc": "ROS Basics",
+    "title": "Running Programs",
+    "content": "ROS has two main ways to start nodes: . | rosrun starts a single node directly | roslaunch starts several nodes with parameters and arguments as prescribed in launch files. | . Typical ROS drivers (including this pressure controller dirver) actually require several nodes, so usually those are nicely packaged into launch files. You can also combine nodes from various packages into your own launch files to start combinations of different drivers and control nodes. This quickly gets messy though, so sometimes it’s easier and cleaner to just make your own bash files that you run instead. ",
+    "url": "/latest/ros-driver/ros-basics#running-programs",
+    "relUrl": "/ros-driver/ros-basics#running-programs"
+  },"54": {
     "doc": "ROS Driver",
     "title": " ROS Driver",
     "content": ". ",
     "url": "/latest/ros-driver#-ros-driver",
     "relUrl": "/ros-driver#-ros-driver"
-  },"49": {
+  },"55": {
     "doc": "ROS Driver",
     "title": "Dependencies",
     "content": "Hardware . | A pressure control system running my Ctrl-P firmware | A desktop computer running Linux (currently tested only in Ubuntu 18.04) | . Software . | ROS Melodic | The rqt_multiplot package for nice plot layouts and custom axes | Cython HID Library from Trezor: | The Python Control Interface package for this project | Various python libraries: . | All python dependencies are managed in the reqirements file. pip install -r requirements.txt | . | . ",
     "url": "/latest/ros-driver#dependencies",
     "relUrl": "/ros-driver#dependencies"
-  },"50": {
+  },"56": {
     "doc": "ROS Driver",
     "title": "Installation",
     "content": ". | Clone the Python Control Interface package to the src folder of your catkin workspace. | Clone this package to the src folder of your catkin workspace. | Install cython-hid dependencies (as specified in the Cython HID Library) sudo apt-get install python-dev libusb-1.0-0-dev libudev-dev sudo pip install --upgrade setuptools . | In the root folder of this package, run pip install -r requirements.txt to install python dependencies. | In the root folder of your catkin workspace, run catkin_make to enable the custom python modules in this package to work. | . ",
     "url": "/latest/ros-driver#installation",
     "relUrl": "/ros-driver#installation"
-  },"51": {
+  },"57": {
     "doc": "ROS Driver",
     "title": "Usage",
     "content": "This driver is split into two ROS packages: . | pressure_trajectory_ros is where trajectories are set up, built, and stored for execution | pressure_control_ros is the main driver that actually interfaces with the pressure control hardware | . ",
     "url": "/latest/ros-driver#usage",
     "relUrl": "/ros-driver#usage"
-  },"52": {
+  },"58": {
     "doc": "ROS Driver",
     "title": "ROS Driver",
     "content": " ",
     "url": "/latest/ros-driver",
     "relUrl": "/ros-driver"
-  },"53": {
+  },"59": {
     "doc": "Tutorial",
     "title": "Using the pressure_control ROS drivers",
     "content": ". | Manual pressure control | Build Trajectories | Prepare to Run the Pressure Controller | Run Trajectories Manually | Send Trajectories in Realtime | . This driver is split into two ROS packages: . | pressure_trajectory_ros is where trajectories are set up, built, and stored for execution | pressure_control_ros is the main driver that actually interfaces with the pressure control hardware | . ",
     "url": "/latest/ros-driver/tutorial#using-the-pressure_control-ros-drivers",
     "relUrl": "/ros-driver/tutorial#using-the-pressure_control-ros-drivers"
-  },"54": {
+  },"60": {
     "doc": "Tutorial",
     "title": "Manual pressure control",
     "content": "roslaunch pressure_controller_ros set_setpoint.launch . ",
     "url": "/latest/ros-driver/tutorial#manual-pressure-control",
     "relUrl": "/ros-driver/tutorial#manual-pressure-control"
-  },"55": {
+  },"61": {
     "doc": "Tutorial",
     "title": "Build Trajectories",
     "content": "To build a pressure trajectory, you can either discretize a periodic waveform, or use a set of waypoints. Set Up a Trajectory . | In the “pressure_trajectory_ros” package, browse the “traj_setup” folder. This is where you can set up trajectories to be built. | In the “examples” folder, open “planar2seg_demo.yaml”. This example will produce a triangle wave with some prefix and suffix to that trajectory. | Examine the “settings” section of the file. Here we note that the trajectory is of type “waveform” and it is not designed to be wrapped (repeated over and over). | Examine the “config” section of the file. Here we notice a few things: . | Only channels 1 and 2 are active | The waveform is a triangle wave of frequency 0.25 Hz | The waveform is repeating two times, and each cycle is discretized into 90 sub-samples. | . | Next, we can see the “setpoints” section has some prefix waypoints (which will be executed before the waveform), and suffix waypoints (executed after the waveform). | . Build a Trajectory . Building a trajectory is a single command through roslaunch: . roslaunch pressure_trajectory_ros build_traj.launch profile:=example/planar2seg_demo . Note that you don’t need to include the file extension “.yaml’ . ",
     "url": "/latest/ros-driver/tutorial#build-trajectories",
     "relUrl": "/ros-driver/tutorial#build-trajectories"
-  },"56": {
+  },"62": {
     "doc": "Tutorial",
     "title": "Prepare to Run the Pressure Controller",
     "content": "To begin running the pressure controller, use the following command: . roslaunch pressure_controller_ros bringup.launch profile:=YOUR_CONFIG_PROFILE . In the “config” folder of the “pressure_control_ros” package, you can set up hardware configurations. the “DEBUG.yaml” configuration is a good place to start. Note that you don’t need to include the file extension “.yaml’ . ",
     "url": "/latest/ros-driver/tutorial#prepare-to-run-the-pressure-controller",
     "relUrl": "/ros-driver/tutorial#prepare-to-run-the-pressure-controller"
-  },"57": {
+  },"63": {
     "doc": "Tutorial",
     "title": "Run Trajectories Manually",
     "content": ". | Make sure you have started the pressure control interface: | . roslaunch pressure_controller_ros bringup.launch profile:=DEBUG . | In a new terminal, upload the trajectory: | . roslaunch pressure_controller_ros load_traj.launch profile:=example/planar2seg_demo . | Start running the trajectory: | . roslaunch pressure_controller_ros run_traj.launch . ",
     "url": "/latest/ros-driver/tutorial#run-trajectories-manually",
     "relUrl": "/ros-driver/tutorial#run-trajectories-manually"
-  },"58": {
+  },"64": {
     "doc": "Tutorial",
     "title": "Send Trajectories in Realtime",
     "content": "This is fully implemented now. The implementation is based on the ur_modern_driver for Universal Robots. Documentation is comming soon. For now, feel free to check out the source code and the live_traj_follower launch file. In addition to this rosnode, the realtime trajectory follow has a python library that can be imported in other ros projects, ans seen in my Hand+Arm Package . ",
     "url": "/latest/ros-driver/tutorial#send-trajectories-in-realtime",
     "relUrl": "/ros-driver/tutorial#send-trajectories-in-realtime"
-  },"59": {
+  },"65": {
     "doc": "Tutorial",
     "title": "Tutorial",
     "content": " ",
     "url": "/latest/ros-driver/tutorial",
     "relUrl": "/ros-driver/tutorial"
-  },"60": {
+  },"66": {
     "doc": "Hardware Setup",
     "title": " Hardware Setup",
     "content": ". | Gather your hardware | Set up a new package to store your configs | Build a hardware config file | Build a controller config file | Use an existing plotting config file | . With proper setup, you can treat a group of pressure controllers like one larger device. ",
     "url": "/latest/ros-driver/setup#-hardware-setup",
     "relUrl": "/ros-driver/setup#-hardware-setup"
-  },"61": {
+  },"67": {
     "doc": "Hardware Setup",
     "title": "Gather your hardware",
     "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. This ROS Package is compatible with both serial and raw USB communication. Serial is limited to roughly 50 Hz communication rate to/from the controllers, wheras raw USB (sometimes called HID) is capable of 300 Hz reliably for this system. For more info about configuring communication protocols, check out the firmware documentation. ",
     "url": "/latest/ros-driver/setup#gather-your-hardware",
     "relUrl": "/ros-driver/setup#gather-your-hardware"
-  },"62": {
+  },"68": {
     "doc": "Hardware Setup",
     "title": "Set up a new package to store your configs",
     "content": "ROS conventions are mixed in terms of the cirrect way to handle user config files interacting with packages. You could just edit the pressure_controller_ros package directly, but that gets messy since now it’s a combination of user settings and package source code. Instead, here’s the perferred method to avoid this: . | Create a new package where all your configs are stored . | From within your catkin workspace, go to the source directory | Make a new package with a name you choose (like “pressure_controller_configs”) that depends on the “pressure_controller_ros” package | Get back to your workspace directory and run catkin_make to build the new package | . cd src catkin_create_pkg pressure_controller_configs pressure_controller_ros cd .. catkin_make . | Add the correct config folders . | Go into your new package | Copy the default config folders from the pressure_control_ros package | . cd src/pressure_controller_configs cp -r $(rospack find pressure_controller_ros)/config . | Make your own launch file referencing the pressure_control_cbt package . | Launch files are located in the launch folder of this package. Take a look there for the arguments you’ll need to pass to each file when you “include” them in your own launch files | Make the launch directory: mkdir launch | Make a new launch file to bringup the pressure controllers bringup_pressure.launch | Note that you can set the “config_package”. Set this to your new package: “pressure_controller_configs”. This tells the startup routine where to look for your config files. | . | When starting up the pressure controllers, use this new launch file rather than the one in the original package. roslaunch pressure_controller_configs bringup_pressure.launch profile:=[YOUR PROFILE] hw_profile:=[YOUR HARDWARE PROFILE] . | . ",
     "url": "/latest/ros-driver/setup#set-up-a-new-package-to-store-your-configs",
     "relUrl": "/ros-driver/setup#set-up-a-new-package-to-store-your-configs"
-  },"63": {
+  },"69": {
     "doc": "Hardware Setup",
     "title": "Build a hardware config file",
     "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “pressure_controller_ros” » “config” » “hardware”. Hardware config fields . | Native USB (HID) Settings (Only required for devices in HID mode) . | vendor_id - (int) Vendor ID number (unique to MCU manufacturer) | product_id - (int) Product ID number (unique to MCU board type) | serial_number - (int or str) Serial number (unique to each device) | . | Serial Settings (Only required for devices in serial mode) . | devname - (str) Device name (ttyACM# or ttyUSB#) | baudrate - (int) Baud Rate (standard is 115200 baud) | . | Common Settings . | num_channels - (int) Number of control channels the device has | cmd_spec - (str) Command specification number to use | cmd_format - (str) String format for data to be sent to the controller | . | . Examples . Here’s an example of a hardware config with 2 pressure controllers in HID mode . devices: # The first controller - vendor_id: 5824 product_id: 1158 serial_number: 6467390 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' # The second controller - vendor_id: 5824 product_id: 1158 serial_number: 5587550 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Here’s an example of a hardware config with 1 pressure controller in serial mode . devices: - devname: /dev/ttyACM0 baudrate: 115200 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Determine device information . To set up device information in your hardware config file, just run a terminal command and copy the information. | Start a new hardware config file (must be located in the “config” » “hardware” of either this package or your own package) | Plug one pressure controller in at a time. | Run a ROS command to get information about USB devices: . | rosrun pressure_controller_ros find_hid_devices.py | rosrun pressure_controller_ros find_serial_devices.py | . | From the list, find the required device identifiers and copy them into your hardware config. | Plug in the next pressure controller and repeat steps 2-4. | . Usage . This ROS driver takes care of the low-level details of coordinating pressure control devices: . | low-level splitting of commands to different controllers | Synchronizing timers on all controllers | Stitching data from several controlers back into a single “data” signal (gets published to a ROS topic) | . With proper setup, you can treat a group of pressure controllers like one larger device with the combined number of channels. ",
     "url": "/latest/ros-driver/setup#build-a-hardware-config-file",
     "relUrl": "/ros-driver/setup#build-a-hardware-config-file"
-  },"64": {
+  },"70": {
     "doc": "Hardware Setup",
     "title": "Build a controller config file",
     "content": "Set up all the control settings (like which channels are on, PID gains, etc.). | Create a new control config file based on an existing one (must be located in the config/control folder of your package) . | Configuration files are “.yaml” files with a few specific fields related to actual pressure control | . | Update relevant fields for your hardware setup | . Control config fields . | Channel Settings . | num_channels - (int) Number of channels total (across all devices) | states - (list(bool)) The On/Off state of each channel. (Length of this list much match num_channels) | . | data_loop_time - (int) The period (in ms) to send data back from the controllers. (min value is ~4ms) | PID Settings . | all_equal - (bool) Decide whether the PID gains of all channels are set the othe same values | integrator_start - (float) The window around the setpoint in which integration is allowed. (This prevents integrator windup) | values - (list(float)) The actual P, I, and D values (in that order). Set to a list of length 3 to give all channels the same gains. Set to a list of lists to specify gains on a per-channel basis (much include values for all channels if using this option). | . | max_pressure - (float) Maximum pressure (in psi) before software watchdog kicks in. Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels). | min_pressure - (float) Minimum pressure (in psi). Setpoints are clipped to this value. Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels). | transitions - (float) Default transition time (in sec) when sending single setpoints to the controller | echo - (bool) Turn debugging command echos on (usually this should be false) | . ",
     "url": "/latest/ros-driver/setup#build-a-controller-config-file",
     "relUrl": "/ros-driver/setup#build-a-controller-config-file"
-  },"65": {
+  },"71": {
     "doc": "Hardware Setup",
     "title": "Use an existing plotting config file",
     "content": "We use the rqt_multiplot package for plotting which lets you make/use config files to set up plot groups. You can use an existing profile for now (in the config/plotting folder), and modify/make a new one from inside the plotting window when it’s running. ",
     "url": "/latest/ros-driver/setup#use-an-existing-plotting-config-file",
     "relUrl": "/ros-driver/setup#use-an-existing-plotting-config-file"
-  },"66": {
+  },"72": {
     "doc": "Hardware Setup",
     "title": "Hardware Setup",
     "content": " ",
     "url": "/latest/ros-driver/setup",
     "relUrl": "/ros-driver/setup"
-  },"67": {
+  },"73": {
     "doc": "Hardware Setup",
     "title": " Hardware Setup",
     "content": ". | Gather your hardware | Upload compatible firmware | Determine the device names | Build a hardware config file | Set up the communication config file | . ",
     "url": "/latest/top-level/setup#-hardware-setup",
     "relUrl": "/top-level/setup#-hardware-setup"
-  },"68": {
+  },"74": {
     "doc": "Hardware Setup",
     "title": "Gather your hardware",
     "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. All you need is several USB ports (or a USB 3.0 hub). Plug all the pressure controllers in via USB and you’re all set to go. ",
     "url": "/latest/top-level/setup#gather-your-hardware",
     "relUrl": "/top-level/setup#gather-your-hardware"
-  },"69": {
+  },"75": {
     "doc": "Hardware Setup",
     "title": "Upload compatible firmware",
     "content": "This Python interface is only compatible with serial communication, so be sure to use the “serial” option (not the “HID” option) when flashing firmware to the pressure controllers. If you have previously used the controllers in “HID” mode with ROS, you will need re-flash the “Serial” mode. ",
     "url": "/latest/top-level/setup#upload-compatible-firmware",
     "relUrl": "/top-level/setup#upload-compatible-firmware"
-  },"70": {
+  },"76": {
     "doc": "Hardware Setup",
     "title": "Determine the device names",
     "content": "Use a serial terminal of some sort to check what the devices are called (Arduino IDE works well). | In Ubuntu and MacOS, devices begin with /dev/tty*. For example, /dev/ttyACM0 or something similar. | In Windows, devices begin with COM*. For example, COM4 or something similar. | . ",
     "url": "/latest/top-level/setup#determine-the-device-names",
     "relUrl": "/top-level/setup#determine-the-device-names"
-  },"71": {
+  },"77": {
     "doc": "Hardware Setup",
     "title": "Build a hardware config file",
     "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “config” » “hardware”. Single Controller . If you are using only a single controller, you only need one device in your list. This is what most people will use. - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . Multiple Controllers . If you want to chain together multiple controllers, simply define multiple devices: . - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . ",
     "url": "/latest/top-level/setup#build-a-hardware-config-file",
     "relUrl": "/top-level/setup#build-a-hardware-config-file"
-  },"72": {
+  },"78": {
     "doc": "Hardware Setup",
     "title": "Set up the communication config file",
     "content": "With our hardware configuration set up, the last step is to tell the system which hardware configuration you are using. | Go to “config” » “comms” » “comms_config.yaml”. | Set the hardware item to the name of the hardware config file you just made | Set the devnames item to a list of device names. The number of devices needs to be the same as the number of hardware devices you defined in your hardware config file. | . Example: . hardware: \"double3.4\" devnames: [\"/dev/ttyACM0\", \"/dev/ttyACM1\"] . The devnames are separate from the rest of the hardware config becasue sometimes device names change for no reason in Ubuntu and Windows. ",
     "url": "/latest/top-level/setup#set-up-the-communication-config-file",
     "relUrl": "/top-level/setup#set-up-the-communication-config-file"
-  },"73": {
+  },"79": {
     "doc": "Hardware Setup",
     "title": "Hardware Setup",
     "content": " ",
     "url": "/latest/top-level/setup",
     "relUrl": "/top-level/setup"
-  },"74": {
+  },"80": {
     "doc": "TODO",
     "title": " TODO",
     "content": "Take a look at the current issues with these packages, and feel free to request more features! . Firmware Issues Python Inteface Issues ROS Driver Issues . Issues With This Documentation . ",
     "url": "/latest/todo#-todo",
     "relUrl": "/todo#-todo"
-  },"75": {
+  },"81": {
     "doc": "TODO",
     "title": "TODO",
     "content": " ",
     "url": "/latest/todo",
     "relUrl": "/todo"
-  },"76": {
+  },"82": {
     "doc": "Python Interface",
     "title": " Python Interface",
     "content": " ",
     "url": "/latest/top-level#-python-interface",
     "relUrl": "/top-level#-python-interface"
-  },"77": {
+  },"83": {
     "doc": "Python Interface",
     "title": "Dependencies",
     "content": "Hardware . | An arduino-compatible microcontroller (confirmed working on Arduino Mega and Teensy 3.5) | . Software . | Python 3 (use python 3.6 or newer) | Various python libraries, specified in requirements.txt: pip install -r requirements.txt | . ",
     "url": "/latest/top-level#dependencies",
     "relUrl": "/top-level#dependencies"
-  },"78": {
+  },"84": {
     "doc": "Python Interface",
     "title": "Installation",
     "content": "Set up a python IDE . Follow the instructions in the Python Tips page. Clone the code . Already have an IDE you like (like VSCode or PyCharm)? . Download the Python Interface . ",
     "url": "/latest/top-level#installation",
     "relUrl": "/top-level#installation"
-  },"79": {
+  },"85": {
     "doc": "Python Interface",
     "title": "Usage",
     "content": "Settings Locations . | Scripts are located in “pressure_control_run” | Controller configurations are located in the “config” folder | Trajectory setup files are located in the “traj_setup” folder | After trajectories are built, auto-generated files are located in the “traj_built” folder | . Run Python Scripts . Run python scripts through the terminal: python file_name.py [arg1] [arg2] . ",
     "url": "/latest/top-level#usage",
     "relUrl": "/top-level#usage"
-  },"80": {
+  },"86": {
     "doc": "Python Interface",
     "title": "Python Interface",
     "content": " ",
     "url": "/latest/top-level",
     "relUrl": "/top-level"
-  },"81": {
+  },"87": {
     "doc": "Tutorial",
     "title": " Tutorial",
     "content": "NEW! . Works with multi-device setup! . | Common usage example: | Set up your hardware | Configure the pressure controller. | Set pressure manually | Run a pre-built trajectory on the controller | . Run these commands in a linux terminal. If you are using an IPython console (like in spyder), replace python with run at the beginning of commands. ",
     "url": "/latest/top-level/tutorial#-tutorial",
     "relUrl": "/top-level/tutorial#-tutorial"
-  },"82": {
+  },"88": {
     "doc": "Tutorial",
     "title": "Common usage example:",
     "content": "Commands in the console . # Build your trajectory python build_traj.py example/setpoint_traj_demo # Configure the pressure controller with the default profile # This step only needs to be run when you are updating parameters. # The last profile to be configured is always loaded on startup python config.py default # Load the built trajectory onto the controller python send_pre_built.py example/setpoint_traj_demo # Run the trajectory 1 time, and speed-stretch by 2.5x (faster) python run_pre_built.py 1 2.5 . example/setpoint_traj_demo.yaml: . settings: traj_type: 'interp' # Types include: 'waveform', 'interp' # Place all of the type-specific settings in here config: interp_type: none # can be: 'linear', 'cubic' setpoints: # Setpoints are only used if you are doing an interpolation # [time (sec), pressure 1,2...N (psi)] main: - [0.0, 10, 12, 14, 16] - [1.0, 20, 0, 0, 0] - [2.0, 0, 20, 0, 0] - [3.0, 0, 0, 20, 0] - [4.0, 0, 0, 0, 20] - [5.0, 10, 12, 14, 16] # The prefix and suffix are optional. # If you don't want them, simply exclude them and the program will know what to do. prefix: - [0.000, 0, 0, 0, 0] - [1.0, 10, 12, 14, 16] suffix: - [2.000, 10, 12, 14, 16] - [3.0, 0, 0, 0, 0] . Output . ",
     "url": "/latest/top-level/tutorial#common-usage-example",
     "relUrl": "/top-level/tutorial#common-usage-example"
-  },"83": {
+  },"89": {
     "doc": "Tutorial",
     "title": "Set up your hardware",
     "content": "Follow the instructions in Hardware Setup. Once configured, you can pretend you have only one pressure controller with n channels. If you have multiple devices configured together, then you treat them as one controller with the total number of channels of all devices combined. This python interface does the hard work of splitting up commands to all the controllers, so for all intents and purposes, you just pretend you have one controller with a bunch of channels. ",
     "url": "/latest/top-level/tutorial#set-up-your-hardware",
     "relUrl": "/top-level/tutorial#set-up-your-hardware"
-  },"84": {
+  },"90": {
     "doc": "Tutorial",
     "title": "Configure the pressure controller.",
     "content": "This sets a bunch of configuration settings on the controller (like which channels are on, PID gains, etc.). | Create a config file in the config folder. | Configuration files are “.yaml” files with a few specific fields (see examples in the config folder) | config files must be stored in the config folder. | . | python config.py [config_file] . | config_file - name of the configuration file you want to use. It can include folders too. | . | . ",
     "url": "/latest/top-level/tutorial#configure-the-pressure-controller",
     "relUrl": "/top-level/tutorial#configure-the-pressure-controller"
-  },"85": {
+  },"91": {
     "doc": "Tutorial",
     "title": "Set pressure manually",
     "content": "python set_pressure.py [p1] [p2] ... [pn] . | no arguments - Pressure is set to 0 | p1 - Pressure [in psi] - To set all pressure equal, send one value | p1, p2, …,pn - Pressure [in psi] - To set pressure individually, the number of pressure sent must equal the number of channels (n). | . Once running, use keyboard keys to move the pressure up and down. ",
     "url": "/latest/top-level/tutorial#set-pressure-manually",
     "relUrl": "/top-level/tutorial#set-pressure-manually"
-  },"86": {
+  },"92": {
     "doc": "Tutorial",
     "title": "Run a pre-built trajectory on the controller",
     "content": "Set up a trajectory . | Create a trajectory setup file in the traj_setup folder. | Trajectory setup files are “.yaml” files with a few specific fields (see examples in the traj_setup/example folder) | Trajectory setup files must be stored in the traj_setup folder (you can use subfolders too) | . | There are three basic parts in a trajctory . | main - The looping part | prefix - Run once at the start of the trajectory | suffix - Run once after the looping part is finished. | . | To forgo suffixes or prefixes, just leave them blank in the file (or delete them entirely) . | A Note about smoothness: . | In the “main” part of the trajectory, the first and last lines must be the same if you want to make a smooth looping trajectory. At the lowest level, the controller jumps directly from the last line to the first line when looping. | For a smooth prefix » main transition, the last line in the “prefix” and first line of the “main” should be the same. | Transitions to the suffix are handled dynamically, starting from the setpoint at the exact time the suffix is requested. | If the main part finishes, the final line of “main” is coppied to time 0.0s in the suffix | If the main part is interrupted, the current setpoint (including interpolated values) is copied to time 0.0s of the suffix. | In the example above, we dynamically transition to the first line of the suffix from wherever the setpoint currently is over 2.0 seconds. | . | . | . Build a trajectory . | python build_traj.py [traj_profile] . | traj_profile - name of trajectory you want to build. It can include folders too. | . | The trajectory is built, and a “.traj” file is saved in the traj_built folder | . Load the pre-built trajectory onto the controller . python send_pre_built.py [traj_profile] . | traj_profile - name of trajectory you just built | . You must build trajectories from setup files before you can send them. Do not try to create trajectory files yourself. Run the current trajectory . Execute the pressure trajectory you just sent . python run_pre_built.py [num_cycles] [speed_factor] . | num_cycles - Loop the main part of the trajectory this number of times. (Set to -1 for endless loop) | speed_factor - Speed-stretch a trajectory (larger speed factor runs the trajectory faster) | . This command also saves the incomming data from the pressure controller in a csv: . [time in ms] [setpoints p1 ...... pn] [measured p1 ....... pn] [input pressure] [command echos] 3848, 0.00, 0.00, 0.00, 0.00, 0.10, 0.05, 0.03, -0.07, 30.00, , , 3858, 0.50, 0.50, 0.50, 0.50, 0.45, 0.51, 0.46, 0.39, 29.50, , , 3868, , , , , , , , , , time, 10 . Spaces are shown in this example for clarity, but in real csv’s there are no spaces. | For pressures, data will always be returned from all channels, even if they are turned off in the configuration. | If multiple controllers are configured together, one file per hardware device is created, with the suffix “_00X” appended to the output filename for each device. | Data for all devices is automatically synced. | . ",
     "url": "/latest/top-level/tutorial#run-a-pre-built-trajectory-on-the-controller",
     "relUrl": "/top-level/tutorial#run-a-pre-built-trajectory-on-the-controller"
-  },"87": {
+  },"93": {
     "doc": "Tutorial",
     "title": "Tutorial",
     "content": " ",
