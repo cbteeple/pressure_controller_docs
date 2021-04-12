@@ -3,7 +3,7 @@ layout: default
 title: Hardware Setup
 parent: ROS Driver
 permalink: /ros-driver/setup
-nav_order: 1
+nav_order: 2
 font_awesome: "fas fa-cog"
 ---
 

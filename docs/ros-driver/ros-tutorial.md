@@ -3,7 +3,7 @@ layout: default
 title: Tutorial
 parent: ROS Driver
 permalink: /ros-driver/tutorial
-nav_order: 2
+nav_order: 3
 ---
 
 # Using the pressure_control ROS drivers
