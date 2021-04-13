@@ -1,562 +1,496 @@
 {"0": {
+    "doc": "Basic Tutorial",
+    "title": "Using the pressure_control ROS drivers",
+    "content": ". | Set up your hardware and control configs | Start the Pressure Controller | Manual pressure control | Build Trajectories | Run Trajectories Manually | . This driver is split into two ROS packages: . | pressure_trajectory_ros is where trajectories are set up, built, and stored for execution | pressure_control_ros is the main driver that actually interfaces with the pressure control hardware | . ",
+    "url": "/latest/ros-driver/tutorial#using-the-pressure_control-ros-drivers",
+    "relUrl": "/ros-driver/tutorial#using-the-pressure_control-ros-drivers"
+  },"1": {
+    "doc": "Basic Tutorial",
+    "title": "Set up your hardware and control configs",
+    "content": "Follow the ROS Hardware Setup instructions to set up your hardware configuration, and the Control Setup instructions to set up your control config files. Use an existing plotting config file . We use the rqt_multiplot package for plotting which lets you make/use config files to set up plot groups. You can use an existing profile for now (in the config/plotting folder), and modify/make a new one from inside the plotting window when it’s running. ",
+    "url": "/latest/ros-driver/tutorial#set-up-your-hardware-and-control-configs",
+    "relUrl": "/ros-driver/tutorial#set-up-your-hardware-and-control-configs"
+  },"2": {
+    "doc": "Basic Tutorial",
+    "title": "Start the Pressure Controller",
+    "content": "To begin running a pressure controller, use the following command: . roslaunch pressure_controller_ros bringup.launch profile:=YOUR_CONFIG_PROFILE . In the “config” folder of the “pressure_control_ros” package, you can set up hardware configurations. the “DEBUG.yaml” configuration is a good place to start. Note that you don’t need to include the file extension “.yaml’ . ",
+    "url": "/latest/ros-driver/tutorial#start-the-pressure-controller",
+    "relUrl": "/ros-driver/tutorial#start-the-pressure-controller"
+  },"3": {
+    "doc": "Basic Tutorial",
+    "title": "Manual pressure control",
+    "content": "Note: This doesn’t work very well . This program attempts to use the terminal as a GUI. This ends up being very clunky and sometimes things go wrong. A GUI-based manual control program is planned for version 3.0. Run the manual control program . roslaunch pressure_controller_ros set_setpoint.launch . ",
+    "url": "/latest/ros-driver/tutorial#manual-pressure-control",
+    "relUrl": "/ros-driver/tutorial#manual-pressure-control"
+  },"4": {
+    "doc": "Basic Tutorial",
+    "title": "Build Trajectories",
+    "content": "To build a pressure trajectory, you can either discretize a periodic waveform, or use a set of waypoints. Set Up a Trajectory . | In the “pressure_trajectory_ros” package, browse the “traj_setup” folder. This is where you can set up trajectories to be built. | In the “examples” folder, open “planar2seg_demo.yaml”. This example will produce a triangle wave with some prefix and suffix to that trajectory. | Examine the “settings” section of the file. Here we note that the trajectory is of type “waveform” and it is not designed to be wrapped (repeated over and over). | Examine the “config” section of the file. Here we notice a few things: . | Only channels 1 and 2 are active | The waveform is a triangle wave of frequency 0.25 Hz | The waveform is repeating two times, and each cycle is discretized into 90 sub-samples. | . | Next, we can see the “setpoints” section has some prefix waypoints (which will be executed before the waveform), and suffix waypoints (executed after the waveform). | . Build a Trajectory . Building a trajectory is a single command through roslaunch: . roslaunch pressure_trajectory_ros build_traj.launch profile:=example/planar2seg_demo . Note that you don’t need to include the file extension “.yaml’ . ",
+    "url": "/latest/ros-driver/tutorial#build-trajectories",
+    "relUrl": "/ros-driver/tutorial#build-trajectories"
+  },"5": {
+    "doc": "Basic Tutorial",
+    "title": "Run Trajectories Manually",
+    "content": ". | Make sure you have started the pressure control interface: | . roslaunch pressure_controller_ros bringup.launch profile:=DEBUG . | In a new terminal, upload the trajectory: | . roslaunch pressure_controller_ros load_traj.launch profile:=example/planar2seg_demo . | Start running the trajectory: | . roslaunch pressure_controller_ros run_traj.launch . ",
+    "url": "/latest/ros-driver/tutorial#run-trajectories-manually",
+    "relUrl": "/ros-driver/tutorial#run-trajectories-manually"
+  },"6": {
+    "doc": "Basic Tutorial",
+    "title": "Basic Tutorial",
+    "content": " ",
+    "url": "/latest/ros-driver/tutorial",
+    "relUrl": "/ros-driver/tutorial"
+  },"7": {
+    "doc": "Control Setup",
+    "title": " Control Setup",
+    "content": ". | Build a controller config file | Tune valve PWM offsets | Tune PID gains | . ",
+    "url": "/latest/ros-driver/control-setup#-control-setup",
+    "relUrl": "/ros-driver/control-setup#-control-setup"
+  },"8": {
+    "doc": "Control Setup",
+    "title": "Build a controller config file",
+    "content": "Set up all the control settings (like which channels are on, PID gains, etc.). | Create a new control config file based on an existing one (must be located in the config/control folder of your package) . | Configuration files are “.yaml” files with a few specific fields related to actual pressure control | . | Update relevant fields for your hardware setup | . Control config fields . | Channel Settings . | num_channels (int) - Number of channels total (across all devices) | states (list(bool)) - The On/Off state of each channel. (Length of this list much match num_channels) | . | data_loop_time (int) - The period (in ms) to send data back from the controllers. (min value is ~4ms) | PID Settings . | all_equal (bool) - Decide whether the PID gains of all channels are set the othe same values | integrator_start (float) - The window around the setpoint in which integration is allowed. (This prevents integrator windup) | values (list(float)) - The actual P, I, and D values (in that order). Set to a list of length 3 to give all channels the same gains. Set to a list of lists to specify gains on a per-channel basis (much include values for all channels if using this option). | . | valve_offsets (list(list(int))) - PWM offset values for valves. Set to a list, where each entry is a list of length 2 with the source and vent offsets for that particular channel. | max_pressure (float) - Maximum pressure (in psi) before software watchdog kicks in. Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels). | min_pressure (float) - Minimum pressure (in psi). Setpoints are clipped to this value. Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels). | transitions (float) - Default transition time (in sec) when sending single setpoints to the controller | echo (bool) - Turn debugging command echos on (usually this should be false) | . ",
+    "url": "/latest/ros-driver/control-setup#build-a-controller-config-file",
+    "relUrl": "/ros-driver/control-setup#build-a-controller-config-file"
+  },"9": {
+    "doc": "Control Setup",
+    "title": "Tune valve PWM offsets",
+    "content": "The PWM offsets allow us to do smooth control starting from the voltages at which the valves just barely crack open. This ensures we can actually control the flow rate smoothly. You will need to re-calibrate these every so often as the resistance and mechanical parts of the valves will slightly change over time. | Bringup the pressure controller(s) . | roslaunch pressure_controller_ros bringup_only.launch hw_profile:=[HARDWARE CONFIG] | . | Initialize your control config . | Set all valve_offset values to thier default values (for the Clippard valves used in this project, 225 works well to start) | Save, then send the config to the controller: roslaunch pressure_controller_ros config.launch profile:=[CONTROL CONFIG] | . | Apply a small step change in pressure to all channels . | roslaunch pressure_controller_ros set_setpoint.launch | . | Listen to the valves, observe the resulting data, and update your config . | If the valves hum for a short time before you see any actual air flow and there is low-frequency oscillations in pressure, increase the PWM value for that channel by ~2-3. | If the valves click a lot and pressure oscillates rapidly while maintaining a steady pressure, decrease the PWM value for that channel by ~2-3. | You may need to set the voltage offsets differently for the source and vent valve in each channel if (for example) a channel can provide pressure but has trouble venting. | . | . Once you tune these values, you should be all set. They are related to properties of the actual valves, not the load you are driving, so you will only need to re-calibrate this avery so often throughout the year. ",
+    "url": "/latest/ros-driver/control-setup#tune-valve-pwm-offsets",
+    "relUrl": "/ros-driver/control-setup#tune-valve-pwm-offsets"
+  },"10": {
+    "doc": "Control Setup",
+    "title": "Tune PID gains",
+    "content": "Since a PID controller is inherently model-free, you will need to tune the gains for each new load (pneumatic device) you place on each channel. The following process seems to work reasonably well: . | Bringup the pressure controller(s) . | roslaunch pressure_controller_ros bringup_only.launch hw_profile:=[HARDWARE CONFIG] | . | Initialize your control config . | Set I = 0 and D = 0 for all channels to start. | Set P to a value you think is too low (0.1 is a good place to start). | Save, then send the config to the controller: roslaunch pressure_controller_ros config.launch profile:=[CONTROL CONFIG] | . | Apply a small step change in pressure to all channels . | roslaunch pressure_controller_ros set_setpoint.launch | . | Observe the resulting data and update your config . | If the controller oscillates, set P lower and resend the config until it stops. | If the controller does not oscillate, set P higher and resend the config until it starts oscillating, then back off slowly until it stops. | . | Add integral gain . | Set I to a value 1/10th of the cUrrent value of P for each channel and test. | If the controller oscillates, decrease I | If the controller takes a while to reach the setpoint, increase I | . | Add derivative gain (optional) . | In testing, it usually seems like a P-I controller works very well to achieve fast, reliable pressure control. If you do see lots of sharp motions in the control, you can add a small amount of D to smooth this off. | . | . Based on some basic testing, we found that the values you come up with here are reasonably robust to changes in the load, so you will only need to re-tune these valuses if you have a substantially different pneumatic device. ",
+    "url": "/latest/ros-driver/control-setup#tune-pid-gains",
+    "relUrl": "/ros-driver/control-setup#tune-pid-gains"
+  },"11": {
+    "doc": "Control Setup",
+    "title": "Control Setup",
+    "content": " ",
+    "url": "/latest/ros-driver/control-setup",
+    "relUrl": "/ros-driver/control-setup"
+  },"12": {
     "doc": "Firmware",
     "title": " Firmware",
     "content": "An object-oriented approach to doing pressure control. Hopefully things are modular and can be swapped in an out for different controllers and valve setups. ",
     "url": "/latest/firmware#-firmware",
     "relUrl": "/firmware#-firmware"
-  },"1": {
+  },"13": {
     "doc": "Firmware",
     "title": "Dependencies",
     "content": "Hardware . | An arduino-compatible microcontroller (confirmed working on Arduino Mega and Teensy 3.5) | . Software . | Various Arduino Libraries . | EEPROMAnything Library by collin80 | Button Library by madleech | LiquidCrystal_I2C by fdebrabander | EasyLCD Library by cbteeple (that’s me!) | . | . ",
     "url": "/latest/firmware#dependencies",
     "relUrl": "/firmware#dependencies"
-  },"2": {
+  },"14": {
     "doc": "Firmware",
     "title": "Installation",
     "content": "Download the Firmware . ",
     "url": "/latest/firmware#installation",
     "relUrl": "/firmware#installation"
-  },"3": {
+  },"15": {
     "doc": "Firmware",
     "title": "Usage",
     "content": "Settings Locations . | Firmware is located in “pressure_control_firmware” | Harware configurations are located in the “config”” folder | Sensor configurations are located in the “config/sensors_lib.h”” file | . Initialize the Onboard Memory (EEPROM) . New! . For each new MCU board, you need to initiatlize the onboard memory before installing the firmware. | Navigate to “utilities/initialize_onboard_memory” | Open “initialize_onboard_memory.ino” in the Arduino IDE | Upload the program to the new MCU. | You’re done! You never need to do this again for that MCU. | . Install the Firmware on an MCU . | Open the firmware in the Arduino IDE. | Choose a configuration file (in the “config” folder), where you set the # of valves, pins, etc. | Choose what type of communication you want to use . | Arduino Mega: It’s only capable of serial (no need to change any settings) | Teensy 3.x: You can select between serial vs. native USB (HID). Do this in the Arduino IDE’s “Tools” » “USB Type” menu. | . | Flash the firmware to your microcontroller (confirmed working on Arduino Mega and Teensy 3.5) | . ",
     "url": "/latest/firmware#usage",
     "relUrl": "/firmware#usage"
-  },"4": {
+  },"16": {
     "doc": "Firmware",
     "title": "Firmware",
     "content": " ",
     "url": "/latest/firmware",
     "relUrl": "/firmware"
-  },"5": {
+  },"17": {
     "doc": "Firmware Commands",
     "title": "Firmware Commands",
-    "content": ". | Structure | View Current Settings | Command Spec | . ",
+    "content": ". | Structure | Command Specification | . ",
     "url": "/latest/firmware/firmware_commands",
     "relUrl": "/firmware/firmware_commands"
-  },"6": {
+  },"18": {
     "doc": "Firmware Commands",
     "title": "Structure",
-    "content": "Serial commands follow a simple “COMMAND+ARGUMENTS” structure, with the separator character being the semicolon. Send the command followed by some number of arguments depending on the command. Always end the line with a “newline”. Usually serial terminals do the newline automatically for you. Examples: [COMMAND];[ARG_1];[ARG_2];…;[ARG_N] chan;1;0;0;1 - turns on channels 0 and 3, and turns 1 and 2 off (assuming there are exactly 4 output channels) . ",
+    "content": "Commands follow a simple “COMMAND+ARGUMENTS” structure, with the separator character being the semicolon. Send the command followed by some number of arguments depending on the command. Always end the line with a “newline”. Examples: . | [COMMAND];[ARG_1];[ARG_2];…;[ARG_N] | chan;1;0;0;1 - turns on channels 0 and 3, and turns 1 and 2 off (assuming there are exactly 4 output channels) | . To view the current settings of any of the parameters you can control, simply use the commands below, but omit any arguments you would normally put after the commands. ",
     "url": "/latest/firmware/firmware_commands#structure",
     "relUrl": "/firmware/firmware_commands#structure"
-  },"7": {
+  },"19": {
     "doc": "Firmware Commands",
-    "title": "View Current Settings",
-    "content": "To view the current settings of any of the parameters you can control, simply use the commands below, but omit any arguments you would normally put after the commands. Example: “SET” will return the current setpoints of all channels. “PID” will return the gains for all channels “TIME” will return the desired loop time etc. ",
-    "url": "/latest/firmware/firmware_commands#view-current-settings",
-    "relUrl": "/firmware/firmware_commands#view-current-settings"
-  },"8": {
-    "doc": "Firmware Commands",
-    "title": "Command Spec",
-    "content": "v 2.0 v 1.0 . ",
-    "url": "/latest/firmware/firmware_commands#command-spec",
-    "relUrl": "/firmware/firmware_commands#command-spec"
-  },"9": {
+    "title": "Command Specification",
+    "content": "A comprehensive set of command specifications can be found in the pressure_control_interface package. This documentation expands on the functionality of each command. Basic Commands . | Command | Arguments | Description | . | ON | n/a | Start the live pressure output | . | OFF | n/a | Stop the live pressure output | . | LOAD | n/a | Load settings from onboard storage | . | SAVE | n/a | Overwrite the current settings profile in onboard storage | . | MODE | #1 int (enum) | Set the control mode | . |   |   | 0 = direct control of valve states | . |   |   | 1 = pressure control using PID and sensors) | . |   |   | 2 = pressure trajectory following | . |   |   | 3 = pressure control with ramp from current setpoint to new one | . | ECHO | #1 bool | Set whether commands are echoed | . |   |   | 0 = Off - No commands are echoed back (silent mode) | . |   |   | 1 = On - commands are echoed back on the serial line. Command echos are always preceded by an underscore | . | TIME | #1 int | Set the desired loop time for measurement outputs (in ms) | . | UNITS | #1 int (enum) | Set the pressure units you want to use: {0: psi, 1: kPa, 2: bar, 3:atm} | . |   | [#1;#2] | Set the input and output units separately | . |   |   | #1 int = input units: used for setting setpoints and loading trajectories | . |   |   | #2 int = output units: used for displaying data | . | CURRTIME | #1 int | Set the current display time on the controller (in ms). Typically used to synchronize with other devices (i.e. set current time to zero when you start a trajectory) | . NOTE: Units are converted at the command/output level. Pressures are always internally represented in psi regaurdless of what the units are set to. Safety Settings . | Command | Arguments | Description | . | MAXP | #1 float | Set the maximum pressure allowed. Pressures are clipped if outside this range when using the “SET” command, but not when loaded as part of a trajectory. (used for the pressure watchdog) | . | MINP | #1 float | Set the minimum pressure allowed. Pressures are clipped if outside this range when using the “SET” command, but not when loaded as part of a trajectory. | . | MASTERP | #1 bool | use input pressure sensor for watchdog | . |   | [#1;#2] |   | . |   |   | #1 bool = use input pressure sensor for watchdog | . |   |   | #2 bool = pressure sensor data output on/off | . | MASTERMAXP | [#1;#2] | Set the maximum pressure before the master watchdog triggers, as well as the | . |   |   | #1 float = maximum pressure threshold | . |   |   | #2 int = minimum time above the threshold before watchdog triggers | . Control Channels . | Command | Arguments | Description | . | CHAN | #1 bool | Set all channels active or inactive | . |   | [#1;#2;…;#N] list(bool) | Set individual channels active *. Replace “#” with either 1 or 0 for on or off. | . | SET | [#1;#2] | Set the pressure setpoint of ALL pressure channels. This setting is only used if MODE is set to 1 or 3. | . |   |   | #1 float = ramp time in seconds - only used if MODE is set to 3 | . |   |   | #2 float = Setpoint | . |   | [#1;#2;…;#N;#N+1] list(float) | Set the pressure setpoint of individual pressure channels*. | . |   |   | #1 float = ramp time in seconds - only used if MODE is set to 3 | . |   |   | #2;…;#N+1 list(float) = Setpoints for each channel | . | VALVE | #1 float | Set the valve states of ALL pressure channels (can be -1.0 → 1.0). This setting is only used if MODE is set to 0. | . |   |   | -1.0 = vent at full speed | . |   |   | 0.0 = idle (both valves in the pair are closed) | . |   |   | 1.0 = pressurize to full input pressure at full speed | . |   | [#0;#1;…;#N-1] list(float) | Set the valve state of individual channels* (float). | . When setting things for individual channels, the number of arguments must equal the number of channels. Controller Settings . | Command | Arguments | Description | . | PID | [#1; #2; #3; #4] | Set the PID gains for one particular channel | . |   |   | #1 int = Channel index | . |   |   | #2 float = Proportional gain | . |   |   | #3 float = Integral gain | . |   |   | #4 float = Derivative gain | . | WINDOW | #1 float | Set the dead window for all channels. This is a window around the setpoint in which control is turned off. Default is 0 (control always on) | . |   | [#0;#1;…;#N-1] list(float) | Set the dead window for individual channels *. | . | INTSTART | #1 float | Set the window (in pressure space) around the setpoint in which the integrator works | . | VOFFSET | [#1; #2; #3] | Set the PWM offset values for valves one particular channel | . |   |   | #1 int = Channel index | . |   |   | #2 int = Supply valve offset (can be 0 → 255) | . |   |   | #3 int = Vent valve offset (can be 0 → 255) | . When setting things for individual channels, the number of arguments must equal the number of channels. Set Up Trajectories . | Command | Arguments | Description | . | TRAJCONFIG | [#1; #2; #3; #4] | Set the trajectory settings | . |   |   | #1 int = Prefix length | . |   |   | #2 int = Main trajectory length | . |   |   | #3 int = Suffix length | . |   |   | #4 bool = Run the suffix trajectory after stop | . | TRAJWRAP | #1 bool | Wrap the trajectory (Same functionality can be achieved using TRAJLOOP) | . |   |   | 0 = Off - trajectory excecutes once | . |   |   | 1 = On - loop over and over until stopped | . | TRAJLOOP | #1 int | Number of times to loop | . |   |   | -1 = Loop Forever until the TRAJSTOP command is sent | . |   |   | 0 = Skip the main loop | . |   |   | 1,2,… = Do the main loop this many times | . | TRAJSPEED | #1 float | Stretch the speed of the trajectory | . |   |   | 1.0 - base speed | . |   |   | &gt;1.0 - Faster than base speed | . |   |   | &lt;1.0 - Slower than base speed (can never be 0; if 0 is sent, no changes are made) | . | TRAJSET | [#1, #2, #3;…;#N+2] | Set the main trajectory line by line | . |   |   | #1 int = index (can be 0 → max_length-1) | . |   |   | #2 float = time point | . |   |   | #3;…;#N+2 list(float) = pressure setpoints for each channel, where the row is zero-padded if the number of inputs is less than the number of total channels | . | PREFSET | [#1, #2, #3;…;#N+2] | Set the prefix trajectory line by line (works exactly like TRAJSET) | . | SUFFSET | [#1, #2, #3;…;#N+2] | Set the prefix trajectory line by line (works exactly like TRAJSET) | . Run Trajectories . | Command | Arguments | Description | . | TRAJSTART | [none] | Start the trajectory from the beginning. Run suffix first, then run trajectory until stop is called or it finishes. If wrapping is set, loop over the main trajectory until stop is called. ) | . | TRAJSTOP | [none] | Stop the trajectory and return to 0 pressure | . | TRAJPAUSE | [none] | Pause the trajectory and hold pressure | . | TRAJRESUME | [none] | Resume the trajectory | . Others . | Command | Arguments | Description | . | DEFLOAD | [none] | Load default settings profile from onboard storage | . | DEFSAVE | [none] | Overwrite default settings profile settings to onboard storage | . | LCDTIME | #1 int | Set the desired refresh time for the LCD screen if attached (in ms) | . ",
+    "url": "/latest/firmware/firmware_commands#command-specification",
+    "relUrl": "/firmware/firmware_commands#command-specification"
+  },"20": {
     "doc": "Firmware Interface",
     "title": "Firmware Interface",
     "content": ". | Safety Features | Basic Operation | Configuring the Firmware | Configuring the PID gains | . ",
     "url": "/latest/firmware/firmware_interface",
     "relUrl": "/firmware/firmware_interface"
-  },"10": {
+  },"21": {
     "doc": "Firmware Interface",
     "title": "Safety Features",
     "content": "Pressure Runaway Watchdog . Looks at the pressure in all of the currently active channels, and immediately vents all channels if any channel goes above a configurable maximum. Things can get damaged if the pressure were to accidentally reach too high, so this always runs. To set the maximum pressures: . | “MAXP;[some value]” - Set the pressure where the watchdog should trigger. | . Setpoint Guarding . When in pressure control mode (mode 1), the setpoint is only allowed between some upper and lower bound . | “MAXP;[some value]” - Maximum pressure, same as the watchdog pressure. We don’t allow pressure to be commanded higher than this | “MINP;[some value]” - Minimum pressure. Don’t allow pressures to be set smaller than this. | . ",
     "url": "/latest/firmware/firmware_interface#safety-features",
     "relUrl": "/firmware/firmware_interface#safety-features"
-  },"11": {
+  },"22": {
     "doc": "Firmware Interface",
     "title": "Basic Operation",
     "content": "If someone has configured and flashed this firmware to an arduino for you to use, this is where you should read. System startup . Upon powering on the system, you should send the following commands to resume from where you left off last time: . | “LOAD”. This loads the PID controller settings that were configured for you. (This is automatically executed on startup) | “SET;0;0”. This ensures all channels are set to 0psi immediately before starting. | “MODE;3”. This ensures you are in “pressure control +ramp” mode | . Decide what you want to see . Now you can choose whether you want to see the live pressure output or not . | “ON”. This turns on the live pressure output | “OFF”. This turns off the live pressure output | “TIME; 100” This will set the output time to 100 ms (10 HZ). Feel free ro set this however fast you want it. | . Set pressures and go! . Now you can set pressures and the controller will take you there. It’s as simple as that! . | “SET;#1;#2”. This ramps to the desired pressure (#2) for all channels in #1 seconds. | “SET;#1;#2;#3;…;#N+1”. This sets the desired pressure separately for each channel (assuming you have N channels), and ramps to that pressure over #1 seconds.. | . Saving incoming data . If you want to save the measured pressure, you need to intercept the incoming serial stream. In addition, you need to filter out all of the command echos that happen every time you send a command (like a new setpoint). The simple way - copy &amp; paste . The simple (but cumbersome) way to do this is just to use a serial material (like Arduino’s serial monitor baked into their IDE). | Turn on the data stream with the “ON” command | Do your tests | Turn the stream off with the “OFF” command. | Copy and paste all of the incoming data into a spreadsheet or text file to save and use later. | Don’t forget to delete all of the rows with commands in them (you’ll have to hunt for them). | . The slick way - directly intercept the incoming stream . If you can set up a direct interface to the incoming serial line with MATLAB or python, this is much nicer. Now you can automatically save all the data, and you can filter out command echos. Command echos ALWAYS start with an underscore (“_”) character. This makes it easy to set up a quick if-statement to check if the first character in the incoming line of data is an underscore. ",
     "url": "/latest/firmware/firmware_interface#basic-operation",
     "relUrl": "/firmware/firmware_interface#basic-operation"
-  },"12": {
+  },"23": {
     "doc": "Firmware Interface",
     "title": "Configuring the Firmware",
     "content": "This is where to read if you are setting up this system to be used. We use configuration files in the “config” folder : . Things to change depending on your hardware: . | Number of channels (MAX_NUM_CHANNELS) | Sensor type (set SENSOR_ANALOG and SENSOR_I2C true or false depending on the type you are using.) | Control type (set the types true or false depending on which one you want to use). | Valve pins (set the pairs of pins to use as “channels”) | i2c addresses (if using i2c sensors) | Default controller settings | . NOTE: you might also need to change the number of channels in the “traj” class, since I haven’t found a nice way to make that depend on the config file yet. ",
     "url": "/latest/firmware/firmware_interface#configuring-the-firmware",
     "relUrl": "/firmware/firmware_interface#configuring-the-firmware"
-  },"13": {
+  },"24": {
     "doc": "Firmware Interface",
     "title": "Configuring the PID gains",
     "content": "You can pretty much just use the Ziegler-Nichols method verbatim. ",
     "url": "/latest/firmware/firmware_interface#configuring-the-pid-gains",
     "relUrl": "/firmware/firmware_interface#configuring-the-pid-gains"
-  },"14": {
-    "doc": "Command Spec (v1.0)",
-    "title": "Command Spec (v1.0)",
-    "content": "Stable . | Basic Commands | Control Channels | Controller Settings | Run Trajectories | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v1",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v1"
-  },"15": {
-    "doc": "Command Spec (v1.0)",
-    "title": "Basic Commands",
-    "content": "| Command | Arguments | Description | . | ECHO | [#] | Set whether commands are echoed (bool) | . |   |   | 0 = Off - No commands are echoed back (silent mode) | . |   |   | 1 = On - commands are echoed back on the serial line. Command echos are always preceded by an underscore | . | ON | [none] | Start the live pressure output | . | OFF | [none] | Stop the live pressure output | . | LOAD | [none] | Load settings from onboard storage | . | SAVE | [none] | Save settings to onboard storage | . | MODE | [#] | Set the control mode (bool) | . |   |   | 0 = direct control of valve states | . |   |   | 1 = pressure control using PID and sensors) | . |   |   | 2 = pressure trajectory following | . | TIME | [#] | Set the desired loop time for measurement outputs (in ms) (int) | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v1#basic-commands",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v1#basic-commands"
-  },"16": {
-    "doc": "Command Spec (v1.0)",
-    "title": "Control Channels",
-    "content": "| Command | Arguments | Description | . | CHAN | [#] | Set all channels active or inactive (bool) | . |   |   | 0 = inactive | . |   |   | 1 = active | . |   | [#0;#1;…;#N-1] | Set individual channels active *. Replace “#” with either 1 or 0 for on or off (bool). | . | SET | [#] | Set the pressure setpoint of ALL pressure channels (float). This setting is only used if MODE is set to 1. | . |   | [#0;#1;…;#N-1] | Set the pressure setpoint of individual pressure channels* (float). | . | VALVE | [#] | Set the valve states of ALL pressure channels (float, can be -1.0 → 1.0). This setting is only used if MODE is set to 0. | . |   |   | -1.0 = vent at full speed | . |   |   | 0.0 = idle (both valves in the pair are closed) | . |   |   | 1.0 = pressurize to full input pressure at full speed | . |   | [#0;#1;…;#N-1] | Set the valve state of individual channels* (float). | . When setting things for individual channels, the number of arguments must equal the number of channels. ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v1#control-channels",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v1#control-channels"
-  },"17": {
-    "doc": "Command Spec (v1.0)",
-    "title": "Controller Settings",
-    "content": "| Command | Arguments | Description | . | PID | [#0; #1; #2; #3] | Set the PID gains for one particular channel | . |   |   | #0 = Channel index (int, can be 0 → N-1) | . |   |   | #1 = Proportional gain (float) | . |   |   | #2 = Integral gain (float) | . |   |   | #3 = Derivative gain (float) | . | WINDOW | [#] | Set the dead window for all channels. This is a window around the setpoint in which control is turned off. Default is 0 (control always on) | . |   | [#0;#1;…;#N-1] | Set the dead window for individual channels *. | . When setting things for individual channels, the number of arguments must equal the number of channels. ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v1#controller-settings",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v1#controller-settings"
-  },"18": {
-    "doc": "Command Spec (v1.0)",
-    "title": "Run Trajectories",
-    "content": "| Command | Arguments | Description | . | TRAJCONFIG | [#0; #1; #2] | Set the trajectory settings | . |   |   | #0 = Starting Index (int, can be 0 → max_length-1) | . |   |   | #1 = Trajectory Length (int) | . |   |   | #2 = Wrap the trajectory (bool) | . | TRAJSET | [#0, #1, #2;…;#N+1] | Set the trajectory line by line | . |   |   | #0 = index (int, can be 0 → max_length-1) | . |   |   | #1 = time point (float) | . |   |   | #2;…;#N+1 = pressure setpoints for all channels (float) | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v1#run-trajectories",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v1#run-trajectories"
-  },"19": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Command Spec (v2.0)",
-    "content": "New! . | Basic Commands | Safety Settings | Control Channels | Controller Settings | Set Up Trajectories | Run Trajectories | Others | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2"
-  },"20": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Basic Commands",
-    "content": "| Command | Arguments | Description | . | ECHO | [#] | Set whether commands are echoed (bool) | . |   |   | 0 = Off - No commands are echoed back (silent mode) | . |   |   | 1 = On - commands are echoed back on the serial line. Command echos are always preceded by an underscore | . | ON | [none] | Start the live pressure output | . | OFF | [none] | Stop the live pressure output | . | LOAD | [none] | Load settings from onboard storage | . | SAVE | [none] | Overwrite the current settings profile in onboard storage | . | MODE | [#] | Set the control mode (bool) | . |   |   | 0 = direct control of valve states | . |   |   | 1 = pressure control using PID and sensors) | . |   |   | 2 = pressure trajectory following | . |   |   | 3 = pressure control with ramp from current setpoint to new one | . | TIME | [#] | Set the desired loop time for measurement outputs (in ms) (int) | . | UNITS | [#] | Set the pressure units you want to use (int) | . |   |   | 0 = psi | . |   |   | 1 = kPa | . |   |   | 2 = bar | . |   |   | 3 = atm | . |   | [#0;#1] | Set the input and output units separately | . |   |   | #0 = input units: used for setting setpoints and loading trajectories (int) | . |   |   | #1 = output units: used for displaying data (bool) | . NOTE: Units are converted at the command/output level. Pressures are always internally represented in psi regaurdless of what the units are set to. ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#basic-commands",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#basic-commands"
-  },"21": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Safety Settings",
-    "content": "| Command | Arguments | Description | . | MAXP | [#] | Set the maximum pressure allowed. Pressures are clipped if outside this range when using the “SET” command, but not when loaded as part of a trajectory. (used for the pressure watchdog) | . | MINP | [#] | Set the minimum pressure allowed. Pressures are clipped if outside this range when using the “SET” command, but not when loaded as part of a trajectory. | . | MASTERP | [#] | If a master pressure sensor exists, use it as a watchdog (bool) | . |   |   | 0 = inactive | . |   |   | 1 = active | . |   | [#0;#1] |   | . |   |   | #0 = on/off (bool) | . |   |   | #1 = pressure sensor data output on/off (bool) | . | MASTERMAXP | [#0;#1] | Set the maximum pressure before the master watchdog triggers, as well as the | . |   |   | #0 = maximum pressure threshold (float) | . |   |   | #1 = minimum time above the threshold before watchdog triggers (int) | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#safety-settings",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#safety-settings"
-  },"22": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Control Channels",
-    "content": "| Command | Arguments | Description | . | CHAN | [#] | Set all channels active or inactive (bool) | . |   |   | 0 = inactive | . |   |   | 1 = active | . |   | [#0;#1;…;#N-1] | Set individual channels active *. Replace “#” with either 1 or 0 for on or off (bool). | . | SET | [#0;#1] | Set the pressure setpoint of ALL pressure channels. This setting is only used if MODE is set to 1 or 3. | . |   |   | #0 = ramp time in seconds (float) - only used if MODE is set to 3 | . |   |   | #1 = Setpoint in psi (float) | . |   | [#0;#1;…;#N] | Set the pressure setpoint of individual pressure channels* (float). | . |   |   | #0 = ramp time in seconds (float) - only used if MODE is set to 3 | . |   |   | #1;…;#N = Setpoints for each channel in psi (float) | . | VALVE | [#] | Set the valve states of ALL pressure channels (float, can be -1.0 → 1.0). This setting is only used if MODE is set to 0. | . |   |   | -1.0 = vent at full speed | . |   |   | 0.0 = idle (both valves in the pair are closed) | . |   |   | 1.0 = pressurize to full input pressure at full speed | . |   | [#0;#1;…;#N-1] | Set the valve state of individual channels* (float). | . When setting things for individual channels, the number of arguments must equal the number of channels. ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#control-channels",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#control-channels"
-  },"23": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Controller Settings",
-    "content": "| Command | Arguments | Description | . | PID | [#0; #1; #2; #3] | Set the PID gains for one particular channel | . |   |   | #0 = Channel index (int, can be 0 → N-1) | . |   |   | #1 = Proportional gain (float) | . |   |   | #2 = Integral gain (float) | . |   |   | #3 = Derivative gain (float) | . | WINDOW | [#] | Set the dead window for all channels. This is a window around the setpoint in which control is turned off. Default is 0 (control always on) | . |   | [#0;#1;…;#N-1] | Set the dead window for individual channels *. | . When setting things for individual channels, the number of arguments must equal the number of channels. ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#controller-settings",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#controller-settings"
-  },"24": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Set Up Trajectories",
-    "content": "| Command | Arguments | Description | . | TRAJCONFIG | [#0; #1; #2; #3] | Set the trajectory settings | . |   |   | #0 = Prefix length (int) | . |   |   | #1 = Main trajectory length (int) | . |   |   | #2 = Suffix length (int) | . |   |   | #3 = Run the suffix trajectory after stop (bool) | . | TRAJWRAP | [#] | Wrap the trajectory (bool) (Same functionality can be achieved using TRAJLOOP) | . |   |   | 0 = Off - trajectory excecutes once | . |   |   | 1 = On - loop over and over until stopped | . | TRAJLOOP | [#] | Number of times to loop (int) | . |   |   | -1 = Loop Forever until the TRAJSTOP command is sent | . |   |   | 0 = Skip the main loop | . |   |   | 1,2,… = Do the main loop this many times | . | TRAJSPEED | [#] | Stretch the speed of the trajectory (float) | . |   |   | 1.0 - base speed | . |   |   | &gt;1.0 - Faster than base speed | . |   |   | &lt;1.0 - Slower than base speed (can never be 0; if 0 is sent, no changes are made) | . | TRAJSET | [#0, #1, #2;…;#N+1] | Set the main trajectory line by line | . |   |   | #0 = index (int, can be 0 → max_length-1) | . |   |   | #1 = time point (float) | . |   |   | #2;…;#N+1 = pressure setpoints for each channel (float), where the row is zero-padded if the number of inputs is less than the number of total channels | . | PREFSET | [#0, #1, #2;…;#N+1] | Set the prefix trajectory line by line (works exactly like TRAJSET) | . | SUFFSET | [#0, #1, #2;…;#N+1] | Set the prefix trajectory line by line (works exactly like TRAJSET) | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#set-up-trajectories",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#set-up-trajectories"
   },"25": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Run Trajectories",
-    "content": "| Command | Arguments | Description | . | TRAJSTART | [none] | Start the trajectory from the beginning. Run suffix first, then run trajectory until stop is called or it finishes. If wrapping is set, loop over the main trajectory until stop is called. ) | . | TRAJSTOP | [none] | Stop the trajectory and return to 0 pressure | . | TRAJPAUSE | [none] | Pause the trajectory and hold pressure | . | TRAJRESUME | [none] | Resume the trajectory | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#run-trajectories",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#run-trajectories"
-  },"26": {
-    "doc": "Command Spec (v2.0)",
-    "title": "Others",
-    "content": "| Command | Arguments | Description | . | DEFLOAD | [none] | Load default settings profile from onboard storage | . | DEFSAVE | [none] | Overwrite default settings profile settings to onboard storage | . | LCDTIME | [#] | Set the desired refresh time for the LCD screen if attached (in ms) (int) | . | INTSTART | [#] | Start or stop the controller integrator (bool) | . |   |   | 0 = Off - No integrator | . |   |   | 1 = On - Start the integrator | . ",
-    "url": "/latest/firmware/firmware_commands/fw_cmd_v2#others",
-    "relUrl": "/firmware/firmware_commands/fw_cmd_v2#others"
-  },"27": {
     "doc": "Photo Gallery",
     "title": " Photo Gallery",
     "content": ". | Full Systems | PCB | . ",
     "url": "/latest/gallery#-photo-gallery",
     "relUrl": "/gallery#-photo-gallery"
-  },"28": {
+  },"26": {
     "doc": "Photo Gallery",
     "title": "Full Systems",
     "content": "Version 3.0 . Version 2.0 . Version 1.0 . ",
     "url": "/latest/gallery#full-systems",
     "relUrl": "/gallery#full-systems"
-  },"29": {
+  },"27": {
     "doc": "Photo Gallery",
     "title": "PCB",
     "content": ". ",
     "url": "/latest/gallery#pcb",
     "relUrl": "/gallery#pcb"
-  },"30": {
+  },"28": {
     "doc": "Photo Gallery",
     "title": "Photo Gallery",
     "content": " ",
     "url": "/latest/gallery",
     "relUrl": "/gallery"
-  },"31": {
+  },"29": {
     "doc": "Hardware",
     "title": " Hardware",
     "content": " ",
     "url": "/latest/hardware#-hardware",
     "relUrl": "/hardware#-hardware"
-  },"32": {
+  },"30": {
     "doc": "Hardware",
     "title": "Subsystems",
     "content": ". | Valves | Sensors | Microcontroller | Custom Printed Circuit Board | Mounting Components | Issues | . ",
     "url": "/latest/hardware#subsystems",
     "relUrl": "/hardware#subsystems"
-  },"33": {
+  },"31": {
     "doc": "Hardware",
     "title": "Valves",
     "content": "For smooth pressure control, I chose the EFB-1DV-24-L proportional fill/bleed valve assembly from Clippard Minimatic. Each valve in the pair can handle high flows at reasonable operating pressures (100 liters/min at 50 PSI). They run at 24 V, but can only handle 60 PSI of back-pressure before they crack. For the input shutoff valve, I chose to use the E215E-2C024 2-way Valve from Clippard. The valve can withstand high back-pressure with reasonable flow rates (150 PSI with 70 L/min). These also run at 24 V. To drive all the valves, I am using one mosfet per valve as switches. The valves are then modulated in a smooth way using pulse width modulation (PWM). ",
     "url": "/latest/hardware#valves",
     "relUrl": "/hardware#valves"
-  },"34": {
+  },"32": {
     "doc": "Hardware",
     "title": "Sensors",
     "content": "Main Control Sensors . The pressure control system features 10 channels, requiring 10 pressure sensors, each of which needs to be capable of measuring pressure up to ~ 35 PSI, and vaccum down to -14.5 PSI (full vacuum). After a lot of searching I found the Honeywell SSCSNBN030PDAC5 differential pressure sensor. This sensor measures ±30 PSI over a voltage range of 0.25 V ~ 4.25 V, and we can extend the top end of the range slightly since we can measure up to 5 volts (the accuracy just gets worse as we move past the top of the measurement voltage range). The sensor is abundant and inexpensive at the time of writing, but has a HUGE footprint on a PCB. Input Shutoff Sensor . An addition to the pressure control system in v3.4 is an input shutoff valve for the high-pressure line. The main control valves can only take ~ 60 PSI of back pressure before they break, so we need to prevent anything higher from being supplied. The input shutoff utilizes a positive-pressure sensor to measure the input pressure and shut off the flow if it gets too high. For this, I chose the Honeywell SSCDANN150PGAA5 vented gauge pressure sensor. It can measure up to 150 PSI (more than we should ever be supplying), and has the typical 0.5 V - 4.5 V output range. ",
     "url": "/latest/hardware#sensors",
     "relUrl": "/hardware#sensors"
-  },"35": {
+  },"33": {
     "doc": "Hardware",
     "title": "Microcontroller",
     "content": "I used the Teensy 3.5 MCU because it’s 32 bits with a built-in floating point unit for super fast floating point math (good for real-time control). It also has enough pins . ",
     "url": "/latest/hardware#microcontroller",
     "relUrl": "/hardware#microcontroller"
-  },"36": {
+  },"34": {
     "doc": "Hardware",
     "title": "Custom Printed Circuit Board",
     "content": "I built a custom circuit PCB to breakout signals to my various sensors and solienoid drivers. General Design . This board is designed to be relatively space-efficient while still being modular. It also has everything set up to break out every signal from the Teensy 3.5 to potentially be used later if nessecary. This results in a relatively large board, but it was farily cheap to get it fabricated by OSH Park. Electrical Components . All of the electronic components used on this board can be found on Digikey. Download Electronics BOM . | Part Description | Digikey P/N | Qty | Price Each | . | Motor Drivers |   |   |   | . | Power Barrel Connector Jack 2.10mm ID, 5.50mm OD | CP-059AH-ND | 1 | $0.89 | . | Slide Switch SPDT Through Hole | 679-1877-ND | 1 | $4.39 | . | N-Channel 40V 450mA (Ta) 1W (Tc) Through Hole TO-92-3 | TN0104N3-G-ND | 20 | $0.90 | . |   |   |   |   | . | MCU Power |   |   |   | . | Teensy 3.5 32-Bit MCU Eval Board | 1568-1443-ND | 1 | $26.25 | . | DC-to-DC Converter, Input 8V - 36V, Output 5V 1A | 102-5018-ND | 1 | $2.96 | . | Green 572nm LED Indication - Discrete 2.1V 1206 | 516-3233-1-ND | 1 | $0.53 | . | 150 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805 | RHM150AHCT-ND | 1 | $0.17 | . | 4.7 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805 | 311-4.70KCRCT-ND | 2 | $0.10 | . |   |   |   |   | . | Sensors |   |   |   | . | Pressure Sensor ±30PSI Differential, 0.25 V ~ 4.25 V 4-SIP | 480-5507-ND | 10 | $27.50 | . | Pressure Sensor 150PSI Vented Gauge, 0.5 V ~ 4.5 V 8-DIP | 480-5203-ND | 1 | $23.82 | . | 10 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805 | P20708CT-ND | 11 | $0.30 | . | 20 kOhms ±0.1% 0.25W, 1/4W Chip Resistor 0805 | P20740CT-ND | 11 | $0.30 | . |   |   |   |   | . | Connectors |   |   |   | . | Through Hole 2 pin 0.100” (2.54mm) | WM4800-ND | 2 | $0.84 | . | Receptacle 2 pin 0.100” (2.54mm) | WM2900-ND | 2 | $0.27 | . | Through Hole 3 pin 0.100” (2.54mm) | WM4801-ND | 10 | $0.80 | . | Receptacle 3 pin 0.100” (2.54mm) | WM2901-ND | 10 | $0.23 | . | Tactile Button | CKN9085CT-ND | 3 | $0.31 | . |   |   |   |   | . | Pin Headers (For Teensy) |   |   |   | . | Surface Mount 6 pins (2x3) 0.100” (2.54mm) | 609-5381-1-ND | 1 | $0.35 | . | Surface Mount 8 pins (2x4) 0.100” (2.54mm) | A121623-ND | 1 | $0.46 | . | Surface Mount 10 pins (2x5) 0.100” (2.54mm) | 609-5381-1-ND | 1 | $0.50 | . | Through Hole 24 pins (1x24) 0.100” (2.54mm) | S1012E-24-ND | 4 | $1.28 | . |   |   |   |   | . | Pin Headers (For Board) |   |   |   | . | Through Hole 12 pins (2x6) 0.100” (2.54mm) | S2012E-06-ND | 1 | $0.60 | . | Through Hole 6 socket (2x3) 0.100” (2.54mm) | S7106-ND | 1 | $0.62 | . | Through Hole 10 socket (2x5) 0.100” (2.54mm) | S7108-ND | 1 | $0.71 | . | Through Hole 2 socket (1x3) 0.100” (2.54mm) | S7000-ND | 1 | $0.32 | . | Through Hole 3 socket (1x3) 0.100” (2.54mm) | S7036-ND | 1 | $0.37 | . | Through Hole 4 socket (1x4) 0.100” (2.54mm) | S7002-ND | 1 | $0.45 | . | Through Hole 5 socket (1x5) 0.100” (2.54mm) | S6103-ND | 1 | $0.47 | . | Through Hole 24 socket (1x24) 0.100” (2.54mm) | S7057-ND | 2 | $1.00 | . | 2-pin Jumper | S9001-ND | 11 | $0.10 | . | Crimp pins | WM2512-ND‎ | Lots | $0.09 | . | Crip sockets | ‎WM2517CT-ND‎ | Lots | $0.06 | . ",
     "url": "/latest/hardware#custom-printed-circuit-board",
     "relUrl": "/hardware#custom-printed-circuit-board"
-  },"37": {
+  },"35": {
     "doc": "Hardware",
     "title": "Mounting Components",
     "content": "Store-Bought Components . All of the mounting components used on this board can be found on McMaster-Carr. Download Mounting BOM . | Part Description | McMaster P/N | Qty | Package | Price Each | . | Narrow Head Slotted Screws, Plastic, M3 , 16mm Long | 96295A711 | 1 | Pack of 100 each | 9.63 | . | Narrow Head Slotted Screws, Plastic, M3 , 20mm Long | 96295A712 | 1 | Pack of 100 each | $9.69 | . | Nylon Unthreaded Spacer 6 mm OD, 2 mm Long, for M3 Screw Size | 93657A001 | 12 | Each | $1.07 | . | Nylon Plastic Washer for M3 Screw Size, 3.2 mm ID, 8 mm OD, Black | 95610A530 | 1 | Pack of 100 each | $3.60 | . | Nylon Unthreaded Spacer 4.5 mm OD, 1 mm Long | 93657A501 | 6 | Each | $1.46 | . | Aluminum Female Threaded Hex Standoff 40mm Long, M3 | 95947A500 | 4 | Each | $1.76 | . | Aluminum Male-Female Threaded Hex Standoff 40mm Long, M3 | 98952A401 | 4 | Each | $2.97 | . | Aluminum Male-Female Threaded Hex Standoff 20mm Long, M3 | 98952A118 | 4 | Each | $1.90 | . | Aluminum Female Threaded Hex Standoff 20mm Long, M3 | 95947A016 | 4 | Each | $0.91 | . | Nylon Hex Nut M3 x 0.5 mm Thread, Black | 93800A400 | 1 | Pack of 100 each | $13.82 | . Custom-Made Components . In addition, I laser-cut a flat frame to place everything together in a neat package. Download the DXF - Coming Soon . ",
     "url": "/latest/hardware#mounting-components",
     "relUrl": "/hardware#mounting-components"
-  },"38": {
+  },"36": {
     "doc": "Hardware",
     "title": "Issues",
     "content": "There are many issues (both anticipated and unanticipated) with the current PCB Design (v3.4). Major . | Pressure sensors coming off both sides cause mounting and soldering issues. | makes the board hard to solder (end up soldering underneath other sensors) | makes the board hard to mount (needs 40mm standoffs) | . | Onboard 5V regulator can’t handle spikes in current . | If you turn on the 24V input switch, turn it off, and turn it on again, the 5V regulator will burn itself up. | I just had to removed it, so the Teensy is can ONLY be powered through the USB port. | . | Mounting holes are crowded and not shielded . | I placed components too close to the mounting holes | It’s hard to get bolts thought the holes without shorting components, so I ended up using plastic screws (bad solution) | . | . Minor . | Extra headers for overriding onboard pressure sensors don’t fit . | headers are poorly placed - interfere with sensor seating and mounting | Headers are hacky | . | “Robot” and “Ext” headers don’t fit the Molex connectors they were designed for. | I just mis-calculated the width of these connectors | . | USB port for teensy isn’t supported and has poor placement . | the USB cord just hangs off the teensy board in the middle of the main board | usb coard also covers the power switch. | . | . ",
     "url": "/latest/hardware#issues",
     "relUrl": "/hardware#issues"
-  },"39": {
+  },"37": {
     "doc": "Hardware",
     "title": "Hardware",
     "content": " ",
     "url": "/latest/hardware",
     "relUrl": "/hardware"
-  },"40": {
+  },"38": {
     "doc": "Home",
     "title": "Ctrl-P: Control Pressure (latest)",
     "content": "By Clark Teeple . A custom pneumatic control system featuring smooth control of pressure at a high bandwidth. This work was done as part of a research project at the Harvard Microrobotics Lab. Our goal was to build a system capable of smooth control of pressure to drive our custom soft robotic hands. Publications using this system: . | “A Dexterous Soft Robotic Hand for Delicate In-Hand Manipulation,” S. Abondance, C.B. Teeple, and R.J. Wood, IEEE Robotics and Automation Letters, 2020 . Link PDF . | “Multi-Segment Soft Robotic Fingers Enable Robust Precision Grasping,” C.B. Teeple, T.N. Koutros, M.A. Graule, and R.J. Wood, International Journal of Robotics Research, 2020 . Link PDF . | “Ultragentle Manipulation of Delicate Structures using a Soft Robotic Gripper,” N.R. Sinatra, C.B. Teeple, D.M. Vogt, K.K. Parker, D.F. Gruber, and R.J. Wood, Science Robotics, 2019 (uses a version modified for use with water pressure) . Link PDF . | . ",
     "url": "/latest/#ctrl-p-control-pressure-latest",
     "relUrl": "/#ctrl-p-control-pressure-latest"
-  },"41": {
+  },"39": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "/latest/",
     "relUrl": "/"
-  },"42": {
-    "doc": "Plotting Data",
-    "title": " Plotting Data",
-    "content": "Obselete . The newest version of this interface parses data directly, producing a nicely formatted CSV. | Check out the example | Results of plotting script with real data | . ",
-    "url": "/latest/top-level/plotting-data#-plotting-data",
-    "relUrl": "/top-level/plotting-data#-plotting-data"
-  },"43": {
-    "doc": "Plotting Data",
-    "title": "Check out the example",
-    "content": "The data from the pressure control system is saved in a nonstandard format and needs to be parsed before you can use it. As part of the python interface, there are some utillities designed for parsing data and saving the parsed data. Take a look at the “plot_data.py” example in the Python Interface for more details (copied here for ease). import os from utils.parse_data import DataParser from utils.get_files import get_files_recursively from utils.get_files import get_save_path # Get the desired save path from save_paths.yaml base_path = get_save_path(which='default') # Set the folder to use within the base data folder folder = 'example' # Parse and graph the data, then save it data_path=os.path.join(base_path, folder) filenames = get_files_recursively(data_path, filter_extension='.txt') parser = DataParser(data_path = data_path) for _, filename_rel, full_filename in filenames: print(filename_rel) parser.parse_data(filename_rel) parser.plot(filename = filename_rel.replace('.txt','.png'), ylabel=\"Pressure (psi)\", time_from_zero = True) parser.save_data(filename_rel.replace('.txt','.pkl')) . ",
-    "url": "/latest/top-level/plotting-data#check-out-the-example",
-    "relUrl": "/top-level/plotting-data#check-out-the-example"
-  },"44": {
-    "doc": "Plotting Data",
-    "title": "Results of plotting script with real data",
-    "content": ". ",
-    "url": "/latest/top-level/plotting-data#results-of-plotting-script-with-real-data",
-    "relUrl": "/top-level/plotting-data#results-of-plotting-script-with-real-data"
-  },"45": {
-    "doc": "Plotting Data",
-    "title": "Plotting Data",
-    "content": " ",
-    "url": "/latest/top-level/plotting-data",
-    "relUrl": "/top-level/plotting-data"
-  },"46": {
+  },"40": {
     "doc": "Python Tips",
     "title": " Python Tips",
     "content": ". Set up VSCode as your python IDE . This is the standard way to run this control interface. | Install Python 3 . | On Ubuntu 18.04 and later: Python 3 is already installed | On Windows: Use Anaconda | . | Make a new python virtual environment (call it “ctrl_p”) . | On Ubuntu: use venv sudo apt-get install python3-venv | On Windows: do this inside Anaconda (instructions) | . | Clone the python interface code (you can put it anywhere you want) | Install VSCode | Configure VSCode . | Install the python extension for vscode. | (Windows Only) Set your default terminal to the command prompt (instructions). | Open the “pressure_control_interface” folder from inside vscode. | Set the python virtual environment to use (instructions). | . | Install python package dependencies . | pip install [PACKAGE] | all dependancies for this project are listed in the setup page | . | . ",
     "url": "/latest/top-level/python-tips#-python-tips",
     "relUrl": "/top-level/python-tips#-python-tips"
-  },"47": {
+  },"41": {
     "doc": "Python Tips",
     "title": "Python Tips",
     "content": " ",
     "url": "/latest/top-level/python-tips",
     "relUrl": "/top-level/python-tips"
-  },"48": {
+  },"42": {
+    "doc": "Realtime Control",
+    "title": "Using the pressure_control ROS drivers",
+    "content": ". | Send Trajectories in Realtime | . ",
+    "url": "/latest/ros-driver/tutorial-realtime#using-the-pressure_control-ros-drivers",
+    "relUrl": "/ros-driver/tutorial-realtime#using-the-pressure_control-ros-drivers"
+  },"43": {
+    "doc": "Realtime Control",
+    "title": "Send Trajectories in Realtime",
+    "content": "This is fully implemented now. The implementation is based on the ur_modern_driver for Universal Robots. Documentation is comming soon. For now, feel free to check out the source code and the live_traj_follower launch file. In addition to this rosnode, the realtime trajectory follow has a python library that can be imported in other ros projects, ans seen in my Hand+Arm Package . ",
+    "url": "/latest/ros-driver/tutorial-realtime#send-trajectories-in-realtime",
+    "relUrl": "/ros-driver/tutorial-realtime#send-trajectories-in-realtime"
+  },"44": {
+    "doc": "Realtime Control",
+    "title": "Realtime Control",
+    "content": " ",
+    "url": "/latest/ros-driver/tutorial-realtime",
+    "relUrl": "/ros-driver/tutorial-realtime"
+  },"45": {
     "doc": "ROS Basics",
     "title": "ROS Basics",
     "content": ". | Install ROS | Make a Catkin Workspace | Installing ROS packages | ROS programming paradigms | Running Programs | . ",
     "url": "/latest/ros-driver/ros-basics",
     "relUrl": "/ros-driver/ros-basics"
-  },"49": {
+  },"46": {
     "doc": "ROS Basics",
     "title": "Install ROS",
     "content": "Follow the instructions for installing ROS. You should match the version of ROS to the version of Ubuntu you are using. | Ubuntu 20.04 – ROS Noetic | Ubuntu 18.04 – ROS Melodic | Ubuntu 16.04 – ROS Kinetic | . For this package, you should use the “desktop-full” installation option. Setting up the terminal to play nicely with ROS . Add your ROS installation to your .bashrc file so it gets loaded when every time you open a new terminal: . echo \"source /opt/ros/noetic/setup.bash\" &gt;&gt; ~/.bashrc source ~/.bashrc . ",
     "url": "/latest/ros-driver/ros-basics#install-ros",
     "relUrl": "/ros-driver/ros-basics#install-ros"
-  },"50": {
+  },"47": {
     "doc": "ROS Basics",
     "title": "Make a Catkin Workspace",
     "content": "Follow the tutorial for making a new workspace. I usually create my worskapces in the “Documents” folder rather than the home folder, so step 1 of the tuorial becomes: . mkdir -p ~/Documents/[WORKSPACE NAME]/src cd ~/Documents/[WORKSPACE NAME] catkin_make . Setting up the terminal to play nicely with your new workspace . Add your new catkin workspace to your .bashrc file so it gets loaded when every time you open a new terminal: . echo \"source /home/[USERNAME]/Documents/[WORKSPACE NAME]/devel/setup.bash\" &gt;&gt; ~/.bashrc source ~/.bashrc . where [USERNAME] is your computer’s username, and [WORKSPACE NAME] is the name of your workspace folder. ",
     "url": "/latest/ros-driver/ros-basics#make-a-catkin-workspace",
     "relUrl": "/ros-driver/ros-basics#make-a-catkin-workspace"
-  },"51": {
+  },"48": {
     "doc": "ROS Basics",
     "title": "Installing ROS packages",
     "content": "ROS packages can be installed either using apt-get install if they have official packages (like MoveIt! or Gazebo), or built from source. The pressure controller package must be built from source: . | Clone the repo into the src directory in your catkin workspace. | To build packages, run catkin_make from your workspace folder. (Note: you must run this from the workspace folder, not any subfolders or anywhere else) | . ",
     "url": "/latest/ros-driver/ros-basics#installing-ros-packages",
     "relUrl": "/ros-driver/ros-basics#installing-ros-packages"
-  },"52": {
+  },"49": {
     "doc": "ROS Basics",
     "title": "ROS programming paradigms",
     "content": "ROS has three main programming paradigms it uses to send/recieve messages and do things with them: . | Publishers/Subscribers: Send/Recieve messages to and from topics. | Publishers send data to topics. | Subscribers poll for new messages on particular topics, and perform something when a new message comes in. | . | Services: Event-based programs. These are blocking, so a service MUST finish before the program that called it can move forward. | These should only ever be used for executing tiny calculations or triggering short actions. | . | Action Servers: Event-based programs. A goal is sent to an action server by another node, and the prgram does something in response. This is non-blocking. | Most modern drivers for running real hardware use this type of node (including this package). | . | . Stitching ROS constructs together . Usually, you will have a few ROS objects in the same node, especialy if you are building a “controller” node. For example, maybe you want to send some control signals in response to the pose of an object to do visual servoing. To do this, you would: . | Use an existing driver for doing pose detection (maybe AprilTags with a camera) that publishes the pose of objects in one topic. | Use this pressure_controller_ros driver to control pneumatic pressure as your “control inputs”. This package uses an action server to send commands to the controller. | Build your own control node that: . | Subscribes to the “object pose” topic with a callback function. | Performs one step of your controller in response to each new pose estimate to obtain pressure setpoints from the pose error | Sends new pressure setpoints to the pressure controller by sending a new goal to the “command server” | . | . ",
     "url": "/latest/ros-driver/ros-basics#ros-programming-paradigms",
     "relUrl": "/ros-driver/ros-basics#ros-programming-paradigms"
-  },"53": {
+  },"50": {
     "doc": "ROS Basics",
     "title": "Running Programs",
     "content": "ROS has two main ways to start nodes: . | rosrun starts a single node directly | roslaunch starts several nodes with parameters and arguments as prescribed in launch files. | . Typical ROS drivers (including this pressure controller dirver) actually require several nodes, so usually those are nicely packaged into launch files. You can also combine nodes from various packages into your own launch files to start combinations of different drivers and control nodes. This quickly gets messy though, so sometimes it’s easier and cleaner to just make your own bash files that you run instead. ",
     "url": "/latest/ros-driver/ros-basics#running-programs",
     "relUrl": "/ros-driver/ros-basics#running-programs"
-  },"54": {
+  },"51": {
     "doc": "ROS Driver",
     "title": " ROS Driver",
     "content": ". ",
     "url": "/latest/ros-driver#-ros-driver",
     "relUrl": "/ros-driver#-ros-driver"
-  },"55": {
+  },"52": {
     "doc": "ROS Driver",
     "title": "Dependencies",
     "content": "Hardware . | A pressure control system running my Ctrl-P firmware | A desktop computer running Linux (currently tested only in Ubuntu 18.04) | . Software . | ROS Melodic | The rqt_multiplot package for nice plot layouts and custom axes | Cython HID Library from Trezor: | The Python Control Interface package for this project | Various python libraries: . | All python dependencies are managed in the reqirements file. pip install -r requirements.txt | . | . ",
     "url": "/latest/ros-driver#dependencies",
     "relUrl": "/ros-driver#dependencies"
-  },"56": {
+  },"53": {
     "doc": "ROS Driver",
     "title": "Installation",
     "content": ". | Clone the Python Control Interface package to the src folder of your catkin workspace. | Clone this package to the src folder of your catkin workspace. | Install cython-hid dependencies (as specified in the Cython HID Library) sudo apt-get install python-dev libusb-1.0-0-dev libudev-dev sudo pip install --upgrade setuptools . | In the root folder of this package, run pip install -r requirements.txt to install python dependencies. | In the root folder of your catkin workspace, run catkin_make to enable the custom python modules in this package to work. | . ",
     "url": "/latest/ros-driver#installation",
     "relUrl": "/ros-driver#installation"
-  },"57": {
+  },"54": {
     "doc": "ROS Driver",
     "title": "Usage",
     "content": "This driver is split into two ROS packages: . | pressure_trajectory_ros is where trajectories are set up, built, and stored for execution | pressure_control_ros is the main driver that actually interfaces with the pressure control hardware | . ",
     "url": "/latest/ros-driver#usage",
     "relUrl": "/ros-driver#usage"
-  },"58": {
+  },"55": {
     "doc": "ROS Driver",
     "title": "ROS Driver",
     "content": " ",
     "url": "/latest/ros-driver",
     "relUrl": "/ros-driver"
-  },"59": {
-    "doc": "Tutorial",
-    "title": "Using the pressure_control ROS drivers",
-    "content": ". | Manual pressure control | Build Trajectories | Prepare to Run the Pressure Controller | Run Trajectories Manually | Send Trajectories in Realtime | . This driver is split into two ROS packages: . | pressure_trajectory_ros is where trajectories are set up, built, and stored for execution | pressure_control_ros is the main driver that actually interfaces with the pressure control hardware | . ",
-    "url": "/latest/ros-driver/tutorial#using-the-pressure_control-ros-drivers",
-    "relUrl": "/ros-driver/tutorial#using-the-pressure_control-ros-drivers"
-  },"60": {
-    "doc": "Tutorial",
-    "title": "Manual pressure control",
-    "content": "roslaunch pressure_controller_ros set_setpoint.launch . ",
-    "url": "/latest/ros-driver/tutorial#manual-pressure-control",
-    "relUrl": "/ros-driver/tutorial#manual-pressure-control"
-  },"61": {
-    "doc": "Tutorial",
-    "title": "Build Trajectories",
-    "content": "To build a pressure trajectory, you can either discretize a periodic waveform, or use a set of waypoints. Set Up a Trajectory . | In the “pressure_trajectory_ros” package, browse the “traj_setup” folder. This is where you can set up trajectories to be built. | In the “examples” folder, open “planar2seg_demo.yaml”. This example will produce a triangle wave with some prefix and suffix to that trajectory. | Examine the “settings” section of the file. Here we note that the trajectory is of type “waveform” and it is not designed to be wrapped (repeated over and over). | Examine the “config” section of the file. Here we notice a few things: . | Only channels 1 and 2 are active | The waveform is a triangle wave of frequency 0.25 Hz | The waveform is repeating two times, and each cycle is discretized into 90 sub-samples. | . | Next, we can see the “setpoints” section has some prefix waypoints (which will be executed before the waveform), and suffix waypoints (executed after the waveform). | . Build a Trajectory . Building a trajectory is a single command through roslaunch: . roslaunch pressure_trajectory_ros build_traj.launch profile:=example/planar2seg_demo . Note that you don’t need to include the file extension “.yaml’ . ",
-    "url": "/latest/ros-driver/tutorial#build-trajectories",
-    "relUrl": "/ros-driver/tutorial#build-trajectories"
-  },"62": {
-    "doc": "Tutorial",
-    "title": "Prepare to Run the Pressure Controller",
-    "content": "To begin running the pressure controller, use the following command: . roslaunch pressure_controller_ros bringup.launch profile:=YOUR_CONFIG_PROFILE . In the “config” folder of the “pressure_control_ros” package, you can set up hardware configurations. the “DEBUG.yaml” configuration is a good place to start. Note that you don’t need to include the file extension “.yaml’ . ",
-    "url": "/latest/ros-driver/tutorial#prepare-to-run-the-pressure-controller",
-    "relUrl": "/ros-driver/tutorial#prepare-to-run-the-pressure-controller"
-  },"63": {
-    "doc": "Tutorial",
-    "title": "Run Trajectories Manually",
-    "content": ". | Make sure you have started the pressure control interface: | . roslaunch pressure_controller_ros bringup.launch profile:=DEBUG . | In a new terminal, upload the trajectory: | . roslaunch pressure_controller_ros load_traj.launch profile:=example/planar2seg_demo . | Start running the trajectory: | . roslaunch pressure_controller_ros run_traj.launch . ",
-    "url": "/latest/ros-driver/tutorial#run-trajectories-manually",
-    "relUrl": "/ros-driver/tutorial#run-trajectories-manually"
-  },"64": {
-    "doc": "Tutorial",
-    "title": "Send Trajectories in Realtime",
-    "content": "This is fully implemented now. The implementation is based on the ur_modern_driver for Universal Robots. Documentation is comming soon. For now, feel free to check out the source code and the live_traj_follower launch file. In addition to this rosnode, the realtime trajectory follow has a python library that can be imported in other ros projects, ans seen in my Hand+Arm Package . ",
-    "url": "/latest/ros-driver/tutorial#send-trajectories-in-realtime",
-    "relUrl": "/ros-driver/tutorial#send-trajectories-in-realtime"
-  },"65": {
-    "doc": "Tutorial",
-    "title": "Tutorial",
-    "content": " ",
-    "url": "/latest/ros-driver/tutorial",
-    "relUrl": "/ros-driver/tutorial"
-  },"66": {
+  },"56": {
     "doc": "Hardware Setup",
     "title": " Hardware Setup",
-    "content": ". | Gather your hardware | Set up a new package to store your configs | Build a hardware config file | Build a controller config file | Use an existing plotting config file | . With proper setup, you can treat a group of pressure controllers like one larger device. ",
+    "content": ". | Gather your hardware | Set up a new package to store your configs | Build a hardware config file | . With proper setup, you can treat a group of pressure controllers like one larger device. ",
     "url": "/latest/ros-driver/setup#-hardware-setup",
     "relUrl": "/ros-driver/setup#-hardware-setup"
-  },"67": {
+  },"57": {
     "doc": "Hardware Setup",
     "title": "Gather your hardware",
     "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. This ROS Package is compatible with both serial and raw USB communication. Serial is limited to roughly 50 Hz communication rate to/from the controllers, wheras raw USB (sometimes called HID) is capable of 300 Hz reliably for this system. For more info about configuring communication protocols, check out the firmware documentation. ",
     "url": "/latest/ros-driver/setup#gather-your-hardware",
     "relUrl": "/ros-driver/setup#gather-your-hardware"
-  },"68": {
+  },"58": {
     "doc": "Hardware Setup",
     "title": "Set up a new package to store your configs",
-    "content": "ROS conventions are mixed in terms of the cirrect way to handle user config files interacting with packages. You could just edit the pressure_controller_ros package directly, but that gets messy since now it’s a combination of user settings and package source code. Instead, here’s the perferred method to avoid this: . | Create a new package where all your configs are stored . | From within your catkin workspace, go to the source directory | Make a new package with a name you choose (like “pressure_controller_configs”) that depends on the “pressure_controller_ros” package | Get back to your workspace directory and run catkin_make to build the new package | . cd src catkin_create_pkg pressure_controller_configs pressure_controller_ros cd .. catkin_make . | Add the correct config folders . | Go into your new package | Copy the default config folders from the pressure_control_ros package | . cd src/pressure_controller_configs cp -r $(rospack find pressure_controller_ros)/config . | Make your own launch file referencing the pressure_control_cbt package . | Launch files are located in the launch folder of this package. Take a look there for the arguments you’ll need to pass to each file when you “include” them in your own launch files | Make the launch directory: mkdir launch | Make a new launch file to bringup the pressure controllers bringup_pressure.launch | Note that you can set the “config_package”. Set this to your new package: “pressure_controller_configs”. This tells the startup routine where to look for your config files. | . | When starting up the pressure controllers, use this new launch file rather than the one in the original package. roslaunch pressure_controller_configs bringup_pressure.launch profile:=[YOUR PROFILE] hw_profile:=[YOUR HARDWARE PROFILE] . | . ",
+    "content": "ROS conventions are mixed in terms of the correct way to handle user config files interacting with packages. You could just edit the pressure_controller_ros package directly, but that gets messy since that would create a combination of user settings and package source code. Instead, here’s the perferred method to avoid this: . | Create a new package where all your configs are stored . | From within your catkin workspace, go to the source directory | Make a new package with a name you choose (like “pressure_controller_configs”) that depends on the “pressure_controller_ros” package | Get back to your workspace directory and run catkin_make to build the new package | . cd src catkin_create_pkg pressure_controller_configs pressure_controller_ros cd .. catkin_make . | Add the correct config folders . | Go into your new package | Copy the default config folders from the pressure_control_ros package | . cd src/pressure_controller_configs cp -r $(rospack find pressure_controller_ros)/config . | Make your own launch file referencing the pressure_control_cbt package . | Launch files are located in the launch folder of this package. Take a look there for the arguments you’ll need to pass to each file when you “include” them in your own launch files | Make the launch directory: mkdir launch | Make a new launch file to bringup the pressure controllers bringup_pressure.launch | Note that you can set the “config_package”. Set this to your new package: “pressure_controller_configs”. This tells the startup routine where to look for your config files. | . | When starting up the pressure controllers, use this new launch file rather than the one in the original package. roslaunch pressure_controller_configs bringup_pressure.launch profile:=[YOUR PROFILE] hw_profile:=[YOUR HARDWARE PROFILE] . | . ",
     "url": "/latest/ros-driver/setup#set-up-a-new-package-to-store-your-configs",
     "relUrl": "/ros-driver/setup#set-up-a-new-package-to-store-your-configs"
-  },"69": {
+  },"59": {
     "doc": "Hardware Setup",
     "title": "Build a hardware config file",
-    "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “pressure_controller_ros” » “config” » “hardware”. Hardware config fields . | Native USB (HID) Settings (Only required for devices in HID mode) . | vendor_id - (int) Vendor ID number (unique to MCU manufacturer) | product_id - (int) Product ID number (unique to MCU board type) | serial_number - (int or str) Serial number (unique to each device) | . | Serial Settings (Only required for devices in serial mode) . | devname - (str) Device name (ttyACM# or ttyUSB#) | baudrate - (int) Baud Rate (standard is 115200 baud) | . | Common Settings . | num_channels - (int) Number of control channels the device has | cmd_spec - (str) Command specification number to use | cmd_format - (str) String format for data to be sent to the controller | . | . Examples . Here’s an example of a hardware config with 2 pressure controllers in HID mode . devices: # The first controller - vendor_id: 5824 product_id: 1158 serial_number: 6467390 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' # The second controller - vendor_id: 5824 product_id: 1158 serial_number: 5587550 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Here’s an example of a hardware config with 1 pressure controller in serial mode . devices: - devname: /dev/ttyACM0 baudrate: 115200 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Determine device information . To set up device information in your hardware config file, just run a terminal command and copy the information. | Start a new hardware config file (must be located in the “config” » “hardware” of either this package or your own package) | Plug one pressure controller in at a time. | Run a ROS command to get information about USB devices: . | rosrun pressure_controller_ros find_hid_devices.py | rosrun pressure_controller_ros find_serial_devices.py | . | From the list, find the required device identifiers and copy them into your hardware config. | Plug in the next pressure controller and repeat steps 2-4. | . Usage . This ROS driver takes care of the low-level details of coordinating pressure control devices: . | low-level splitting of commands to different controllers | Synchronizing timers on all controllers | Stitching data from several controlers back into a single “data” signal (gets published to a ROS topic) | . With proper setup, you can treat a group of pressure controllers like one larger device with the combined number of channels. ",
+    "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “pressure_controller_ros” » “config” » “hardware”. Hardware config fields . | Native USB (HID) Settings (Only required for devices in HID mode) . | vendor_id (int) - Vendor ID number (unique to MCU manufacturer) | product_id (int) - Product ID number (unique to MCU board type) | serial_number (int or str) - Serial number (unique to each device) | . | Serial Settings (Only required for devices in serial mode) . | devname (str) - Device name (ttyACM# or ttyUSB#) | baudrate (int) - Baud Rate (standard is 115200 baud) | . | Common Settings . | num_channels (int) - Number of control channels the device has | cmd_spec (str) - Command specification number to use | cmd_format (str) - String format for data to be sent to the controller | . | . Examples . Here’s an example of a hardware config with 2 pressure controllers in HID mode . devices: # The first controller - vendor_id: 5824 product_id: 1158 serial_number: 6467390 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' # The second controller - vendor_id: 5824 product_id: 1158 serial_number: 5587550 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Here’s an example of a hardware config with 1 pressure controller in serial mode . devices: - devname: /dev/ttyACM0 baudrate: 115200 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Determine device information . To set up device information in your hardware config file, just run a terminal command and copy the information. | Start a new hardware config file (must be located in the “config” » “hardware” of either this package or your own package) | Plug one pressure controller in at a time. | Run a ROS command to get information about USB devices: . | rosrun pressure_controller_ros find_hid_devices.py | rosrun pressure_controller_ros find_serial_devices.py | . | From the list, find the required device identifiers and copy them into your hardware config. | Plug in the next pressure controller and repeat steps 2-4. | . Usage . This ROS driver takes care of the low-level details of coordinating pressure control devices: . | low-level splitting of commands to different controllers | Synchronizing timers on all controllers | Stitching data from several controlers back into a single “data” signal (gets published to a ROS topic) | . With proper setup, you can treat a group of pressure controllers like one larger device with the combined number of channels. ",
     "url": "/latest/ros-driver/setup#build-a-hardware-config-file",
     "relUrl": "/ros-driver/setup#build-a-hardware-config-file"
-  },"70": {
-    "doc": "Hardware Setup",
-    "title": "Build a controller config file",
-    "content": "Set up all the control settings (like which channels are on, PID gains, etc.). | Create a new control config file based on an existing one (must be located in the config/control folder of your package) . | Configuration files are “.yaml” files with a few specific fields related to actual pressure control | . | Update relevant fields for your hardware setup | . Control config fields . | Channel Settings . | num_channels - (int) Number of channels total (across all devices) | states - (list(bool)) The On/Off state of each channel. (Length of this list much match num_channels) | . | data_loop_time - (int) The period (in ms) to send data back from the controllers. (min value is ~4ms) | PID Settings . | all_equal - (bool) Decide whether the PID gains of all channels are set the othe same values | integrator_start - (float) The window around the setpoint in which integration is allowed. (This prevents integrator windup) | values - (list(float)) The actual P, I, and D values (in that order). Set to a list of length 3 to give all channels the same gains. Set to a list of lists to specify gains on a per-channel basis (much include values for all channels if using this option). | . | max_pressure - (float) Maximum pressure (in psi) before software watchdog kicks in. Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels). | min_pressure - (float) Minimum pressure (in psi). Setpoints are clipped to this value. Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels). | transitions - (float) Default transition time (in sec) when sending single setpoints to the controller | echo - (bool) Turn debugging command echos on (usually this should be false) | . ",
-    "url": "/latest/ros-driver/setup#build-a-controller-config-file",
-    "relUrl": "/ros-driver/setup#build-a-controller-config-file"
-  },"71": {
-    "doc": "Hardware Setup",
-    "title": "Use an existing plotting config file",
-    "content": "We use the rqt_multiplot package for plotting which lets you make/use config files to set up plot groups. You can use an existing profile for now (in the config/plotting folder), and modify/make a new one from inside the plotting window when it’s running. ",
-    "url": "/latest/ros-driver/setup#use-an-existing-plotting-config-file",
-    "relUrl": "/ros-driver/setup#use-an-existing-plotting-config-file"
-  },"72": {
+  },"60": {
     "doc": "Hardware Setup",
     "title": "Hardware Setup",
     "content": " ",
     "url": "/latest/ros-driver/setup",
     "relUrl": "/ros-driver/setup"
-  },"73": {
+  },"61": {
     "doc": "Hardware Setup",
     "title": " Hardware Setup",
     "content": ". | Gather your hardware | Upload compatible firmware | Determine the device names | Build a hardware config file | Set up the communication config file | . ",
     "url": "/latest/top-level/setup#-hardware-setup",
     "relUrl": "/top-level/setup#-hardware-setup"
-  },"74": {
+  },"62": {
     "doc": "Hardware Setup",
     "title": "Gather your hardware",
     "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. All you need is several USB ports (or a USB 3.0 hub). Plug all the pressure controllers in via USB and you’re all set to go. ",
     "url": "/latest/top-level/setup#gather-your-hardware",
     "relUrl": "/top-level/setup#gather-your-hardware"
-  },"75": {
+  },"63": {
     "doc": "Hardware Setup",
     "title": "Upload compatible firmware",
     "content": "This Python interface is only compatible with serial communication, so be sure to use the “serial” option (not the “HID” option) when flashing firmware to the pressure controllers. If you have previously used the controllers in “HID” mode with ROS, you will need re-flash the “Serial” mode. ",
     "url": "/latest/top-level/setup#upload-compatible-firmware",
     "relUrl": "/top-level/setup#upload-compatible-firmware"
-  },"76": {
+  },"64": {
     "doc": "Hardware Setup",
     "title": "Determine the device names",
     "content": "Use a serial terminal of some sort to check what the devices are called (Arduino IDE works well). | In Ubuntu and MacOS, devices begin with /dev/tty*. For example, /dev/ttyACM0 or something similar. | In Windows, devices begin with COM*. For example, COM4 or something similar. | . ",
     "url": "/latest/top-level/setup#determine-the-device-names",
     "relUrl": "/top-level/setup#determine-the-device-names"
-  },"77": {
+  },"65": {
     "doc": "Hardware Setup",
     "title": "Build a hardware config file",
     "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “config” » “hardware”. Single Controller . If you are using only a single controller, you only need one device in your list. This is what most people will use. - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . Multiple Controllers . If you want to chain together multiple controllers, simply define multiple devices: . - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . ",
     "url": "/latest/top-level/setup#build-a-hardware-config-file",
     "relUrl": "/top-level/setup#build-a-hardware-config-file"
-  },"78": {
+  },"66": {
     "doc": "Hardware Setup",
     "title": "Set up the communication config file",
     "content": "With our hardware configuration set up, the last step is to tell the system which hardware configuration you are using. | Go to “config” » “comms” » “comms_config.yaml”. | Set the hardware item to the name of the hardware config file you just made | Set the devnames item to a list of device names. The number of devices needs to be the same as the number of hardware devices you defined in your hardware config file. | . Example: . hardware: \"double3.4\" devnames: [\"/dev/ttyACM0\", \"/dev/ttyACM1\"] . The devnames are separate from the rest of the hardware config becasue sometimes device names change for no reason in Ubuntu and Windows. ",
     "url": "/latest/top-level/setup#set-up-the-communication-config-file",
     "relUrl": "/top-level/setup#set-up-the-communication-config-file"
-  },"79": {
+  },"67": {
     "doc": "Hardware Setup",
     "title": "Hardware Setup",
     "content": " ",
     "url": "/latest/top-level/setup",
     "relUrl": "/top-level/setup"
-  },"80": {
+  },"68": {
     "doc": "TODO",
     "title": " TODO",
     "content": "Take a look at the current issues with these packages, and feel free to request more features! . Firmware Issues Python Inteface Issues ROS Driver Issues . Issues With This Documentation . ",
     "url": "/latest/todo#-todo",
     "relUrl": "/todo#-todo"
-  },"81": {
+  },"69": {
     "doc": "TODO",
     "title": "TODO",
     "content": " ",
     "url": "/latest/todo",
     "relUrl": "/todo"
-  },"82": {
+  },"70": {
     "doc": "Python Interface",
     "title": " Python Interface",
     "content": " ",
     "url": "/latest/top-level#-python-interface",
     "relUrl": "/top-level#-python-interface"
-  },"83": {
+  },"71": {
     "doc": "Python Interface",
     "title": "Dependencies",
     "content": "Hardware . | An arduino-compatible microcontroller (confirmed working on Arduino Mega and Teensy 3.5) | . Software . | Python 3 (use python 3.6 or newer) | Various python libraries, specified in requirements.txt: pip install -r requirements.txt | . ",
     "url": "/latest/top-level#dependencies",
     "relUrl": "/top-level#dependencies"
-  },"84": {
+  },"72": {
     "doc": "Python Interface",
     "title": "Installation",
     "content": "Set up a python IDE . Follow the instructions in the Python Tips page. Clone the code . Already have an IDE you like (like VSCode or PyCharm)? . Download the Python Interface . ",
     "url": "/latest/top-level#installation",
     "relUrl": "/top-level#installation"
-  },"85": {
+  },"73": {
     "doc": "Python Interface",
     "title": "Usage",
     "content": "Settings Locations . | Scripts are located in “pressure_control_run” | Controller configurations are located in the “config” folder | Trajectory setup files are located in the “traj_setup” folder | After trajectories are built, auto-generated files are located in the “traj_built” folder | . Run Python Scripts . Run python scripts through the terminal: python file_name.py [arg1] [arg2] . ",
     "url": "/latest/top-level#usage",
     "relUrl": "/top-level#usage"
-  },"86": {
+  },"74": {
     "doc": "Python Interface",
     "title": "Python Interface",
     "content": " ",
     "url": "/latest/top-level",
     "relUrl": "/top-level"
-  },"87": {
+  },"75": {
     "doc": "Tutorial",
     "title": " Tutorial",
-    "content": "NEW! . Works with multi-device setup! . | Common usage example: | Set up your hardware | Configure the pressure controller. | Set pressure manually | Run a pre-built trajectory on the controller | . Run these commands in a linux terminal. If you are using an IPython console (like in spyder), replace python with run at the beginning of commands. ",
+    "content": "NEW! . Works with multi-device setup! . | Common usage example: | Set up your hardware | Configure the pressure controller. | Set pressure manually | Run a pre-built trajectory on the controller | Plot Results | . Run these commands in a linux terminal. If you are using an IPython console (like in spyder), replace python with run at the beginning of commands. ",
     "url": "/latest/top-level/tutorial#-tutorial",
     "relUrl": "/top-level/tutorial#-tutorial"
-  },"88": {
+  },"76": {
     "doc": "Tutorial",
     "title": "Common usage example:",
     "content": "Commands in the console . # Build your trajectory python build_traj.py example/setpoint_traj_demo # Configure the pressure controller with the default profile # This step only needs to be run when you are updating parameters. # The last profile to be configured is always loaded on startup python config.py default # Load the built trajectory onto the controller python send_pre_built.py example/setpoint_traj_demo # Run the trajectory 1 time, and speed-stretch by 2.5x (faster) python run_pre_built.py 1 2.5 . example/setpoint_traj_demo.yaml: . settings: traj_type: 'interp' # Types include: 'waveform', 'interp' # Place all of the type-specific settings in here config: interp_type: none # can be: 'linear', 'cubic' setpoints: # Setpoints are only used if you are doing an interpolation # [time (sec), pressure 1,2...N (psi)] main: - [0.0, 10, 12, 14, 16] - [1.0, 20, 0, 0, 0] - [2.0, 0, 20, 0, 0] - [3.0, 0, 0, 20, 0] - [4.0, 0, 0, 0, 20] - [5.0, 10, 12, 14, 16] # The prefix and suffix are optional. # If you don't want them, simply exclude them and the program will know what to do. prefix: - [0.000, 0, 0, 0, 0] - [1.0, 10, 12, 14, 16] suffix: - [2.000, 10, 12, 14, 16] - [3.0, 0, 0, 0, 0] . Output . ",
     "url": "/latest/top-level/tutorial#common-usage-example",
     "relUrl": "/top-level/tutorial#common-usage-example"
-  },"89": {
+  },"77": {
     "doc": "Tutorial",
     "title": "Set up your hardware",
     "content": "Follow the instructions in Hardware Setup. Once configured, you can pretend you have only one pressure controller with n channels. If you have multiple devices configured together, then you treat them as one controller with the total number of channels of all devices combined. This python interface does the hard work of splitting up commands to all the controllers, so for all intents and purposes, you just pretend you have one controller with a bunch of channels. ",
     "url": "/latest/top-level/tutorial#set-up-your-hardware",
     "relUrl": "/top-level/tutorial#set-up-your-hardware"
-  },"90": {
+  },"78": {
     "doc": "Tutorial",
     "title": "Configure the pressure controller.",
     "content": "This sets a bunch of configuration settings on the controller (like which channels are on, PID gains, etc.). | Create a config file in the config folder. | Configuration files are “.yaml” files with a few specific fields (see examples in the config folder) | config files must be stored in the config folder. | . | python config.py [config_file] . | config_file - name of the configuration file you want to use. It can include folders too. | . | . ",
     "url": "/latest/top-level/tutorial#configure-the-pressure-controller",
     "relUrl": "/top-level/tutorial#configure-the-pressure-controller"
-  },"91": {
+  },"79": {
     "doc": "Tutorial",
     "title": "Set pressure manually",
     "content": "python set_pressure.py [p1] [p2] ... [pn] . | no arguments - Pressure is set to 0 | p1 - Pressure [in psi] - To set all pressure equal, send one value | p1, p2, …,pn - Pressure [in psi] - To set pressure individually, the number of pressure sent must equal the number of channels (n). | . Once running, use keyboard keys to move the pressure up and down. ",
     "url": "/latest/top-level/tutorial#set-pressure-manually",
     "relUrl": "/top-level/tutorial#set-pressure-manually"
-  },"92": {
+  },"80": {
     "doc": "Tutorial",
     "title": "Run a pre-built trajectory on the controller",
     "content": "Set up a trajectory . | Create a trajectory setup file in the traj_setup folder. | Trajectory setup files are “.yaml” files with a few specific fields (see examples in the traj_setup/example folder) | Trajectory setup files must be stored in the traj_setup folder (you can use subfolders too) | . | There are three basic parts in a trajctory . | main - The looping part | prefix - Run once at the start of the trajectory | suffix - Run once after the looping part is finished. | . | To forgo suffixes or prefixes, just leave them blank in the file (or delete them entirely) . | A Note about smoothness: . | In the “main” part of the trajectory, the first and last lines must be the same if you want to make a smooth looping trajectory. At the lowest level, the controller jumps directly from the last line to the first line when looping. | For a smooth prefix » main transition, the last line in the “prefix” and first line of the “main” should be the same. | Transitions to the suffix are handled dynamically, starting from the setpoint at the exact time the suffix is requested. | If the main part finishes, the final line of “main” is coppied to time 0.0s in the suffix | If the main part is interrupted, the current setpoint (including interpolated values) is copied to time 0.0s of the suffix. | In the example above, we dynamically transition to the first line of the suffix from wherever the setpoint currently is over 2.0 seconds. | . | . | . Build a trajectory . | python build_traj.py [traj_profile] . | traj_profile - name of trajectory you want to build. It can include folders too. | . | The trajectory is built, and a “.traj” file is saved in the traj_built folder | . Load the pre-built trajectory onto the controller . python send_pre_built.py [traj_profile] . | traj_profile - name of trajectory you just built | . You must build trajectories from setup files before you can send them. Do not try to create trajectory files yourself. Run the current trajectory . Execute the pressure trajectory you just sent . python run_pre_built.py [num_cycles] [speed_factor] . | num_cycles - Loop the main part of the trajectory this number of times. (Set to -1 for endless loop) | speed_factor - Speed-stretch a trajectory (larger speed factor runs the trajectory faster) | . This command also saves the incomming data from the pressure controller in a csv: . [time in ms] [setpoints p1 ...... pn] [measured p1 ....... pn] [input pressure] [command echos] 3848, 0.00, 0.00, 0.00, 0.00, 0.10, 0.05, 0.03, -0.07, 30.00, , , 3858, 0.50, 0.50, 0.50, 0.50, 0.45, 0.51, 0.46, 0.39, 29.50, , , 3868, , , , , , , , , , time, 10 . Spaces are shown in this example for clarity, but in real csv’s there are no spaces. | For pressures, data will always be returned from all channels, even if they are turned off in the configuration. | If multiple controllers are configured together, one file per hardware device is created, with the suffix “_00X” appended to the output filename for each device. | Data for all devices is automatically synced. | . ",
     "url": "/latest/top-level/tutorial#run-a-pre-built-trajectory-on-the-controller",
     "relUrl": "/top-level/tutorial#run-a-pre-built-trajectory-on-the-controller"
-  },"93": {
+  },"81": {
+    "doc": "Tutorial",
+    "title": "Plot Results",
+    "content": "Since data is saved in CSV files, it’s easy to plot them with your favorite plotting utility. ",
+    "url": "/latest/top-level/tutorial#plot-results",
+    "relUrl": "/top-level/tutorial#plot-results"
+  },"82": {
     "doc": "Tutorial",
     "title": "Tutorial",
     "content": " ",
