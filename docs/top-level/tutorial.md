@@ -171,4 +171,14 @@ _Spaces are shown in this example for clarity, but in real csv's there are no sp
 - If multiple controllers are configured together, one file per hardware device is created, with the suffix **"_00X"** appended to the output filename for each device.
 - Data for all devices is automatically synced.
 
+## Plot Results
+
+Since data is saved in CSV files, it's easy to plot them with your favorite plotting utility.
+
+<img alt="We can graph setpoints and measured pressures"
+     src="{{ "assets/img/pressure_graph0.png" | absolute_url }}"
+     class="gallery gallery-50" />
+<img alt="We can graph setpoints and measured pressures"
+     src="{{ "assets/img/pressure_graph1.png" | absolute_url }}"
+     class="gallery gallery-50" />
 

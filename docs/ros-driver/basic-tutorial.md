@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Tutorial
+title: Basic Tutorial
 parent: ROS Driver
 permalink: /ros-driver/tutorial
-nav_order: 3
+nav_order: 4
 ---
 
 # Using the pressure_control ROS drivers
@@ -18,7 +18,34 @@ This driver is split into two ROS packages:
 - **pressure_trajectory_ros** is where trajectories are set up, built, and stored for execution
 - **pressure_control_ros** is the main driver that actually interfaces with the pressure control hardware
 
+
+## Set up your hardware and control configs
+Follow the [ROS Hardware Setup]({{ site.baseurl }}{% link docs/ros-driver/setup.md %}) instructions to set up your hardware configuration, and the [Control Setup]({{ site.baseurl }}{% link docs/ros-driver/control-setup.md %}) instructions to set up your control config files. 
+
+
+### Use an existing plotting config file
+We use the [rqt_multiplot](http://wiki.ros.org/rqt_multiplot) package for plotting which lets you make/use config files to set up plot groups. You can use an existing profile for now (in the `config/plotting` folder), and modify/make a new one from inside the plotting window when it's running.
+
+
+## Start the Pressure Controller
+To begin running a pressure controller, use the following command:
+
+`roslaunch pressure_controller_ros bringup.launch profile:=YOUR_CONFIG_PROFILE`
+
+In the "**config**" folder of the "**pressure_control_ros**" package, you can set up hardware configurations. the "*DEBUG.yaml*" configuration is a good place to start.
+
+*Note that you don't need to include the file extension ".yaml'*
+
+
+
 ## Manual pressure control
+
+Note: This doesn't work very well
+{: .fs-4 .label .label-yellow }
+This program attempts to use the terminal as a GUI. This ends up being very clunky and sometimes things go wrong. A GUI-based manual control program is planned for version 3.0.
+
+### Run the manual control program
+
 `roslaunch pressure_controller_ros set_setpoint.launch`
 
 
@@ -43,15 +70,6 @@ Building a trajectory is a single command through roslaunch:
 
 *Note that you don't need to include the file extension ".yaml'*
 
-## Prepare to Run the Pressure Controller
-To begin running the pressure controller, use the following command:
-
-`roslaunch pressure_controller_ros bringup.launch profile:=YOUR_CONFIG_PROFILE`
-
-In the "**config**" folder of the "**pressure_control_ros**" package, you can set up hardware configurations. the "*DEBUG.yaml*" configuration is a good place to start.
-
-*Note that you don't need to include the file extension ".yaml'*
-
 
 ## Run Trajectories Manually
 1. Make sure you have started the pressure control interface: 
@@ -65,6 +83,3 @@ In the "**config**" folder of the "**pressure_control_ros**" package, you can se
 3. Start running the trajectory:
 
 `roslaunch pressure_controller_ros run_traj.launch`
-
-## Send Trajectories in Realtime
-This is fully implemented now. The implementation is based on the [ur_modern_driver](https://github.com/ros-industrial/ur_modern_driver) for Universal Robots. Documentation is comming soon. For now, feel free to check out the [source code](https://github.com/cbteeple/pressure_control_cbt/tree/master/pressure_controller_ros/src/pressure_controller_ros) and the [live_traj_follower launch file](https://github.com/cbteeple/pressure_control_cbt/blob/master/pressure_controller_ros/launch/live_traj_follower.launch). In addition to this rosnode, the realtime trajectory follow has a python library that can be imported in other ros projects, ans seen in my [Hand+Arm Package](https://github.com/cbteeple/hand_arm_cbt/blob/master/scripts/pick_place_run_multi.py)

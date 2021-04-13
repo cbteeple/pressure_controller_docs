@@ -29,7 +29,7 @@ This ROS Package is compatible with both serial and raw USB communication. Seria
 
 
 ## Set up a new package to store your configs
-ROS conventions are mixed in terms of the cirrect way to handle user config files interacting with packages. You _could_ just edit the pressure_controller_ros package directly, but that gets messy since now it's a combination of user settings and package source code. Instead, here's the perferred method to avoid this:
+ROS conventions are mixed in terms of the correct way to handle user config files interacting with packages. You _could_ just edit the pressure_controller_ros package directly, but that gets messy since that would create a combination of user settings and package source code. Instead, here's the perferred method to avoid this:
 
 1. Create a new package where all your configs are stored
 	1. From within your catkin workspace, go to the source directory
@@ -73,16 +73,16 @@ Browse some examples in **"pressure_controller_ros"** >> **"config"** >> **"hard
 
 ### Hardware config fields
 - Native USB (HID) Settings (_Only required for devices in HID mode_)
-	- **vendor_id** - (_int_) Vendor ID number (unique to MCU manufacturer)
-    - **product_id** - (_int_) Product ID number (unique to MCU board type)
-    - **serial_number** -  (_int_ or _str_) Serial number (unique to each device)
+	- **vendor_id** (`int`) - Vendor ID number (unique to MCU manufacturer)
+    - **product_id** (`int`) - Product ID number (unique to MCU board type)
+    - **serial_number** (`int` or `str`) - Serial number (unique to each device)
 - Serial Settings (_Only required for devices in serial mode_)
-	- **devname** - (_str_) Device name (ttyACM# or ttyUSB#)
-	- **baudrate** - (_int_) Baud Rate (standard is 115200 baud)
+	- **devname** (`str`) - Device name (ttyACM# or ttyUSB#)
+	- **baudrate** (`int`) - Baud Rate (standard is 115200 baud)
 - Common Settings
-    - **num_channels** - (_int_) Number of control channels the device has
-    - **cmd_spec** - (_str_) Command specification number to use
-    - **cmd_format** - (_str_) String format for data to be sent to the controller
+    - **num_channels** (`int`) - Number of control channels the device has
+    - **cmd_spec** (`str`) - Command specification number to use
+    - **cmd_format** (`str`) - String format for data to be sent to the controller
 
 ### Examples
 Here's an example of a hardware config with 2 pressure controllers in HID mode
@@ -134,29 +134,3 @@ This ROS driver takes care of the low-level details of coordinating pressure con
 - Stitching data from several controlers back into a single "data" signal (gets published to a ROS topic)
 
 With proper setup, you can treat a group of pressure controllers like one larger device with the combined number of channels.
-
-
-## Build a controller config file
-Set up all the control settings (like which channels are on, PID gains, etc.).
-
-1. Create a new control config file based on an existing one (must be located in the `config/control` folder of your package)
-    - Configuration files are "*.yaml*" files with a few specific fields related to actual pressure control
-2. Update relevant fields for your hardware setup
-
-### Control config fields
-- Channel Settings
-	- **num_channels** - (_int_) Number of channels total (across all devices)
-	- **states** - (_list(bool)_) The On/Off state of each channel. (Length of this list much match _num_channels_)
-- **data_loop_time** -  (_int_) The period (in ms) to send data back from the controllers. (min value is ~4ms)
-- PID Settings
-	- **all_equal** - (_bool_) Decide whether the PID gains of all channels are set the othe same values
-	- **integrator_start** - (_float_) The window around the setpoint in which integration is allowed. (This prevents integrator windup)
-	- **values** - (_list(float)_) The actual P, I, and D values (in that order). _Set to a list of length 3 to give all channels the same gains. Set to a list of lists to specify gains on a per-channel basis (much include values for all channels if using this option)._
-- **max_pressure** - (_float_) Maximum pressure (in psi) before software watchdog kicks in. _Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels)._
-- **min_pressure** - (_float_) Minimum pressure (in psi). Setpoints are clipped to this value. _Set to a number to apply the same value to all channels. Set to a list to specify values on a per-channel basis (much include values for all channels)._
-- **transitions** - (_float_) Default transition time (in sec) when sending single setpoints to the controller
-- **echo** - (_bool_) Turn debugging command echos on (usually this should be false)
-
-
-## Use an existing plotting config file
-We use the [rqt_multiplot](http://wiki.ros.org/rqt_multiplot) package for plotting which lets you make/use config files to set up plot groups. You can use an existing profile for now (in the `config/plotting` folder), and modify/make a new one from inside the plotting window when it's running.
