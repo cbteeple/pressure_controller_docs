@@ -43,19 +43,40 @@ Set up all the control settings (like which channels are on, PID gains, etc.).
 ## Tune valve PWM offsets
 The PWM offsets allow us to do smooth control starting from the voltages at which the valves just barely crack open. This ensures we can actually control the flow rate smoothly. You will need to re-calibrate these every so often as the resistance and mechanical parts of the valves will slightly change over time.
 
+![Plot of the "setpoint_traj_demo" trajectory]({{ "assets/img/valve_offset_cal.png" | absolute_url }})
+
 1. Bringup the pressure controller(s)
-	- `roslaunch pressure_controller_ros bringup_only.launch hw_profile:=[HARDWARE CONFIG]`
-2. Initialize your control config
-	1. Set all `valve_offset` values to thier default values (for the Clippard valves used in this project, _**225**_ works well to start)
-	2. Save, then send the config to the controller: `roslaunch pressure_controller_ros config.launch profile:=[CONTROL CONFIG]`
-3. Apply a small step change in pressure to all channels
-	- `roslaunch pressure_controller_ros set_setpoint.launch`
-4. Listen to the valves, observe the resulting data, and update your config
+	
+	```bash
+	roscore &
+	roslaunch pressure_controller_ros bringupHID.launch  hw_profile:=[HARDWARE CONFIG]  profile:=[CONTROL_CONFIG]
+	```
+
+2. Start up the valve calibration gui (in a new terminal)
+	
+	```bash
+	rosrun pressure_calibrate rqt_pressure_calibrate.py
+	```
+3. Listen to the valves, observe the resulting data, and update your config
 	1. If the valves hum for a short time before you see any actual air flow and there is low-frequency oscillations in pressure, *increase the PWM value* for that channel by ~2-3.
 	2. If the valves click a lot and pressure oscillates rapidly while maintaining a steady pressure, *decrease the PWM value* for that channel by ~2-3.
 	4. You may need to set the voltage offsets differently for the source and vent valve in each channel if (for example) a channel can provide pressure but has trouble venting.
+4. When you're done, close the gui and your new valve offsets will print to the terminal (like this):
+
+	```
+	Final Valve Offsets:
+	[[229, 229], [234, 244], [241, 234], [234, 234], [225, 225], [216, 213], [221, 220], [228, 228]]
+
+	Copy these settings into 'valve_offsets' in your control config file
+	```
 
 Once you tune these values, you should be all set. They are related to properties of the actual valves, not the load you are driving, so you will only need to re-calibrate this avery so often throughout the year.
+
+**IMPORTANT: Remember to either:**
+1. **Copy these values into all of your config files** OR 
+2. **Remove the 'valve_offsets' parameter from your config files.**
+
+These valve offset settings are saved to the controller when you close the gui, so they will be recalled each time the controller is powered up unless you overwrite them by putting them in your config files.
 
 
 ## Tune PID gains
