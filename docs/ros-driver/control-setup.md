@@ -55,7 +55,7 @@ The PWM offsets allow us to do smooth control starting from the voltages at whic
 2. Start up the valve calibration gui (in a new terminal)
 	
 	```bash
-	rosrun pressure_calibrate rqt_pressure_calibrate.py
+	rosrun pressure_controller_setup rqt_calibrate_valves.py 
 	```
 3. Listen to the valves, observe the resulting data, and update your config
 	1. If the valves hum for a short time before you see any actual air flow and there is low-frequency oscillations in pressure, *increase the PWM value* for that channel by ~2-3.

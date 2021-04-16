@@ -28,9 +28,12 @@ We use the [rqt_multiplot](http://wiki.ros.org/rqt_multiplot) package for plotti
 
 
 ## Start the Pressure Controller
-To begin running a pressure controller, use the following command:
+To begin running a pressure controller, use the following commands:
 
-`roslaunch pressure_controller_ros bringup.launch profile:=YOUR_CONFIG_PROFILE`
+```bash
+roscore &
+roslaunch pressure_controller_ros bringupHID.launch  hw_profile:=[HARDWARE CONFIG]  profile:=[CONTROL_CONFIG]
+```
 
 In the "**config**" folder of the "**pressure_control_ros**" package, you can set up hardware configurations. the "*DEBUG.yaml*" configuration is a good place to start.
 
@@ -39,15 +42,60 @@ In the "**config**" folder of the "**pressure_control_ros**" package, you can se
 
 
 ## Manual pressure control
+Setting pressure namually is simple. Just run the gui from a new terminal:
 
-Note: This doesn't work very well
-{: .fs-4 .label .label-yellow }
-This program attempts to use the terminal as a GUI. This ends up being very clunky and sometimes things go wrong. A GUI-based manual control program is planned for version 3.0.
+```bash
+rosrun pressure_controller_setup rqt_set_pressure.py
+# OR
+rosrun pressure_controller_setup rqt_set_pressure_adv.py
+```
 
-### Run the manual control program
+![Basing Set-Pressure GUI]({{ "assets/img/set_pressure_gui.png" | absolute_url }}){: .gallery .gallery-40}
+![Advanced Pressure GUI with reconfigurable channel binding]({{ "assets/img/set_pressure_adv.png" | absolute_url }}){: .gallery .gallery-60}
 
-`roslaunch pressure_controller_ros set_setpoint.launch`
+The Manual pressure setting GUI inherits properties from the configuration node:
+- Number/configuration of channels. _This allows the gui to dynamically arrange rows of sliders, one for each physical pressure controller._
+- Minimum and maximum pressures
+- Transition time
+- Channel on/off states
+- GUI Config property (tells the gui how to bind pressure channels to sliders)
 
+Example of gui config parameter for basic single-channel operation with two rows of sliders:
+```yaml
+gui_config:
+    - # Row 1
+        # Group 1: Bind channels to two separate sliders horizontally configured
+        - 'channels': [0,1]
+          'layout': 'horiz'
+        # Group 2: Bind channels to two separate sliders horizontally configured
+        - 'channels': [2,3]
+          'layout': 'horiz'
+    - # Row 2
+        # Group 3: Bind channels to two separate sliders horizontally configured
+        - 'channels': [4,5]
+          'layout': 'horiz'
+        # Group 4: Bind channels to two separate sliders horizontally configured
+        - 'channels': [6,7]
+          'layout': 'horiz'
+```
+
+Example of gui config parameter for differential pressures:
+```yaml
+gui_config:
+    - # Row 1
+        # Group 1: Bind channels to a "differential" slider set
+        - 'channels': [0,1]
+          'layout': 'diff'
+        # Group 2: Bind channels to a "differential" slider set
+        - 'channels': [2,3]
+          'layout': 'diff'
+        # Group 3: Bind channels to a "differential" slider set
+        - 'channels': [4,5]
+          'layout': 'diff'
+        # Group 4: Bind channels to a "differential" slider set
+        - 'channels': [6,7]
+          'layout': 'diff'
+```
 
 
 ## Build Trajectories
