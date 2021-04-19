@@ -43,7 +43,7 @@ Set up all the control settings (like which channels are on, PID gains, etc.).
 ## Tune valve PWM offsets
 The PWM offsets allow us to do smooth control starting from the voltages at which the valves just barely crack open. This ensures we can actually control the flow rate smoothly. You will need to re-calibrate these every so often as the resistance and mechanical parts of the valves will slightly change over time.
 
-![Plot of the "setpoint_traj_demo" trajectory]({{ "assets/img/valve_offset_cal.png" | absolute_url }})
+![Valve offset tuning gui]({{ "assets/img/valve_offset_cal.png" | absolute_url }})
 
 1. Bringup the pressure controller(s)
 	
@@ -82,22 +82,45 @@ These valve offset settings are saved to the controller when you close the gui, 
 ## Tune PID gains
 Since a PID controller is inherently model-free, you will need to tune the gains for each new load (pneumatic device) you place on each channel. The following process seems to work reasonably well:
 
-1. Bringup the pressure controller(s)
-	- `roslaunch pressure_controller_ros bringup_only.launch hw_profile:=[HARDWARE CONFIG]`
-2. Initialize your control config
-	1. Set `I = 0` and `D = 0 ` for all channels to start.
-	2. Set `P` to a value you think is too low (0.1 is a good place to start).
-	3. Save, then send the config to the controller: `roslaunch pressure_controller_ros config.launch profile:=[CONTROL CONFIG]`
-3. Apply a small step change in pressure to all channels
-	- `roslaunch pressure_controller_ros set_setpoint.launch`
-4. Observe the resulting data and update your config
-	1. If the controller oscillates, set `P` lower and resend the config until it stops.
-	2. If the controller does not oscillate, set `P` higher and resend the config until it starts oscillating, then back off slowly until it stops.
-5. Add integral gain
-	1. Set `I` to a value 1/10th of the cUrrent value of `P` for each channel and test.
-	2. If the controller oscillates, decrease `I`
-	3. If the controller takes a while to reach the setpoint, increase `I`
-6. Add derivative gain (optional)
-	1. In testing, it usually seems like a P-I controller works very well to achieve fast, reliable pressure control. If you do see lots of sharp motions in the control, you can add a small amount of `D` to smooth this off.
 
-Based on some basic testing, we found that the values you come up with here are reasonably robust to changes in the load, so you will only need to re-tune these valuses if you have a substantially different pneumatic device.
+![Valve offset tuning gui]({{ "assets/img/pid_cal.png" | absolute_url }})
+
+1. Bringup the pressure controller(s) with the current (or default) PID values stored in your control config file
+	
+	```bash
+	roscore &
+	roslaunch pressure_controller_ros bringupHID.launch  hw_profile:=[HARDWARE CONFIG]  profile:=[CONTROL_CONFIG]
+	```
+
+2. Start up the pid calibration gui (in a new terminal)
+	
+	```bash
+	rosrun pressure_controller_setup rqt_calibrate_pid.py 
+	```
+
+3. Start up the namual pressure control gui (in a new terminal)
+	
+	```bash
+	rosrun pressure_controller_setup rqt_set_pressure_adv.py
+	```
+4. Set `I` gain and `D` gain to 0 to begin.
+5. Apply a small step change in pressure to all channels and observe the resulting data:
+	1. If the controller oscillates, decrease `P` gain and until it stops.
+	2. If the controller does not oscillate, increase `P` gain until it starts oscillating, then back off slowly until it stops.
+6. Add integral gain
+	1. Set `I` to a value roughly 1/10th of the current value of `P` for each channel and test.
+	2. If the controller oscillates, decrease the `I` gain
+	3. If the controller takes a while to reach the setpoint, increase the `I` gain
+7. Add derivative gain (optional)
+	1. In testing, it usually seems like a P-I controller works very well to achieve fast, reliable pressure control. If you do see lots of sharp motions in the control, you can add a small value of `D` gain (roughly 1/10th the current value of `P`) to smooth this off.
+8. When you're done, close the gui and your new PID values will print as a list of lists in the terminal (like this):
+
+	```
+	Final PID Gains:
+	[[0.09, 1.5, 0], [0.09, 1.5, 0], [0.09, 1.5, 0], [0.09, 1.5, 0],
+	[0.09, 1.5, 0], [0.09, 1.5, 0], [0.09, 1.5, 0], [0.09, 1.5, 0]]
+	```
+
+**IMPORTANT: Remember to copy the output PID gains into the `pid/values` field in all relevant config files:**
+
+_Based on some basic testing, we found that the values you come up with here are reasonably robust to changes in the load, so you will only need to re-tune these valuses if you have a substantially different pneumatic device._
