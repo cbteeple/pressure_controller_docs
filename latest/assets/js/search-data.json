@@ -365,136 +365,220 @@
     "url": "/latest/ros-driver/setup",
     "relUrl": "/ros-driver/setup"
   },"61": {
+    "doc": "Setup",
+    "title": " Setup",
+    "content": ". | Basic structure of skills | Make a skill config file | Compiling skills | Maintaining skill libraries | . ",
+    "url": "/latest/skills/setup#-setup",
+    "relUrl": "/skills/setup#-setup"
+  },"62": {
+    "doc": "Setup",
+    "title": "Basic structure of skills",
+    "content": "Skills are essentially families of pressure trajectories defined by some channel-wise equations. Parameters can be defined and used in these equations to create dynamic “trajectory generators” which act like python functions. Each skill is made up of four basic components: . | context (list) - A list of control configuration profiles where the skill is valid to use (this is used during runtime to ensure skills are only run when the control system is configured correctly). | variables (dict) - A dictionary defining all the parameters of a skill as well as thier default values. | postures (dict of list) - A dictionary defining all relevant vectors of pressures (what we call “postures”), where each element in the pressure vector is an equation which can utilize variables. (Each equation is interpreted as a string and variables are substituted into the text before evaluating.) | skill (dict of list) - A dictionary defining prefix, main, and suffix trajectories. Each trajectory is a list, where each list entry defines a time and posture. | . ",
+    "url": "/latest/skills/setup#basic-structure-of-skills",
+    "relUrl": "/skills/setup#basic-structure-of-skills"
+  },"63": {
+    "doc": "Setup",
+    "title": "Make a skill config file",
+    "content": "This example will guide you through making your first pressure skill based on the “rotate4finger” skill: . “rotate4finger.yaml” on GitHub . | Define the controller context (list of config profiles where your skill is relevant): . context: - anthro8 - anthro8mixed . | Define the variables you want to use: . variables: idle_pressure: -5 #[psi] grasp_pressure: 20 #[psi] twist_offset: 5 #[psi] . | Define a set of postures to use in your skill. Each posture contains a vector of pressures with element-wise equations (which can use variables): . postures: idle: - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" . rotpos: - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" . | Define the skill in terms of postures vs. time. Trajectories are dynamically time-scaled later when they are compiled, so the times in this definiton file only represent relative lengths of trajectory segments. Also, be sure to include default times. skill: default_times: prefix: 1.0 #[sec] main: 4.0 #[sec] suffix: 1.0 #[sec] prefix: - time: 0.0 posture: idle - time: 1.0 posture: grasp4 main: - time: 0.0 posture: grasp4 - time: 0.25 posture: rotneg - time: 0.75 posture: rotpos - time: 1.0 posture: grasp4 suffix: - time: 0.0 posture: grasp4 - time: 1.0 posture: idle . | . ",
+    "url": "/latest/skills/setup#make-a-skill-config-file",
+    "relUrl": "/skills/setup#make-a-skill-config-file"
+  },"64": {
+    "doc": "Setup",
+    "title": "Compiling skills",
+    "content": "Skills can be complied into pressure trajectories dynamically using variables. #!/usr/bin/env python import rospy from pressure_controller_skills.build_skills import SkillBuilder # Define the specific values of skill parameters and times to use when compiling a trajectory variable_ovr = {'idle_pressure': 0.0, 'grasp_pressure': 24.0, 'twist_offset': 3.0, } time_ovr = {'prefix': 2.0, 'main': 20.0, 'suffix': 2.0, } # Define the location of the \"rotate4finger\" skill. Note the omission of the file extension. filename = 'rotate4finger/rotate4finger' # Create a SkillBuilder object to load and compile the trajectory node = SkillBuilder() node.load_skill(filename) # Load a skill from a file skill = node.generate_skill(vars=variable_ovr, times=time_ovr) # Generate the skill node.save_skill(filename) # Save the generated skill . ",
+    "url": "/latest/skills/setup#compiling-skills",
+    "relUrl": "/skills/setup#compiling-skills"
+  },"65": {
+    "doc": "Setup",
+    "title": "Maintaining skill libraries",
+    "content": "It’s very important that skill files are saved in the correct location so that the package can compile them. By default, skills should be saved in the “skills” folder within this package. If you would like to save skills in a different location, you need to explicitly define the location when instantiating a SkillBuilder object. For example, you could make a new ros package called “my_skills” to hold your skills, and contain them all inside the “pressure_skills” folder inside your new package. Then your code becomes: . skill_ros_package = 'my_skills' skill_folder = 'pressure_skills' # Create a SkillBuilder object node = SkillBuilder(skill_ros_package, skill_folder) # Proceed like normal --&gt; . ",
+    "url": "/latest/skills/setup#maintaining-skill-libraries",
+    "relUrl": "/skills/setup#maintaining-skill-libraries"
+  },"66": {
+    "doc": "Setup",
+    "title": "Setup",
+    "content": " ",
+    "url": "/latest/skills/setup",
+    "relUrl": "/skills/setup"
+  },"67": {
     "doc": "Hardware Setup",
     "title": " Hardware Setup",
     "content": ". | Gather your hardware | Upload compatible firmware | Determine the device names | Build a hardware config file | Set up the communication config file | . ",
     "url": "/latest/top-level/setup#-hardware-setup",
     "relUrl": "/top-level/setup#-hardware-setup"
-  },"62": {
+  },"68": {
     "doc": "Hardware Setup",
     "title": "Gather your hardware",
     "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. All you need is several USB ports (or a USB 3.0 hub). Plug all the pressure controllers in via USB and you’re all set to go. ",
     "url": "/latest/top-level/setup#gather-your-hardware",
     "relUrl": "/top-level/setup#gather-your-hardware"
-  },"63": {
+  },"69": {
     "doc": "Hardware Setup",
     "title": "Upload compatible firmware",
     "content": "This Python interface is only compatible with serial communication, so be sure to use the “serial” option (not the “HID” option) when flashing firmware to the pressure controllers. If you have previously used the controllers in “HID” mode with ROS, you will need re-flash the “Serial” mode. ",
     "url": "/latest/top-level/setup#upload-compatible-firmware",
     "relUrl": "/top-level/setup#upload-compatible-firmware"
-  },"64": {
+  },"70": {
     "doc": "Hardware Setup",
     "title": "Determine the device names",
     "content": "Use a serial terminal of some sort to check what the devices are called (Arduino IDE works well). | In Ubuntu and MacOS, devices begin with /dev/tty*. For example, /dev/ttyACM0 or something similar. | In Windows, devices begin with COM*. For example, COM4 or something similar. | . ",
     "url": "/latest/top-level/setup#determine-the-device-names",
     "relUrl": "/top-level/setup#determine-the-device-names"
-  },"65": {
+  },"71": {
     "doc": "Hardware Setup",
     "title": "Build a hardware config file",
     "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “config” » “hardware”. Single Controller . If you are using only a single controller, you only need one device in your list. This is what most people will use. - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . Multiple Controllers . If you want to chain together multiple controllers, simply define multiple devices: . - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . ",
     "url": "/latest/top-level/setup#build-a-hardware-config-file",
     "relUrl": "/top-level/setup#build-a-hardware-config-file"
-  },"66": {
+  },"72": {
     "doc": "Hardware Setup",
     "title": "Set up the communication config file",
     "content": "With our hardware configuration set up, the last step is to tell the system which hardware configuration you are using. | Go to “config” » “comms” » “comms_config.yaml”. | Set the hardware item to the name of the hardware config file you just made | Set the devnames item to a list of device names. The number of devices needs to be the same as the number of hardware devices you defined in your hardware config file. | . Example: . hardware: \"double3.4\" devnames: [\"/dev/ttyACM0\", \"/dev/ttyACM1\"] . The devnames are separate from the rest of the hardware config becasue sometimes device names change for no reason in Ubuntu and Windows. ",
     "url": "/latest/top-level/setup#set-up-the-communication-config-file",
     "relUrl": "/top-level/setup#set-up-the-communication-config-file"
-  },"67": {
+  },"73": {
     "doc": "Hardware Setup",
     "title": "Hardware Setup",
     "content": " ",
     "url": "/latest/top-level/setup",
     "relUrl": "/top-level/setup"
-  },"68": {
+  },"74": {
+    "doc": "Pressure Skills",
+    "title": " Pressure Skills",
+    "content": ". Build complex parametric skills in pressure control space using straightforward definition files. ",
+    "url": "/latest/skills#-pressure-skills",
+    "relUrl": "/skills#-pressure-skills"
+  },"75": {
+    "doc": "Pressure Skills",
+    "title": "Motivation",
+    "content": "In practical use, this pressure control system is extremely versatile, however the ROS driver still acts a relatively low level: sending pressure signals over time. Setting up pre-programmed trajectories (or even realtime feedback control) works well, but requires a lot of copying and pasteing of the same pressure trajectories into different files. In addition, sometimes we operate using a family of trajectories with fundementally the same form, so there is a lot of room to automate this. Introducing “Pressure Skills”! With this framework, we can define families of pressure trajectories (skills) using parameters and math, then use them like functions to obtain specific trajectories given particular values of the parameters. ",
+    "url": "/latest/skills#motivation",
+    "relUrl": "/skills#motivation"
+  },"76": {
+    "doc": "Pressure Skills",
+    "title": "Dependencies",
+    "content": "Hardware . | A pressure control system running the Ctrl-P firmware | A desktop computer running Linux (currently tested only in Ubuntu 18.04) | . Software . | The ROS Driver for this project | The pressure_controller_skills package | Various python libraries: . | All python dependencies are managed in the reqirements file. pip install -r requirements.txt | . | . ",
+    "url": "/latest/skills#dependencies",
+    "relUrl": "/skills#dependencies"
+  },"77": {
+    "doc": "Pressure Skills",
+    "title": "Installation",
+    "content": ". | Set up and install the ROS Driver. | Clone the pressure_controller_skills package to the src folder of your catkin workspace. | In the root folder of your catkin workspace, run catkin_make to enable the custom python modules in this package to work. | . ",
+    "url": "/latest/skills#installation",
+    "relUrl": "/skills#installation"
+  },"78": {
+    "doc": "Pressure Skills",
+    "title": "Pressure Skills",
+    "content": " ",
+    "url": "/latest/skills",
+    "relUrl": "/skills"
+  },"79": {
     "doc": "TODO",
     "title": " TODO",
     "content": "Take a look at the current issues with these packages, and feel free to request more features! . Firmware Issues Python Inteface Issues ROS Driver Issues . Issues With This Documentation . ",
     "url": "/latest/todo#-todo",
     "relUrl": "/todo#-todo"
-  },"69": {
+  },"80": {
     "doc": "TODO",
     "title": "TODO",
     "content": " ",
     "url": "/latest/todo",
     "relUrl": "/todo"
-  },"70": {
+  },"81": {
     "doc": "Python Interface",
     "title": " Python Interface",
     "content": " ",
     "url": "/latest/top-level#-python-interface",
     "relUrl": "/top-level#-python-interface"
-  },"71": {
+  },"82": {
     "doc": "Python Interface",
     "title": "Dependencies",
     "content": "Hardware . | An arduino-compatible microcontroller (confirmed working on Arduino Mega and Teensy 3.5) | . Software . | Python 3 (use python 3.6 or newer) | Various python libraries, specified in requirements.txt: pip install -r requirements.txt | . ",
     "url": "/latest/top-level#dependencies",
     "relUrl": "/top-level#dependencies"
-  },"72": {
+  },"83": {
     "doc": "Python Interface",
     "title": "Installation",
     "content": "Set up a python IDE . Follow the instructions in the Python Tips page. Clone the code . Already have an IDE you like (like VSCode or PyCharm)? . Download the Python Interface . ",
     "url": "/latest/top-level#installation",
     "relUrl": "/top-level#installation"
-  },"73": {
+  },"84": {
     "doc": "Python Interface",
     "title": "Usage",
     "content": "Settings Locations . | Scripts are located in “pressure_control_run” | Controller configurations are located in the “config” folder | Trajectory setup files are located in the “traj_setup” folder | After trajectories are built, auto-generated files are located in the “traj_built” folder | . Run Python Scripts . Run python scripts through the terminal: python file_name.py [arg1] [arg2] . ",
     "url": "/latest/top-level#usage",
     "relUrl": "/top-level#usage"
-  },"74": {
+  },"85": {
     "doc": "Python Interface",
     "title": "Python Interface",
     "content": " ",
     "url": "/latest/top-level",
     "relUrl": "/top-level"
-  },"75": {
+  },"86": {
     "doc": "Tutorial",
     "title": " Tutorial",
     "content": "NEW! . Works with multi-device setup! . | Common usage example: | Set up your hardware | Configure the pressure controller. | Set pressure manually | Run a pre-built trajectory on the controller | Plot Results | . Run these commands in a linux terminal. If you are using an IPython console (like in spyder), replace python with run at the beginning of commands. ",
     "url": "/latest/top-level/tutorial#-tutorial",
     "relUrl": "/top-level/tutorial#-tutorial"
-  },"76": {
+  },"87": {
     "doc": "Tutorial",
     "title": "Common usage example:",
     "content": "Commands in the console . # Build your trajectory python build_traj.py example/setpoint_traj_demo # Configure the pressure controller with the default profile # This step only needs to be run when you are updating parameters. # The last profile to be configured is always loaded on startup python config.py default # Load the built trajectory onto the controller python send_pre_built.py example/setpoint_traj_demo # Run the trajectory 1 time, and speed-stretch by 2.5x (faster) python run_pre_built.py 1 2.5 . example/setpoint_traj_demo.yaml: . settings: traj_type: 'interp' # Types include: 'waveform', 'interp' # Place all of the type-specific settings in here config: interp_type: none # can be: 'linear', 'cubic' setpoints: # Setpoints are only used if you are doing an interpolation # [time (sec), pressure 1,2...N (psi)] main: - [0.0, 10, 12, 14, 16] - [1.0, 20, 0, 0, 0] - [2.0, 0, 20, 0, 0] - [3.0, 0, 0, 20, 0] - [4.0, 0, 0, 0, 20] - [5.0, 10, 12, 14, 16] # The prefix and suffix are optional. # If you don't want them, simply exclude them and the program will know what to do. prefix: - [0.000, 0, 0, 0, 0] - [1.0, 10, 12, 14, 16] suffix: - [2.000, 10, 12, 14, 16] - [3.0, 0, 0, 0, 0] . Output . ",
     "url": "/latest/top-level/tutorial#common-usage-example",
     "relUrl": "/top-level/tutorial#common-usage-example"
-  },"77": {
+  },"88": {
     "doc": "Tutorial",
     "title": "Set up your hardware",
     "content": "Follow the instructions in Hardware Setup. Once configured, you can pretend you have only one pressure controller with n channels. If you have multiple devices configured together, then you treat them as one controller with the total number of channels of all devices combined. This python interface does the hard work of splitting up commands to all the controllers, so for all intents and purposes, you just pretend you have one controller with a bunch of channels. ",
     "url": "/latest/top-level/tutorial#set-up-your-hardware",
     "relUrl": "/top-level/tutorial#set-up-your-hardware"
-  },"78": {
+  },"89": {
     "doc": "Tutorial",
     "title": "Configure the pressure controller.",
     "content": "This sets a bunch of configuration settings on the controller (like which channels are on, PID gains, etc.). | Create a config file in the config folder. | Configuration files are “.yaml” files with a few specific fields (see examples in the config folder) | config files must be stored in the config folder. | . | python config.py [config_file] . | config_file - name of the configuration file you want to use. It can include folders too. | . | . ",
     "url": "/latest/top-level/tutorial#configure-the-pressure-controller",
     "relUrl": "/top-level/tutorial#configure-the-pressure-controller"
-  },"79": {
+  },"90": {
     "doc": "Tutorial",
     "title": "Set pressure manually",
     "content": "python set_pressure.py [p1] [p2] ... [pn] . | no arguments - Pressure is set to 0 | p1 - Pressure [in psi] - To set all pressure equal, send one value | p1, p2, …,pn - Pressure [in psi] - To set pressure individually, the number of pressure sent must equal the number of channels (n). | . Once running, use keyboard keys to move the pressure up and down. ",
     "url": "/latest/top-level/tutorial#set-pressure-manually",
     "relUrl": "/top-level/tutorial#set-pressure-manually"
-  },"80": {
+  },"91": {
     "doc": "Tutorial",
     "title": "Run a pre-built trajectory on the controller",
     "content": "Set up a trajectory . | Create a trajectory setup file in the traj_setup folder. | Trajectory setup files are “.yaml” files with a few specific fields (see examples in the traj_setup/example folder) | Trajectory setup files must be stored in the traj_setup folder (you can use subfolders too) | . | There are three basic parts in a trajctory . | main - The looping part | prefix - Run once at the start of the trajectory | suffix - Run once after the looping part is finished. | . | To forgo suffixes or prefixes, just leave them blank in the file (or delete them entirely) . | A Note about smoothness: . | In the “main” part of the trajectory, the first and last lines must be the same if you want to make a smooth looping trajectory. At the lowest level, the controller jumps directly from the last line to the first line when looping. | For a smooth prefix » main transition, the last line in the “prefix” and first line of the “main” should be the same. | Transitions to the suffix are handled dynamically, starting from the setpoint at the exact time the suffix is requested. | If the main part finishes, the final line of “main” is coppied to time 0.0s in the suffix | If the main part is interrupted, the current setpoint (including interpolated values) is copied to time 0.0s of the suffix. | In the example above, we dynamically transition to the first line of the suffix from wherever the setpoint currently is over 2.0 seconds. | . | . | . Build a trajectory . | python build_traj.py [traj_profile] . | traj_profile - name of trajectory you want to build. It can include folders too. | . | The trajectory is built, and a “.traj” file is saved in the traj_built folder | . Load the pre-built trajectory onto the controller . python send_pre_built.py [traj_profile] . | traj_profile - name of trajectory you just built | . You must build trajectories from setup files before you can send them. Do not try to create trajectory files yourself. Run the current trajectory . Execute the pressure trajectory you just sent . python run_pre_built.py [num_cycles] [speed_factor] . | num_cycles - Loop the main part of the trajectory this number of times. (Set to -1 for endless loop) | speed_factor - Speed-stretch a trajectory (larger speed factor runs the trajectory faster) | . This command also saves the incomming data from the pressure controller in a csv: . [time in ms] [setpoints p1 ...... pn] [measured p1 ....... pn] [input pressure] [command echos] 3848, 0.00, 0.00, 0.00, 0.00, 0.10, 0.05, 0.03, -0.07, 30.00, , , 3858, 0.50, 0.50, 0.50, 0.50, 0.45, 0.51, 0.46, 0.39, 29.50, , , 3868, , , , , , , , , , time, 10 . Spaces are shown in this example for clarity, but in real csv’s there are no spaces. | For pressures, data will always be returned from all channels, even if they are turned off in the configuration. | If multiple controllers are configured together, one file per hardware device is created, with the suffix “_00X” appended to the output filename for each device. | Data for all devices is automatically synced. | . ",
     "url": "/latest/top-level/tutorial#run-a-pre-built-trajectory-on-the-controller",
     "relUrl": "/top-level/tutorial#run-a-pre-built-trajectory-on-the-controller"
-  },"81": {
+  },"92": {
     "doc": "Tutorial",
     "title": "Plot Results",
     "content": "Since data is saved in CSV files, it’s easy to plot them with your favorite plotting utility. ",
     "url": "/latest/top-level/tutorial#plot-results",
     "relUrl": "/top-level/tutorial#plot-results"
-  },"82": {
+  },"93": {
     "doc": "Tutorial",
     "title": "Tutorial",
     "content": " ",
     "url": "/latest/top-level/tutorial",
     "relUrl": "/top-level/tutorial"
+  },"94": {
+    "doc": "Tutorial",
+    "title": " Tutorial",
+    "content": ". | TODO | . ",
+    "url": "/latest/skills/tutorial#-tutorial",
+    "relUrl": "/skills/tutorial#-tutorial"
+  },"95": {
+    "doc": "Tutorial",
+    "title": "TODO",
+    "content": "Show how to generate pressure trajectories on-the-fly. You can choose to get either the compiled pressure config (drop-in compatible with hand-arm package), or the compiled raw pressure trajectory (compatible with the sorotraj library or your own control nodes) . ",
+    "url": "/latest/skills/tutorial#todo",
+    "relUrl": "/skills/tutorial#todo"
+  },"96": {
+    "doc": "Tutorial",
+    "title": "Tutorial",
+    "content": " ",
+    "url": "/latest/skills/tutorial",
+    "relUrl": "/skills/tutorial"
   }
 }
