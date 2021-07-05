@@ -81,6 +81,10 @@ Usually, you will have a few ROS objects in the same node, especialy if you are 
 	- Performs one step of your controller in response to each new pose estimate to obtain pressure setpoints from the pose error
 	- Sends new pressure setpoints to the pressure controller by sending a new goal to the "command server"
 
+An example of this structure can be found in my Visual Servoing package:
+
+[<i class="fab fa-github"></i> "ihm_servoing" package on GitHub](https://github.com/cbteeple/ihm_servoing){: .btn .btn-primary} 
+
 
 ## Running Programs
 ROS has two main ways to start nodes:
