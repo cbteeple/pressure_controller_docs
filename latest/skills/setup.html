@@ -34,7 +34,7 @@
      <span class="na">prefix</span><span class="pi">:</span> <span class="m">1.0</span> <span class="c1">#[sec]</span>
      <span class="na">main</span><span class="pi">:</span>   <span class="m">4.0</span> <span class="c1">#[sec]</span>
      <span class="na">suffix</span><span class="pi">:</span> <span class="m">1.0</span> <span class="c1">#[sec]</span>
-<span class="err">	</span>    
+        
    <span class="na">prefix</span><span class="pi">:</span>
      <span class="pi">-</span> <span class="na">time</span><span class="pi">:</span> <span class="m">0.0</span>
        <span class="na">posture</span><span class="pi">:</span> <span class="s">idle</span>
@@ -62,29 +62,33 @@
 
 <span class="c1"># Define the specific values of skill parameters and times to use when compiling a trajectory
 </span><span class="n">variable_ovr</span> <span class="o">=</span> <span class="p">{</span><span class="s">'idle_pressure'</span><span class="p">:</span>  <span class="mf">0.0</span><span class="p">,</span>
-				<span class="s">'grasp_pressure'</span><span class="p">:</span> <span class="mf">24.0</span><span class="p">,</span>
-				<span class="s">'twist_offset'</span><span class="p">:</span>   <span class="mf">3.0</span><span class="p">,</span>
-				<span class="p">}</span>
+                <span class="s">'grasp_pressure'</span><span class="p">:</span> <span class="mf">24.0</span><span class="p">,</span>
+                <span class="s">'twist_offset'</span><span class="p">:</span>   <span class="mf">3.0</span><span class="p">,</span>
+                <span class="p">}</span>
 
 <span class="n">time_ovr</span> <span class="o">=</span> <span class="p">{</span><span class="s">'prefix'</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
-			<span class="s">'main'</span><span class="p">:</span>   <span class="mf">20.0</span><span class="p">,</span>
-			<span class="s">'suffix'</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
-			<span class="p">}</span>
+            <span class="s">'main'</span><span class="p">:</span>   <span class="mf">20.0</span><span class="p">,</span>
+            <span class="s">'suffix'</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+            <span class="p">}</span>
 
 
 <span class="c1"># Define the location of the "rotate4finger" skill. Note the omission of the file extension.
 </span><span class="n">filename</span> <span class="o">=</span> <span class="s">'rotate4finger/rotate4finger'</span>
 
+<span class="c1"># Define the context (i.e. pressure control setup) you are currently using.
+</span><span class="n">context</span>  <span class="o">=</span> <span class="s">'anthro8'</span> <span class="c1"># Use the anthro8 context
+</span>
 <span class="c1"># Create a SkillBuilder object to load and compile the trajectory
-</span><span class="n">node</span> <span class="o">=</span> <span class="n">SkillBuilder</span><span class="p">()</span>
-<span class="n">node</span><span class="p">.</span><span class="n">load_skill</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c1"># Load a skill from a file
+</span><span class="n">node</span> <span class="o">=</span> <span class="n">SkillBuilder</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span> <span class="c1"># Ommit the context to skip safety checks.
+</span><span class="n">node</span><span class="p">.</span><span class="n">load_skill</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c1"># Load a skill from a file
 </span><span class="n">skill</span> <span class="o">=</span> <span class="n">node</span><span class="p">.</span><span class="n">generate_skill</span><span class="p">(</span><span class="nb">vars</span><span class="o">=</span><span class="n">variable_ovr</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="n">time_ovr</span><span class="p">)</span> <span class="c1"># Generate the skill
 </span><span class="n">node</span><span class="p">.</span><span class="n">save_skill</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c1"># Save the generated skill
 </span></code></pre></div></div> <h2 id="maintaining-skill-libraries"> <a href="#maintaining-skill-libraries" class="anchor-heading" aria-labelledby="maintaining-skill-libraries"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Maintaining skill libraries </h2> <p>It’s very important that skill files are saved in the correct location so that the package can compile them.</p> <p>By default, skills should be saved in the “skills” folder within this package. If you would like to save skills in a different location, you need to explicitly define the location when instantiating a <code class="language-plaintext highlighter-rouge">SkillBuilder</code> object. For example, you could make a new ros package called “my_skills” to hold your skills, and contain them all inside the “pressure_skills” folder inside your new package. Then your code becomes:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">skill_ros_package</span> <span class="o">=</span> <span class="s">'my_skills'</span>
 <span class="n">skill_folder</span>      <span class="o">=</span> <span class="s">'pressure_skills'</span>
+<span class="n">context</span>           <span class="o">=</span> <span class="s">'anthro8'</span>
 
 <span class="c1"># Create a SkillBuilder object
-</span><span class="n">node</span> <span class="o">=</span> <span class="n">SkillBuilder</span><span class="p">(</span><span class="n">skill_ros_package</span><span class="p">,</span> <span class="n">skill_folder</span><span class="p">)</span>
+</span><span class="n">node</span> <span class="o">=</span> <span class="n">SkillBuilder</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="n">ros_package</span><span class="o">=</span><span class="n">skill_ros_package</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="n">skill_folder</span><span class="p">)</span>
 
 <span class="c1"># Proceed like normal --&gt;
 </span></code></pre></div></div> <hr> <div class="section-nav"> <a href="/latest/skills" id="prev-section" class="btn btn-outline"> <i class="fas fa-chevron-left"></i> <div class="section-nav-content"> <div class=section-nav-crumb> <i class="fas fa-running"></i> </div> Pressure Skills </div> </a> <a href="/latest/skills/tutorial" id="next-section" class="btn btn-outline"> <div class="section-nav-content"> <div class=section-nav-crumb> Pressure Skills / </div> Tutorial </div> <i class="fas fa-chevron-right"></i> </a> </div> <hr> <footer> <p class="text-small text-grey-dk-100 mb-0">&copy; 2019-2021 by <a target="_blank" href="http://cbteeple.com">Clark Teeple</a></p> <div class="d-flex mt-2"> </div> </footer> </div> </div> <div class="search-overlay"></div> </div> <!--Build the modal overlay for nice picture display--> <div class="wrapper" style="position: relative"> <div id="modal-overlay"> <!-- <a href="javascript:void(0);" id="modal-prev" class="modal-main-nav modal-btn" title="Previous (Left Arrow Key)"> <i class="fas fa-chevron-circle-left"></i> </a> --> <div id="modal" title="Click anywhere to close (Esc)"> <div id="modal-content"> <a href="#" id="modal-img-a" class="img-overlay-container" title="Scroll to Image"> <img id="modal-img"/> </a> <div id="modal-description"/></div> </div> </div> <a href="javascript:void(0);" id="modal-close" class="modal-btn" title="Close (Esc)"> <i class="fas fa-times-circle"></i> </a> <div class="modal-small-nav-container"> <a href="javascript:void(0);" id="modal-prev-aux" class="modal-small-nav modal-btn" title="Previous (Left Arrow Key)"> <i class="fas fa-chevron-circle-left"></i> </a> <a href="javascript:void(0);" id="modal-next-aux" class="modal-small-nav modal-btn" title="Next (Right Arrow Key)"> <i class="fas fa-chevron-circle-right"></i> </a> </div> </div> </div> <script src="/latest/assets/js/img-modal.js"></script> <script src="/latest/assets/js/ext-links.js"></script> <script src="/latest/assets/js/switch-version.js"></script> </body> </html>
