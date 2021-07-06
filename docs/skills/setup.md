@@ -38,81 +38,81 @@ This example will guide you through making your first pressure skill based on th
 
 1. Define the controller context (list of config profiles where your skill is relevant):
 
-	```yaml
-	context:
-	  - anthro8
-	  - anthro8mixed
-	```
+    ```yaml
+    context:
+      - anthro8
+      - anthro8mixed
+    ```
 
 2. Define the variables you want to use:
 
-	```yaml
-	variables:
-	  idle_pressure: -5     #[psi]
-	  grasp_pressure: 20    #[psi]
-	  twist_offset: 5       #[psi]
-	```
+    ```yaml
+    variables:
+      idle_pressure: -5     #[psi]
+      grasp_pressure: 20    #[psi]
+      twist_offset: 5       #[psi]
+    ```
 
 3. Define a set of postures to use in your skill. Each posture contains a vector of pressures with element-wise equations (which can use variables):
 
-	```yaml
-	postures:
-	  idle:
-	    - "idle_pressure"
-	    - "idle_pressure"
-	    - "idle_pressure"
-	    - "idle_pressure"
-	    - "idle_pressure"
-	    - "idle_pressure"
-	    - "idle_pressure"
-	    - "idle_pressure"
+    ```yaml
+    postures:
+      idle:
+        - "idle_pressure"
+        - "idle_pressure"
+        - "idle_pressure"
+        - "idle_pressure"
+        - "idle_pressure"
+        - "idle_pressure"
+        - "idle_pressure"
+        - "idle_pressure"
 
-	  .
-	  .
-	  .
+      .
+      .
+      .
 
-	  rotpos:
-	    - "grasp_pressure-twist_offset"
-	    - "grasp_pressure+twist_offset"
-	    - "grasp_pressure-twist_offset"
-	    - "grasp_pressure+twist_offset"
-	    - "grasp_pressure-twist_offset"
-	    - "grasp_pressure+twist_offset"
-	    - "grasp_pressure-twist_offset"
-	    - "grasp_pressure+twist_offset"
-	```
+      rotpos:
+        - "grasp_pressure-twist_offset"
+        - "grasp_pressure+twist_offset"
+        - "grasp_pressure-twist_offset"
+        - "grasp_pressure+twist_offset"
+        - "grasp_pressure-twist_offset"
+        - "grasp_pressure+twist_offset"
+        - "grasp_pressure-twist_offset"
+        - "grasp_pressure+twist_offset"
+    ```
 
 4. Define the skill in terms of postures vs. time. Trajectories are dynamically time-scaled later when they are compiled, so the times in this definiton file only represent relative lengths of trajectory segments. Also, be sure to include default times.
 
-	```yaml
-	skill:
-	  default_times:
-	    prefix: 1.0 #[sec]
-	    main:   4.0 #[sec]
-	    suffix: 1.0 #[sec]
-	    
-	  prefix:
-	    - time: 0.0
-	      posture: idle
-	    - time: 1.0
-	      posture: grasp4
+    ```yaml
+    skill:
+      default_times:
+        prefix: 1.0 #[sec]
+        main:   4.0 #[sec]
+        suffix: 1.0 #[sec]
+        
+      prefix:
+        - time: 0.0
+          posture: idle
+        - time: 1.0
+          posture: grasp4
 
-	  main:
-	    - time: 0.0
-	      posture: grasp4
-	    - time: 0.25
-	      posture: rotneg
-	    - time: 0.75
-	      posture: rotpos
-	    - time: 1.0
-	      posture: grasp4
+      main:
+        - time: 0.0
+          posture: grasp4
+        - time: 0.25
+          posture: rotneg
+        - time: 0.75
+          posture: rotpos
+        - time: 1.0
+          posture: grasp4
 
-	  suffix:
-	    - time: 0.0
-	      posture: grasp4
-	    - time: 1.0
-	      posture: idle
-	```
+      suffix:
+        - time: 0.0
+          posture: grasp4
+        - time: 1.0
+          posture: idle
+    ```
 
 
 
@@ -126,21 +126,24 @@ from pressure_controller_skills.build_skills import SkillBuilder
 
 # Define the specific values of skill parameters and times to use when compiling a trajectory
 variable_ovr = {'idle_pressure':  0.0,
-				'grasp_pressure': 24.0,
-				'twist_offset':   3.0,
-				}
+                'grasp_pressure': 24.0,
+                'twist_offset':   3.0,
+                }
 
 time_ovr = {'prefix': 2.0,
-			'main':   20.0,
-			'suffix': 2.0,
-			}
+            'main':   20.0,
+            'suffix': 2.0,
+            }
 
 
 # Define the location of the "rotate4finger" skill. Note the omission of the file extension.
 filename = 'rotate4finger/rotate4finger'
 
+# Define the context (i.e. pressure control setup) you are currently using.
+context  = 'anthro8' # Use the anthro8 context
+
 # Create a SkillBuilder object to load and compile the trajectory
-node = SkillBuilder()
+node = SkillBuilder(context=context) # Ommit the context to skip safety checks.
 node.load_skill(filename) # Load a skill from a file
 skill = node.generate_skill(vars=variable_ovr, times=time_ovr) # Generate the skill
 node.save_skill(filename) # Save the generated skill
@@ -154,9 +157,10 @@ By default, skills should be saved in the "skills" folder within this package. I
 ```python
 skill_ros_package = 'my_skills'
 skill_folder      = 'pressure_skills'
+context           = 'anthro8'
 
 # Create a SkillBuilder object
-node = SkillBuilder(skill_ros_package, skill_folder)
+node = SkillBuilder(context=context, ros_package=skill_ros_package, folder=skill_folder)
 
 # Proceed like normal -->
 ```
