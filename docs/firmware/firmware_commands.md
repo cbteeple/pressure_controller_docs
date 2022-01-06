@@ -31,6 +31,13 @@ To view the current settings of any of the parameters you can control, simply us
 
 A comprehensive set of command specifications can be found in the [pressure_control_interface](https://github.com/cbteeple/pressure_control_interface/tree/main/pressure_control_interface/utils/command_spec) package. This documentation expands on the functionality of each command.
 
+### System Commands
+
+|Command|Arguments|Description
+|--|--|--
+|FIRMWARE| n/a | Return the firmware version
+|CMDSPEC| n/a | Return the internal version of the command spec used
+|ERROR| n/a| Return the error states of the pressure watchdogs (input and channels)
 
 ### Basic Commands
 
@@ -63,6 +70,7 @@ _NOTE: Units are converted at the command/output level. Pressures are always int
 |--|--|--
 |MAXP| #1 `float`| Set the maximum pressure allowed. Pressures are clipped if outside this range when using the "SET" command, but not when loaded as part of a trajectory. (_used for the pressure watchdog_)
 |MINP| #1 `float`| Set the minimum pressure allowed. Pressures are clipped if outside this range when using the "SET" command, but not when loaded as part of a trajectory.
+|SPIKE|#1 `int`| Set the desired spike time for the channel watchdog (in ms). This is the minimum time above the threshold before watchdog triggers
 |MASTERP| #1 `bool`| use input pressure sensor for watchdog
 || [#1;#2] | 
 ||| #1 `bool` = use input pressure sensor for watchdog
