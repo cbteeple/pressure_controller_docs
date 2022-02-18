@@ -21,7 +21,7 @@ I wrote a handy python class within the `pressure_controller_ros` package to mak
 
 Here is a minimal example showing the relevant lines to add to your own ROS node:
 
-Note: Only works for trajectories with no prefix or suffix
+Note: This requires sorotraj 1.3.1 or newer
 {: .label .label-red .fs-4}
 
 
@@ -46,12 +46,12 @@ builder.set_definition(traj_def) # Reset the definition (this also rebuilds the 
 # traf_def = {SOME DICTIONARY IN SOROTRAJ FORMAT} 
 # builder.set_definition(traj_def) 
 
-# Get the trajectory in "sorotraj" format
-traj = builder.get_trajectory()
+# Get a flattened trajectory in "sorotraj" format
+traj = builder.get_flattened_trajectory(num_reps=1, speed_factor=1.0)
 
 # Now execute the trajectory on the pressure controller
 hand_sender = pneu_traj_sender(self.speed_factor) # Make a traj-sender object
-traj_ros = hand_sender.build_traj(traj['setpoints']) # Convert the trajectory to a ROS trajectory
+traj_ros = hand_sender.build_traj(traj) # Convert the trajectory to a ROS trajectory
 hand_sender.execute_traj(traj_ros, blocking=False) # Run the trajectory
 hand_sender.traj_client.wait_for_result() # Wait until the trajectory is finished
 ```
