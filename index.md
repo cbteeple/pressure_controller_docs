@@ -23,7 +23,7 @@ This work was done as part of a research project at the [Harvard Microrobotics L
 ### Publications using this system:
 - "**SoMoGym: A toolkit for developing and evaluating controllers and reinforcement learning algorithms for soft robots**," M.A. Graule, T.P. McCarthy, C.B. Teeple, J. Werfel, and R.J. Wood, IEEE Robotics and Automation Letters, 2022
 
-	[<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9684669){: .btn} [<i class="fas fa-file-pdf"></i>
+	[<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9684669){: .btn}
 
 - "**Controlling Palm-Object Interactions via Friction for Enhanced In-Hand Manipulation**," C.B. Teeple, B. Aktas, M.C. Yuen, G.R. Kim, R.D. Howe, and R.J. Wood, IEEE Robotics and Automation Letters, 2022
 
