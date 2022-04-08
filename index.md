@@ -21,13 +21,21 @@ By [Clark Teeple](http://www.cbteeple.com)
 This work was done as part of a research project at the [Harvard Microrobotics Lab](https://www.micro.seas.harvard.edu). Our goal was to build a system capable of smooth control of pressure to drive our custom soft robotic hands.
 
 ### Publications using this system:
+- "**SoMoGym: A toolkit for developing and evaluating controllers and reinforcement learning algorithms for soft robots**," M.A. Graule, T.P. McCarthy, C.B. Teeple, J. Werfel, and R.J. Wood, IEEE Robotics and Automation Letters, 2022
+
+	[<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9684669){: .btn} [<i class="fas fa-file-pdf"></i>
+
+- "**Controlling Palm-Object Interactions via Friction for Enhanced In-Hand Manipulation**," C.B. Teeple, B. Aktas, M.C. Yuen, G.R. Kim, R.D. Howe, and R.J. Wood, IEEE Robotics and Automation Letters, 2022
+
+	[<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9684669){: .btn} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/teeple2021arrangement.pdf){: .btn}
+
 - "**Digit Arrangement for Soft Robotic Hands: Enhancing Dexterous In-Hand Manipulation**," C.B. Teeple, R.C. St. Louis, M.A. Graule, and R.J. Wood, International Conference on Intelligent Robots and Systems (IROS), 2021
 
-	<button type="button" name="button" class="btn btn-outline"><i class="fas fa-link"></i> Link Coming Soon</button> <button type="button" name="button" class="btn btn-outline"><i class="fas fa-file-pdf"></i> PDF Coming Soon</button>
+	[<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9636188){: .btn} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/teeple2021arrangement.pdf){: .btn}
 
 - "**An Active Palm Enhances Dexterity for Soft Robotic In-Hand Manipulation**," C.B. Teeple, G.R. Kim, M.A. Graule, and R.J. Wood, International Conference on Robotics and Automation (ICRA), 2021
 
-    [<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org){: .btn} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/teeple2021active.pdf){: .btn}
+    [<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9562049){: .btn} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/teeple2021active.pdf){: .btn}
 - "**A Dexterous Soft Robotic Hand for Delicate In-Hand Manipulation**," S. Abondance, C.B. Teeple, and R.J. Wood, IEEE Robotics and Automation Letters, 2020
 
     [<i class="fas fa-link"></i> Link ](https://ieeexplore.ieee.org/document/9134855){: .btn} [<i class="fas fa-file-pdf"></i> PDF ](https://cv.cbteeple.com/papers/abondance2020_dexterous.pdf){: .btn}
