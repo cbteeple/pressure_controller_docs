@@ -343,111 +343,111 @@
   },"57": {
     "doc": "Hardware Setup",
     "title": " Hardware Setup",
-    "content": ". | Gather your hardware | Upload compatible firmware | Determine the device names | Build a hardware config file | Set up the communication config file | . ",
-    "url": "/latest/top-level/setup#-hardware-setup",
-    "relUrl": "/top-level/setup#-hardware-setup"
-  },"58": {
-    "doc": "Hardware Setup",
-    "title": "Gather your hardware",
-    "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. All you need is several USB ports (or a USB 3.0 hub). Plug all the pressure controllers in via USB and you’re all set to go. ",
-    "url": "/latest/top-level/setup#gather-your-hardware",
-    "relUrl": "/top-level/setup#gather-your-hardware"
-  },"59": {
-    "doc": "Hardware Setup",
-    "title": "Upload compatible firmware",
-    "content": "This Python interface is only compatible with serial communication, so be sure to use the “serial” option (not the “HID” option) when flashing firmware to the pressure controllers. If you have previously used the controllers in “HID” mode with ROS, you will need re-flash the “Serial” mode. ",
-    "url": "/latest/top-level/setup#upload-compatible-firmware",
-    "relUrl": "/top-level/setup#upload-compatible-firmware"
-  },"60": {
-    "doc": "Hardware Setup",
-    "title": "Determine the device names",
-    "content": "Use a serial terminal of some sort to check what the devices are called (Arduino IDE works well). | In Ubuntu and MacOS, devices begin with /dev/tty*. For example, /dev/ttyACM0 or something similar. | In Windows, devices begin with COM*. For example, COM4 or something similar. | . ",
-    "url": "/latest/top-level/setup#determine-the-device-names",
-    "relUrl": "/top-level/setup#determine-the-device-names"
-  },"61": {
-    "doc": "Hardware Setup",
-    "title": "Build a hardware config file",
-    "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “config” » “hardware”. Single Controller . If you are using only a single controller, you only need one device in your list. This is what most people will use. - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . Multiple Controllers . If you want to chain together multiple controllers, simply define multiple devices: . - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . ",
-    "url": "/latest/top-level/setup#build-a-hardware-config-file",
-    "relUrl": "/top-level/setup#build-a-hardware-config-file"
-  },"62": {
-    "doc": "Hardware Setup",
-    "title": "Set up the communication config file",
-    "content": "With our hardware configuration set up, the last step is to tell the system which hardware configuration you are using. | Go to “config” » “comms” » “comms_config.yaml”. | Set the hardware item to the name of the hardware config file you just made | Set the devnames item to a list of device names. The number of devices needs to be the same as the number of hardware devices you defined in your hardware config file. | . Example: . hardware: \"double3.4\" devnames: [\"/dev/ttyACM0\", \"/dev/ttyACM1\"] . The devnames are separate from the rest of the hardware config becasue sometimes device names change for no reason in Ubuntu and Windows. ",
-    "url": "/latest/top-level/setup#set-up-the-communication-config-file",
-    "relUrl": "/top-level/setup#set-up-the-communication-config-file"
-  },"63": {
-    "doc": "Hardware Setup",
-    "title": "Hardware Setup",
-    "content": " ",
-    "url": "/latest/top-level/setup",
-    "relUrl": "/top-level/setup"
-  },"64": {
-    "doc": "Setup",
-    "title": " Setup",
-    "content": ". | Basic structure of skills | Make a skill config file | Compiling skills | Maintaining skill libraries | . ",
-    "url": "/latest/skills/setup#-setup",
-    "relUrl": "/skills/setup#-setup"
-  },"65": {
-    "doc": "Setup",
-    "title": "Basic structure of skills",
-    "content": "Skills are essentially families of pressure trajectories defined by some channel-wise equations. Parameters can be defined and used in these equations to create dynamic “trajectory generators” which act like python functions. Each skill is made up of four basic components: . | context (list) - A list of control configuration profiles where the skill is valid to use (this is used during runtime to ensure skills are only run when the control system is configured correctly). | variables (dict) - A dictionary defining all the parameters of a skill as well as thier default values. | postures (dict of list) - A dictionary defining all relevant vectors of pressures (what we call “postures”), where each element in the pressure vector is an equation which can utilize variables. (Each equation is interpreted as a string and variables are substituted into the text before evaluating.) | skill (dict of list) - A dictionary defining prefix, main, and suffix trajectories. Each trajectory is a list, where each list entry defines a time and posture. | . ",
-    "url": "/latest/skills/setup#basic-structure-of-skills",
-    "relUrl": "/skills/setup#basic-structure-of-skills"
-  },"66": {
-    "doc": "Setup",
-    "title": "Make a skill config file",
-    "content": "This example will guide you through making your first pressure skill based on the “rotate4finger” skill: . “rotate4finger.yaml” on GitHub . | Define the controller context (list of config profiles where your skill is relevant): . context: - anthro8 - anthro8mixed . | Define the variables you want to use: . variables: idle_pressure: -5 #[psi] grasp_pressure: 20 #[psi] twist_offset: 5 #[psi] . | Define a set of postures to use in your skill. Each posture contains a vector of pressures with element-wise equations (which can use variables): . postures: idle: - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" . rotpos: - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" . | Define the skill in terms of postures vs. time. Trajectories are dynamically time-scaled later when they are compiled, so the times in this definiton file only represent relative lengths of trajectory segments. Also, be sure to include default times. skill: default_times: prefix: 1.0 #[sec] main: 4.0 #[sec] suffix: 1.0 #[sec] prefix: - time: 0.0 posture: idle - time: 1.0 posture: grasp4 main: - time: 0.0 posture: grasp4 - time: 0.25 posture: rotneg - time: 0.75 posture: rotpos - time: 1.0 posture: grasp4 suffix: - time: 0.0 posture: grasp4 - time: 1.0 posture: idle . | . ",
-    "url": "/latest/skills/setup#make-a-skill-config-file",
-    "relUrl": "/skills/setup#make-a-skill-config-file"
-  },"67": {
-    "doc": "Setup",
-    "title": "Compiling skills",
-    "content": "Skills can be complied into pressure trajectories dynamically using variables. #!/usr/bin/env python import rospy from pressure_controller_skills.build_skills import SkillBuilder # Define the specific values of skill parameters and times to use when compiling a trajectory variable_ovr = {'idle_pressure': 0.0, 'grasp_pressure': 24.0, 'twist_offset': 3.0, } time_ovr = {'prefix': 2.0, 'main': 20.0, 'suffix': 2.0, } # Define the location of the \"rotate4finger\" skill. Note the omission of the file extension. filename = 'rotate4finger/rotate4finger' # Define the context (i.e. pressure control setup) you are currently using. context = 'anthro8' # Use the anthro8 context # Create a SkillBuilder object to load and compile the trajectory node = SkillBuilder(context=context) # Ommit the context to skip safety checks. node.load_skill(filename) # Load a skill from a file skill = node.generate_skill(vars=variable_ovr, times=time_ovr) # Generate the skill node.save_skill(filename) # Save the generated skill . ",
-    "url": "/latest/skills/setup#compiling-skills",
-    "relUrl": "/skills/setup#compiling-skills"
-  },"68": {
-    "doc": "Setup",
-    "title": "Maintaining skill libraries",
-    "content": "It’s very important that skill files are saved in the correct location so that the package can compile them. By default, skills should be saved in the “skills” folder within this package. If you would like to save skills in a different location, you need to explicitly define the location when instantiating a SkillBuilder object. For example, you could make a new ros package called “my_skills” to hold your skills, and contain them all inside the “pressure_skills” folder inside your new package. Then your code becomes: . skill_ros_package = 'my_skills' skill_folder = 'pressure_skills' context = 'anthro8' # Create a SkillBuilder object node = SkillBuilder(context=context, ros_package=skill_ros_package, folder=skill_folder) # Proceed like normal --&gt; . ",
-    "url": "/latest/skills/setup#maintaining-skill-libraries",
-    "relUrl": "/skills/setup#maintaining-skill-libraries"
-  },"69": {
-    "doc": "Setup",
-    "title": "Setup",
-    "content": " ",
-    "url": "/latest/skills/setup",
-    "relUrl": "/skills/setup"
-  },"70": {
-    "doc": "Hardware Setup",
-    "title": " Hardware Setup",
     "content": ". | Gather your hardware | Set up a new package to store your configs | Build a hardware config file | . With proper setup, you can treat a group of pressure controllers like one larger device. ",
     "url": "/latest/ros-driver/setup#-hardware-setup",
     "relUrl": "/ros-driver/setup#-hardware-setup"
-  },"71": {
+  },"58": {
     "doc": "Hardware Setup",
     "title": "Gather your hardware",
     "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. This ROS Package is compatible with both serial and raw USB communication. Serial is limited to roughly 50 Hz communication rate to/from the controllers, wheras raw USB (sometimes called HID) is capable of 300 Hz reliably for this system. For more info about configuring communication protocols, check out the firmware documentation. ",
     "url": "/latest/ros-driver/setup#gather-your-hardware",
     "relUrl": "/ros-driver/setup#gather-your-hardware"
-  },"72": {
+  },"59": {
     "doc": "Hardware Setup",
     "title": "Set up a new package to store your configs",
     "content": "ROS conventions are mixed in terms of the correct way to handle user config files interacting with packages. You could just edit the pressure_controller_ros package directly, but that gets messy since that would create a combination of user settings and package source code. Instead, here’s the perferred method to avoid this: . | Create a new package where all your configs are stored . | From within your catkin workspace, go to the source directory | Make a new package with a name you choose (like “pressure_controller_configs”) that depends on the “pressure_controller_ros” package | Get back to your workspace directory and run catkin_make to build the new package | . cd src catkin_create_pkg pressure_controller_configs pressure_controller_ros cd .. catkin_make . | Add the correct config folders . | Go into your new package | Copy the default config folders from the pressure_control_ros package | . cd src/pressure_controller_configs cp -r $(rospack find pressure_controller_ros)/config . | Make your own launch file referencing the pressure_control_cbt package . | Launch files are located in the launch folder of this package. Take a look there for the arguments you’ll need to pass to each file when you “include” them in your own launch files | Make the launch directory: mkdir launch | Make a new launch file to bringup the pressure controllers bringup_pressure.launch | Note that you can set the “config_package”. Set this to your new package: “pressure_controller_configs”. This tells the startup routine where to look for your config files. | . | When starting up the pressure controllers, use this new launch file rather than the one in the original package. roslaunch pressure_controller_configs bringup_pressure.launch profile:=[YOUR PROFILE] hw_profile:=[YOUR HARDWARE PROFILE] . | . ",
     "url": "/latest/ros-driver/setup#set-up-a-new-package-to-store-your-configs",
     "relUrl": "/ros-driver/setup#set-up-a-new-package-to-store-your-configs"
-  },"73": {
+  },"60": {
     "doc": "Hardware Setup",
     "title": "Build a hardware config file",
     "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “pressure_controller_ros” » “config” » “hardware”. Hardware config fields . | Native USB (HID) Settings (Only required for devices in HID mode) . | vendor_id (int) - Vendor ID number (unique to MCU manufacturer) | product_id (int) - Product ID number (unique to MCU board type) | serial_number (int or str) - Serial number (unique to each device) | . | Serial Settings (Only required for devices in serial mode) . | devname (str) - Device name (ttyACM# or ttyUSB#) | baudrate (int) - Baud Rate (standard is 115200 baud) | . | Common Settings . | num_channels (int) - Number of control channels the device has | cmd_spec (str) - Command specification number to use | cmd_format (str) - String format for data to be sent to the controller | . | . Examples . Here’s an example of a hardware config with 2 pressure controllers in HID mode . devices: # The first controller - vendor_id: 5824 product_id: 1158 serial_number: 6467390 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' # The second controller - vendor_id: 5824 product_id: 1158 serial_number: 5587550 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Here’s an example of a hardware config with 1 pressure controller in serial mode . devices: - devname: /dev/ttyACM0 baudrate: 115200 num_channels: 8 cmd_spec: '2.1' cmd_format: '%0.2f' . Determine device information . To set up device information in your hardware config file, just run a terminal command and copy the information. | Start a new hardware config file (must be located in the “config” » “hardware” of either this package or your own package) | Plug one pressure controller in at a time. | Run a ROS command to get information about USB devices: . | rosrun pressure_controller_ros find_hid_devices.py | rosrun pressure_controller_ros find_serial_devices.py | . | From the list, find the required device identifiers and copy them into your hardware config. | Plug in the next pressure controller and repeat steps 2-4. | . Usage . This ROS driver takes care of the low-level details of coordinating pressure control devices: . | low-level splitting of commands to different controllers | Synchronizing timers on all controllers | Stitching data from several controlers back into a single “data” signal (gets published to a ROS topic) | . With proper setup, you can treat a group of pressure controllers like one larger device with the combined number of channels. ",
     "url": "/latest/ros-driver/setup#build-a-hardware-config-file",
     "relUrl": "/ros-driver/setup#build-a-hardware-config-file"
-  },"74": {
+  },"61": {
     "doc": "Hardware Setup",
     "title": "Hardware Setup",
     "content": " ",
     "url": "/latest/ros-driver/setup",
     "relUrl": "/ros-driver/setup"
+  },"62": {
+    "doc": "Hardware Setup",
+    "title": " Hardware Setup",
+    "content": ". | Gather your hardware | Upload compatible firmware | Determine the device names | Build a hardware config file | Set up the communication config file | . ",
+    "url": "/latest/top-level/setup#-hardware-setup",
+    "relUrl": "/top-level/setup#-hardware-setup"
+  },"63": {
+    "doc": "Hardware Setup",
+    "title": "Gather your hardware",
+    "content": "You can choose to run one controller, or set up a group of pressure controllers to act as one larger “meta-controller”. All you need is several USB ports (or a USB 3.0 hub). Plug all the pressure controllers in via USB and you’re all set to go. ",
+    "url": "/latest/top-level/setup#gather-your-hardware",
+    "relUrl": "/top-level/setup#gather-your-hardware"
+  },"64": {
+    "doc": "Hardware Setup",
+    "title": "Upload compatible firmware",
+    "content": "This Python interface is only compatible with serial communication, so be sure to use the “serial” option (not the “HID” option) when flashing firmware to the pressure controllers. If you have previously used the controllers in “HID” mode with ROS, you will need re-flash the “Serial” mode. ",
+    "url": "/latest/top-level/setup#upload-compatible-firmware",
+    "relUrl": "/top-level/setup#upload-compatible-firmware"
+  },"65": {
+    "doc": "Hardware Setup",
+    "title": "Determine the device names",
+    "content": "Use a serial terminal of some sort to check what the devices are called (Arduino IDE works well). | In Ubuntu and MacOS, devices begin with /dev/tty*. For example, /dev/ttyACM0 or something similar. | In Windows, devices begin with COM*. For example, COM4 or something similar. | . ",
+    "url": "/latest/top-level/setup#determine-the-device-names",
+    "relUrl": "/top-level/setup#determine-the-device-names"
+  },"66": {
+    "doc": "Hardware Setup",
+    "title": "Build a hardware config file",
+    "content": "A hardware config file allows you to define several parameters about how your hardware is set up. This takes the form of a yaml file where you define a list of devices, where each entry in the list is a dictionary defining the settings for one pressure controller. Browse some examples in “config” » “hardware”. Single Controller . If you are using only a single controller, you only need one device in your list. This is what most people will use. - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . Multiple Controllers . If you want to chain together multiple controllers, simply define multiple devices: . - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string - baudrate: 115200 # Baud rate fro this device. 115200 is default num_channels: 8 # This must match the number of channels define in the firmware cmd_spec: '2.0' # The command specification version you are using. This must be a string . ",
+    "url": "/latest/top-level/setup#build-a-hardware-config-file",
+    "relUrl": "/top-level/setup#build-a-hardware-config-file"
+  },"67": {
+    "doc": "Hardware Setup",
+    "title": "Set up the communication config file",
+    "content": "With our hardware configuration set up, the last step is to tell the system which hardware configuration you are using. | Go to “config” » “comms” » “comms_config.yaml”. | Set the hardware item to the name of the hardware config file you just made | Set the devnames item to a list of device names. The number of devices needs to be the same as the number of hardware devices you defined in your hardware config file. | . Example: . hardware: \"double3.4\" devnames: [\"/dev/ttyACM0\", \"/dev/ttyACM1\"] . The devnames are separate from the rest of the hardware config becasue sometimes device names change for no reason in Ubuntu and Windows. ",
+    "url": "/latest/top-level/setup#set-up-the-communication-config-file",
+    "relUrl": "/top-level/setup#set-up-the-communication-config-file"
+  },"68": {
+    "doc": "Hardware Setup",
+    "title": "Hardware Setup",
+    "content": " ",
+    "url": "/latest/top-level/setup",
+    "relUrl": "/top-level/setup"
+  },"69": {
+    "doc": "Setup",
+    "title": " Setup",
+    "content": ". | Basic structure of skills | Make a skill config file | Compiling skills | Maintaining skill libraries | . ",
+    "url": "/latest/skills/setup#-setup",
+    "relUrl": "/skills/setup#-setup"
+  },"70": {
+    "doc": "Setup",
+    "title": "Basic structure of skills",
+    "content": "Skills are essentially families of pressure trajectories defined by some channel-wise equations. Parameters can be defined and used in these equations to create dynamic “trajectory generators” which act like python functions. Each skill is made up of four basic components: . | context (list) - A list of control configuration profiles where the skill is valid to use (this is used during runtime to ensure skills are only run when the control system is configured correctly). | variables (dict) - A dictionary defining all the parameters of a skill as well as thier default values. | postures (dict of list) - A dictionary defining all relevant vectors of pressures (what we call “postures”), where each element in the pressure vector is an equation which can utilize variables. (Each equation is interpreted as a string and variables are substituted into the text before evaluating.) | skill (dict of list) - A dictionary defining prefix, main, and suffix trajectories. Each trajectory is a list, where each list entry defines a time and posture. | . ",
+    "url": "/latest/skills/setup#basic-structure-of-skills",
+    "relUrl": "/skills/setup#basic-structure-of-skills"
+  },"71": {
+    "doc": "Setup",
+    "title": "Make a skill config file",
+    "content": "This example will guide you through making your first pressure skill based on the “rotate4finger” skill: . “rotate4finger.yaml” on GitHub . | Define the controller context (list of config profiles where your skill is relevant): . context: - anthro8 - anthro8mixed . | Define the variables you want to use: . variables: idle_pressure: -5 #[psi] grasp_pressure: 20 #[psi] twist_offset: 5 #[psi] . | Define a set of postures to use in your skill. Each posture contains a vector of pressures with element-wise equations (which can use variables): . postures: idle: - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" - \"idle_pressure\" . rotpos: - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" - \"grasp_pressure-twist_offset\" - \"grasp_pressure+twist_offset\" . | Define the skill in terms of postures vs. time. Trajectories are dynamically time-scaled later when they are compiled, so the times in this definiton file only represent relative lengths of trajectory segments. Also, be sure to include default times. skill: default_times: prefix: 1.0 #[sec] main: 4.0 #[sec] suffix: 1.0 #[sec] prefix: - time: 0.0 posture: idle - time: 1.0 posture: grasp4 main: - time: 0.0 posture: grasp4 - time: 0.25 posture: rotneg - time: 0.75 posture: rotpos - time: 1.0 posture: grasp4 suffix: - time: 0.0 posture: grasp4 - time: 1.0 posture: idle . | . ",
+    "url": "/latest/skills/setup#make-a-skill-config-file",
+    "relUrl": "/skills/setup#make-a-skill-config-file"
+  },"72": {
+    "doc": "Setup",
+    "title": "Compiling skills",
+    "content": "Skills can be complied into pressure trajectories dynamically using variables. #!/usr/bin/env python import rospy from pressure_controller_skills.build_skills import SkillBuilder # Define the specific values of skill parameters and times to use when compiling a trajectory variable_ovr = {'idle_pressure': 0.0, 'grasp_pressure': 24.0, 'twist_offset': 3.0, } time_ovr = {'prefix': 2.0, 'main': 20.0, 'suffix': 2.0, } # Define the location of the \"rotate4finger\" skill. Note the omission of the file extension. filename = 'rotate4finger/rotate4finger' # Define the context (i.e. pressure control setup) you are currently using. context = 'anthro8' # Use the anthro8 context # Create a SkillBuilder object to load and compile the trajectory node = SkillBuilder(context=context) # Ommit the context to skip safety checks. node.load_skill(filename) # Load a skill from a file skill = node.generate_skill(vars=variable_ovr, times=time_ovr) # Generate the skill node.save_skill(filename) # Save the generated skill . ",
+    "url": "/latest/skills/setup#compiling-skills",
+    "relUrl": "/skills/setup#compiling-skills"
+  },"73": {
+    "doc": "Setup",
+    "title": "Maintaining skill libraries",
+    "content": "It’s very important that skill files are saved in the correct location so that the package can compile them. By default, skills should be saved in the “skills” folder within this package. If you would like to save skills in a different location, you need to explicitly define the location when instantiating a SkillBuilder object. For example, you could make a new ros package called “my_skills” to hold your skills, and contain them all inside the “pressure_skills” folder inside your new package. Then your code becomes: . skill_ros_package = 'my_skills' skill_folder = 'pressure_skills' context = 'anthro8' # Create a SkillBuilder object node = SkillBuilder(context=context, ros_package=skill_ros_package, folder=skill_folder) # Proceed like normal --&gt; . ",
+    "url": "/latest/skills/setup#maintaining-skill-libraries",
+    "relUrl": "/skills/setup#maintaining-skill-libraries"
+  },"74": {
+    "doc": "Setup",
+    "title": "Setup",
+    "content": " ",
+    "url": "/latest/skills/setup",
+    "relUrl": "/skills/setup"
   },"75": {
     "doc": "Pressure Skills",
     "title": " Pressure Skills",
