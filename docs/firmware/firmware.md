@@ -33,7 +33,7 @@ An object-oriented approach to doing pressure control. Hopefully things are modu
 ## Usage
 ### Settings Locations
 - Firmware is located in "**_pressure_control_firmware_**"
-- Harware configurations are located in the "**_config_**"" folder
+- Hardware configurations are located in the "**_config_**"" folder
 - Sensor configurations are located in the "**_config/sensors_lib.h_**"" file
 
 

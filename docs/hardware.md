@@ -29,7 +29,7 @@ For the input shutoff valve, I chose to use the [E215E-2C024](https://www.clippa
 To drive all the valves, I am using one mosfet per valve as switches. The valves are then modulated in a smooth way using pulse width modulation (PWM).
 
 
-<img alt="I use the EFB-1DV-24-L proportional fill/blead valve pair for smooth pressure control"
+<img alt="I use the EFB-1DV-24-L proportional fill/bleed valve pair for smooth pressure control"
      src="https://www.clippard.com/static/images/cache/c9/c924a28f45d860109d2f34f2be4c404a828404bf-900.jpg"
      class="gallery gallery-80" >
 <img alt="I use the E215E-2C024 2-way valves for the input shutoff valve"
@@ -40,7 +40,7 @@ To drive all the valves, I am using one mosfet per valve as switches. The valves
 
 ## Sensors
 ### Main Control Sensors
-The pressure control system features 10 channels, requiring 10 pressure sensors, each of which needs to be capable of measuring pressure up to ~ 35 PSI, and vaccum down to -14.5 PSI (full vacuum).
+The pressure control system features 10 channels, requiring 10 pressure sensors, each of which needs to be capable of measuring pressure up to ~ 35 PSI, and vacuum down to -14.5 PSI (full vacuum).
 
 After a lot of searching I found the [Honeywell SSCSNBN030PDAC5](https://www.digikey.com/products/en?keywords=480-5507-ND) differential pressure sensor. This sensor measures ±30 PSI over a voltage range of 0.25 V ~ 4.25 V, and we can extend the top end of the range slightly since we can measure up to 5 volts (the accuracy just gets worse as we move past the top of the measurement voltage range). The sensor is abundant and inexpensive at the time of writing, but has a **HUGE** footprint on a PCB.
 
@@ -55,10 +55,10 @@ I used the [Teensy 3.5](https://www.pjrc.com/store/teensy35.html) MCU because it
 
 
 ## Custom Printed Circuit Board
-I built a custom circuit PCB to breakout signals to my various sensors and solienoid drivers. 
+I built a custom circuit PCB to breakout signals to my various sensors and solenoid drivers. 
 
 ### General Design
-This board is designed to be relatively space-efficient while still being modular. It also has everything set up to break out every signal from the Teensy 3.5 to potentially be used later if nessecary. This results in a relatively large board, but it was farily cheap to get it fabricated by [OSH Park](https://oshpark.com/shared_projects/FJrbEXym).
+This board is designed to be relatively space-efficient while still being modular. It also has everything set up to break out every signal from the Teensy 3.5 to potentially be used later if necessary. This results in a relatively large board, but it was fairly cheap to get it fabricated by [OSH Park](https://oshpark.com/shared_projects/FJrbEXym).
 
 
 <img alt="Top view of the PCB"
@@ -178,4 +178,4 @@ Minor
 	- I just mis-calculated the width of these connectors
 - USB port for teensy isn't supported and has poor placement
 	- the USB cord just hangs off the teensy board in the middle of the main board
-	- usb coard also covers the power switch.
+	- usb cord also covers the power switch.

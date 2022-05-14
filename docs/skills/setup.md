@@ -23,7 +23,7 @@ Skills are essentially families of pressure trajectories defined by some channel
 Each skill is made up of four basic components:
 
 1. **context** (`list`) - A list of control configuration profiles where the skill is valid to use (_this is used during runtime to ensure skills are only run when the control system is configured correctly_).
-2. **variables** (`dict`) - A dictionary defining all the parameters of a skill as well as thier default values.
+2. **variables** (`dict`) - A dictionary defining all the parameters of a skill as well as their default values.
 2. **postures** (`dict` of `list`) - A dictionary defining all relevant vectors of pressures (what we call "postures"), where each element in the pressure vector is an equation which can utilize variables. (_Each equation is interpreted as a string and variables are substituted into the text before evaluating._)
 2. **skill** (`dict` of `list`) - A dictionary defining prefix, main, and suffix trajectories. Each trajectory is a list, where each list entry defines a time and posture.
 
@@ -82,7 +82,7 @@ This example will guide you through making your first pressure skill based on th
         - "grasp_pressure+twist_offset"
     ```
 
-4. Define the skill in terms of postures vs. time. Trajectories are dynamically time-scaled later when they are compiled, so the times in this definiton file only represent relative lengths of trajectory segments. Also, be sure to include default times.
+4. Define the skill in terms of postures vs. time. Trajectories are dynamically time-scaled later when they are compiled, so the times in this definition file only represent relative lengths of trajectory segments. Also, be sure to include default times.
 
     ```yaml
     skill:
@@ -143,7 +143,7 @@ filename = 'rotate4finger/rotate4finger'
 context  = 'anthro8' # Use the anthro8 context
 
 # Create a SkillBuilder object to load and compile the trajectory
-node = SkillBuilder(context=context) # Ommit the context to skip safety checks.
+node = SkillBuilder(context=context) # Omit the context to skip safety checks.
 node.load_skill(filename) # Load a skill from a file
 skill = node.generate_skill(vars=variable_ovr, times=time_ovr) # Generate the skill
 node.save_skill(filename) # Save the generated skill

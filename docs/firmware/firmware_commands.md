@@ -62,7 +62,7 @@ A comprehensive set of command specifications can be found in the [pressure_cont
 ||| #2 `int` = output units: used for displaying data
 |CURRTIME| #1 `int` | Set the current display time on the controller (in ms). Typically used to synchronize with other devices (i.e. set current time to zero when you start a trajectory)
 
-_NOTE: Units are converted at the command/output level. Pressures are always internally represented in psi regaurdless of what the units are set to._
+_NOTE: Units are converted at the command/output level. Pressures are always internally represented in psi regardless of what the units are set to._
 
 ### Safety Settings
 

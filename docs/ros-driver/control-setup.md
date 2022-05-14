@@ -30,7 +30,7 @@ Set up all the control settings (like which channels are on, PID gains, etc.).
 	- **states** (`list(bool)`) - The On/Off state of each channel. (Length of this list much match _num_channels_)
 - **data_loop_time** (`int`) - The period (in ms) to send data back from the controllers. (min value is ~4ms)
 - PID Settings
-	- **all_equal** (`bool`) - Decide whether the PID gains of all channels are set the othe same values
+	- **all_equal** (`bool`) - Decide whether the PID gains of all channels are set the same values
 	- **integrator_start** (`float`) - The window around the setpoint in which integration is allowed. (This prevents integrator windup)
 	- **values** (`list(float)`) - The actual P, I, and D values (in that order). _Set to a list of length 3 to give all channels the same gains. Set to a list of lists to specify gains on a per-channel basis (much include values for all channels if using this option)._
 - **valve_offsets** (`list(list(int))`) - PWM offset values for valves. _Set to a list, where each entry is a list of length 2 with the source and vent offsets for that particular channel._
@@ -98,7 +98,7 @@ Since a PID controller is inherently model-free, you will need to tune the gains
 	rosrun pressure_controller_setup rqt_calibrate_pid.py 
 	```
 
-3. Start up the namual pressure control gui (in a new terminal)
+3. Start up the manual pressure control gui (in a new terminal)
 	
 	```bash
 	rosrun pressure_controller_setup rqt_set_pressure_adv.py
@@ -123,4 +123,4 @@ Since a PID controller is inherently model-free, you will need to tune the gains
 
 **IMPORTANT: Remember to copy the output PID gains into the `pid/values` field in all relevant config files:**
 
-_Based on some basic testing, we found that the values you come up with here are reasonably robust to changes in the load, so you will only need to re-tune these valuses if you have a substantially different pneumatic device._
+_Based on some basic testing, we found that the values you come up with here are reasonably robust to changes in the load, so you will only need to re-tune these values if you have a substantially different pneumatic device._

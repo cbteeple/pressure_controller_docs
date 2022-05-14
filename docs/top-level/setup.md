@@ -72,4 +72,4 @@ hardware: "double3.4"
 devnames: ["/dev/ttyACM0", "/dev/ttyACM1"]
 ```
 
-_The devnames are separate from the rest of the hardware config becasue sometimes device names change for no reason in Ubuntu and Windows._
+_The devnames are separate from the rest of the hardware config because sometimes device names change for no reason in Ubuntu and Windows._

@@ -58,5 +58,5 @@ hand_sender.traj_client.wait_for_result() # Wait until the trajectory is finishe
 
 
 
-## Additional Documantation
+## Additional Documentation
 The implementation for realtime control is based on the [ur_modern_driver](https://github.com/ros-industrial/ur_modern_driver) for Universal Robots, and is extensively used in my companion ROS package for coordinating with an arm: [Hand+Arm Package](https://github.com/cbteeple/hand_arm_cbt/blob/master/scripts/run_traj.py). To check out how this works at a lower level, feel free to check out the [source code](https://github.com/cbteeple/pressure_control_cbt/blob/master/pressure_controller_ros/src/pressure_controller_ros/live_traj_new.py) and the [live_traj_follower launch file](https://github.com/cbteeple/pressure_control_cbt/blob/master/pressure_controller_ros/launch/live_traj_follower.launch).

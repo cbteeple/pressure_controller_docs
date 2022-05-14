@@ -15,7 +15,7 @@ font_awesome: "fas fa-running"
 Build complex parametric skills in pressure control space using straightforward definition files.
 
 ## Motivation
-In practical use, this pressure control system is extremely versatile, however the ROS driver still acts a relatively low level: **sending pressure signals over time.** Setting up pre-programmed trajectories (or even realtime feedback control) works well, but requires a lot of copying and pasteing of the same pressure trajectories into different files. In addition, sometimes we operate using a family of trajectories with fundementally the same form, so there is a lot of room to automate this.
+In practical use, this pressure control system is extremely versatile, however the ROS driver still acts a relatively low level: **sending pressure signals over time.** Setting up pre-programmed trajectories (or even realtime feedback control) works well, but requires a lot of copying and pasting of the same pressure trajectories into different files. In addition, sometimes we operate using a family of trajectories with fundamentally the same form, so there is a lot of room to automate this.
 
 Introducing **"Pressure Skills"**! With this framework, we can define families of pressure trajectories (_skills_) using parameters and math, then use them like functions to obtain specific trajectories given particular values of the parameters.
 
@@ -29,7 +29,7 @@ Introducing **"Pressure Skills"**! With this framework, we can define families o
 - The [ROS Driver]({{ site.baseurl }}{% link docs/ros-driver/ros-driver.md %}) for this project
 - The [pressure_controller_skills](https://github.com/cbteeple/pressure_controller_skills) package
 - Various python libraries:
-	- All python dependencies are managed in the reqirements file. `pip install -r requirements.txt`
+	- All python dependencies are managed in the requirements file. `pip install -r requirements.txt`
 
 ## Installation
 1. Set up and install the [ROS Driver]({{ site.baseurl }}{% link docs/ros-driver/ros-driver.md %}).

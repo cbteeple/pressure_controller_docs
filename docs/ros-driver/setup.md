@@ -23,13 +23,13 @@ With proper setup, you can treat a group of pressure controllers like one larger
 ## Gather your hardware
 You can choose to run one controller, or set up a group of pressure controllers to act as one larger "meta-controller".
 
-This ROS Package is compatible with both serial and raw USB communication. Serial is limited to roughly 50 Hz communication rate to/from the controllers, wheras raw USB (sometimes called HID) is capable of 300 Hz reliably for this system. _For more info about configuring communication protocols, check out the [firmware documentation]({{ site.baseurl }}{% link docs/firmware/firmware.md %})._
+This ROS Package is compatible with both serial and raw USB communication. Serial is limited to roughly 50 Hz communication rate to/from the controllers, whereas raw USB (sometimes called HID) is capable of 300 Hz reliably for this system. _For more info about configuring communication protocols, check out the [firmware documentation]({{ site.baseurl }}{% link docs/firmware/firmware.md %})._
 
 
 
 
 ## Set up a new package to store your configs
-ROS conventions are mixed in terms of the correct way to handle user config files interacting with packages. You _could_ just edit the pressure_controller_ros package directly, but that gets messy since that would create a combination of user settings and package source code. Instead, here's the perferred method to avoid this:
+ROS conventions are mixed in terms of the correct way to handle user config files interacting with packages. You _could_ just edit the pressure_controller_ros package directly, but that gets messy since that would create a combination of user settings and package source code. Instead, here's the preferred method to avoid this:
 
 1. Create a new package where all your configs are stored
 	1. From within your catkin workspace, go to the source directory
@@ -131,6 +131,6 @@ To set up device information in your hardware config file, just run a terminal c
 This ROS driver takes care of the low-level details of coordinating pressure control devices:
 - low-level splitting of commands to different controllers
 - Synchronizing timers on all controllers
-- Stitching data from several controlers back into a single "data" signal (gets published to a ROS topic)
+- Stitching data from several controllers back into a single "data" signal (gets published to a ROS topic)
 
 With proper setup, you can treat a group of pressure controllers like one larger device with the combined number of channels.

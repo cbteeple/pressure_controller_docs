@@ -30,7 +30,7 @@ This is the standard way to run this control interface.
 	- Set the python virtual environment to use ([instructions](https://code.visualstudio.com/docs/python/python-tutorial#_select-a-python-interpreter)).
 6. Install python package dependencies
 	- `pip install [PACKAGE]`
-	- all dependancies for this project are listed in the [setup]({{ site.baseurl }}{% link docs/top-level/top-level.md %}) page
+	- all dependencies for this project are listed in the [setup]({{ site.baseurl }}{% link docs/top-level/top-level.md %}) page
 
 
 

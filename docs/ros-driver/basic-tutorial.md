@@ -42,7 +42,7 @@ In the "**config**" folder of the "**pressure_control_ros**" package, you can se
 
 
 ## Manual pressure control
-Setting pressure namually is simple. Just run the gui from a new terminal:
+Setting pressure manually is simple. Just run the gui from a new terminal:
 
 ```bash
 rosrun pressure_controller_setup rqt_set_pressure.py

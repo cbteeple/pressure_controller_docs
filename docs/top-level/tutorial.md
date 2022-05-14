@@ -115,7 +115,7 @@ Once running, use keyboard keys to move the pressure up and down.
     - Trajectory setup files are "*.yaml*" files with a few specific fields (see examples in the `traj_setup/example` folder)
     - Trajectory setup files must be stored in the `traj_setup` folder (you can use subfolders too)
 
-2. There are three basic parts in a trajctory
+2. There are three basic parts in a trajectory
     - **main** - The looping part
     - **prefix** - Run once at the start of the trajectory
     - **suffix** - Run once after the looping part is finished.
@@ -126,7 +126,7 @@ Once running, use keyboard keys to move the pressure up and down.
     - In the "**main**" part of the trajectory, the first and last lines must be the same if you want to make a smooth looping trajectory. At the lowest level, the controller jumps directly from the last line to the first line when looping.
     - For a smooth **prefix** >> **main** transition, the last line in the "prefix" and first line of the "main" should be the same.
     - Transitions to the **suffix** are handled dynamically, starting from the setpoint at the exact time the suffix is requested.
-        - If the **main** part finishes, the final line of "**main**" is coppied to time 0.0s in the **suffix**
+        - If the **main** part finishes, the final line of "**main**" is copied to time 0.0s in the **suffix**
         - If the **main** part is interrupted, the current setpoint (including interpolated values) is copied to time 0.0s of the **suffix**.
         - _In the example above, we dynamically transition to the first line of the **suffix** from wherever the setpoint currently is over 2.0 seconds._
 
@@ -158,7 +158,7 @@ Execute the pressure trajectory you just sent
 * **num_cycles** - Loop the main part of the trajectory this number of times. (_Set to -1 for endless loop_)
 * **speed_factor** - Speed-stretch a trajectory (_larger speed factor runs the trajectory faster_)
 
-This command also saves the incomming data from the pressure controller in a csv:
+This command also saves the incoming data from the pressure controller in a csv:
 ```
 [time in ms] [setpoints  p1 ...... pn]  [measured  p1 ....... pn]  [input pressure] [command echos]
 3848,         0.00, 0.00, 0.00, 0.00,    0.10, 0.05, 0.03, -0.07,   30.00,           , ,

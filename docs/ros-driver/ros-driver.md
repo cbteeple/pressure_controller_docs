@@ -22,7 +22,7 @@ font_awesome: "fas fa-robot"
 - [Cython HID Library](https://github.com/trezor/cython-hidapi) from Trezor:
 - The [Python Control Interface](https://github.com/cbteeple/pressure_control_interface) package for this project
 - Various python libraries:
-	- All python dependencies are managed in the reqirements file. `pip install -r requirements.txt`
+	- All python dependencies are managed in the requirements file. `pip install -r requirements.txt`
 
 ## Installation
 Install things in this order to ensure everything works:

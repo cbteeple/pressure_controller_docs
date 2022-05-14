@@ -33,7 +33,7 @@ source ~/.bashrc
 
 ## Make a Catkin Workspace
 
-Follow the tutorial for [making a new workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace). I usually create my worskapces in the "Documents" folder rather than the home folder, so step 1 of the tuorial becomes:
+Follow the tutorial for [making a new workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace). I usually create my workspaces in the "Documents" folder rather than the home folder, so step 1 of the tutorial becomes:
 
 ```bash
 mkdir -p ~/Documents/[WORKSPACE NAME]/src
@@ -63,16 +63,16 @@ The pressure controller package must be built from source:
 ## ROS programming paradigms
 ROS has three main programming paradigms it uses to send/recieve messages and do things with them:
 
-1. Publishers/Subscribers: Send/Recieve messages to and from topics.
+1. Publishers/Subscribers: Send/Receive messages to and from topics.
 	- Publishers send data to topics.
 	- Subscribers poll for new messages on particular topics, and perform something when a new message comes in.
 2. Services: Event-based programs. These are blocking, so a service MUST finish before the program that called it can move forward.
 	- These should only ever be used for executing tiny calculations or triggering short actions.
-3. Action Servers: Event-based programs. A goal is sent to an action server by another node, and the prgram does something in response. This is non-blocking.
+3. Action Servers: Event-based programs. A goal is sent to an action server by another node, and the program does something in response. This is non-blocking.
 	- Most modern drivers for running real hardware use this type of node (including this package).
 
 ### Stitching ROS constructs together
-Usually, you will have a few ROS objects in the same node, especialy if you are building a "controller" node. For example, maybe you want to send some control signals in response to the pose of an object to do visual servoing. To do this, you would:
+Usually, you will have a few ROS objects in the same node, especially if you are building a "controller" node. For example, maybe you want to send some control signals in response to the pose of an object to do visual servoing. To do this, you would:
 
 1. Use an existing driver for doing pose detection (maybe AprilTags with a camera) that publishes the pose of objects in one topic.
 2. Use this pressure_controller_ros driver to control pneumatic pressure as your "control inputs". This package uses an action server to send commands to the controller.
@@ -92,4 +92,4 @@ ROS has two main ways to start nodes:
 1. `rosrun` starts a single node directly
 2. `roslaunch` starts several nodes with parameters and arguments as prescribed in _launch_ files.
 
-Typical ROS drivers (including this pressure controller dirver) actually require several nodes, so usually those are nicely packaged into _launch_ files. You can also combine nodes from various packages into your own _launch_ files to start combinations of different drivers and control nodes. This quickly gets messy though, so sometimes it's easier and cleaner to just make your own bash files that you run instead.
+Typical ROS drivers (including this pressure controller driver) actually require several nodes, so usually those are nicely packaged into _launch_ files. You can also combine nodes from various packages into your own _launch_ files to start combinations of different drivers and control nodes. This quickly gets messy though, so sometimes it's easier and cleaner to just make your own bash files that you run instead.
